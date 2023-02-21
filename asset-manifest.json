@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/amaroni/static/css/main.3781524b.css",
-    "main.js": "/amaroni/static/js/main.4a350b8b.js",
+    "main.js": "/amaroni/static/js/main.e45a67eb.js",
     "static/js/787.4c277a14.chunk.js": "/amaroni/static/js/787.4c277a14.chunk.js",
     "static/media/Covid_Banner.jpg": "/amaroni/static/media/Covid_Banner.823fcba43b84c158f4a6.jpg",
     "static/media/banner.jpg": "/amaroni/static/media/banner.16bd2a8942bb98efb759.jpg",
@@ -9,11 +9,11 @@
     "static/media/logo.png": "/amaroni/static/media/logo.bcba8fd1d00af5d615e9.png",
     "index.html": "/amaroni/index.html",
     "main.3781524b.css.map": "/amaroni/static/css/main.3781524b.css.map",
-    "main.4a350b8b.js.map": "/amaroni/static/js/main.4a350b8b.js.map",
+    "main.e45a67eb.js.map": "/amaroni/static/js/main.e45a67eb.js.map",
     "787.4c277a14.chunk.js.map": "/amaroni/static/js/787.4c277a14.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3781524b.css",
-    "static/js/main.4a350b8b.js"
+    "static/js/main.e45a67eb.js"
   ]
 }
