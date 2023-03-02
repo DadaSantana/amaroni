@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/amaroni/static/css/main.fe6521cf.css",
-    "main.js": "/amaroni/static/js/main.4b66a42a.js",
+    "main.css": "/amaroni/static/css/main.ee425c93.css",
+    "main.js": "/amaroni/static/js/main.aba7eeb7.js",
     "static/js/787.4c277a14.chunk.js": "/amaroni/static/js/787.4c277a14.chunk.js",
     "static/media/Borgo_Amaroni.png": "/amaroni/static/media/Borgo_Amaroni.ad4ae0b4176af3eec4c0.png",
     "static/media/MapBanner.png": "/amaroni/static/media/MapBanner.0ba794fb73046bdaeb9a.png",
     "static/media/logo.png": "/amaroni/static/media/logo.bcba8fd1d00af5d615e9.png",
     "index.html": "/amaroni/index.html",
-    "main.fe6521cf.css.map": "/amaroni/static/css/main.fe6521cf.css.map",
-    "main.4b66a42a.js.map": "/amaroni/static/js/main.4b66a42a.js.map",
+    "main.ee425c93.css.map": "/amaroni/static/css/main.ee425c93.css.map",
+    "main.aba7eeb7.js.map": "/amaroni/static/js/main.aba7eeb7.js.map",
     "787.4c277a14.chunk.js.map": "/amaroni/static/js/787.4c277a14.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fe6521cf.css",
-    "static/js/main.4b66a42a.js"
+    "static/css/main.ee425c93.css",
+    "static/js/main.aba7eeb7.js"
   ]
 }
