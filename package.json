@@ -1,0 +1,76 @@
+{
+  "name": "amaroni-app",
+  "version": "0.1.0",
+  "homepage": "https://dadasantana.github.io/amaroni/",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/styled-engine": "^5.11.9",
+    "@mui/x-data-grid": "^5.17.24",
+    "@react-google-maps/api": "^2.18.1",
+    "@reduxjs/toolkit": "^1.9.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.12",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "awesome-image-viewer": "^1.0.60",
+    "bootstrap": "^5.2.3",
+    "firebase": "^9.17.1",
+    "jquery": "^3.6.3",
+    "latest-version": "^7.0.0",
+    "react": "^18.2.0",
+    "react-awesome-slider": "^4.1.0",
+    "react-bootstrap": "^2.7.2",
+    "react-carousel-minimal": "^1.4.1",
+    "react-dom": "^18.2.0",
+    "react-google-map-picker-custom": "^1.0.2",
+    "react-grid-gallery": "^1.0.0",
+    "react-image-gallery": "^1.2.11",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.58.3",
+    "styled-components": "^5.3.6",
+    "swiper": "^9.0.5",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-image-gallery": "^1.2.0",
+    "@types/react-redux": "^7.1.25",
+    "gh-pages": "^5.0.0"
+  }
+}

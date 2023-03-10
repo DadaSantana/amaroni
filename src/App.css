@@ -1,0 +1,29 @@
+:root {
+    --mainColor: #04459d;
+    --secondColor: #002c66;
+    --whiteFont: #f9f9f9;
+    --shadow: #6e6e6e;
+    --error: #cb2204;
+  }
+  
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+  }
+  
+  #app {
+    min-height: 100vh;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .container {
+    padding: 0 20px;
+  }
+}
+  
