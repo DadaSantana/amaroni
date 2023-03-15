@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/amaroni/static/css/main.af97dff0.css",
-    "main.js": "/amaroni/static/js/main.ac8cd960.js",
+    "main.js": "/amaroni/static/js/main.4a26cdf4.js",
     "static/js/787.4c277a14.chunk.js": "/amaroni/static/js/787.4c277a14.chunk.js",
     "static/media/AmaroniComune.jpg": "/amaroni/static/media/AmaroniComune.9f0491491bb1d0180bbe.jpg",
     "static/media/Borgo_Amaroni.jpg": "/amaroni/static/media/Borgo_Amaroni.e57d762acdef8f6561d3.jpg",
     "static/media/logo.png": "/amaroni/static/media/logo.bcba8fd1d00af5d615e9.png",
     "index.html": "/amaroni/index.html",
     "main.af97dff0.css.map": "/amaroni/static/css/main.af97dff0.css.map",
-    "main.ac8cd960.js.map": "/amaroni/static/js/main.ac8cd960.js.map",
+    "main.4a26cdf4.js.map": "/amaroni/static/js/main.4a26cdf4.js.map",
     "787.4c277a14.chunk.js.map": "/amaroni/static/js/787.4c277a14.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.af97dff0.css",
-    "static/js/main.ac8cd960.js"
+    "static/js/main.4a26cdf4.js"
   ]
 }
