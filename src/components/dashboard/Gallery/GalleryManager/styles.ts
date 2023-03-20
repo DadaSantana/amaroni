@@ -53,4 +53,41 @@ export const Content =  styled.section`
     }
 `;
 
+export const EditGrid = styled.section`
+    display: grid;
+    grid-template-columns: repeat(5, 200px);
+    grid-gap: 20px;
+    max-height: 100%;
+    overflow: auto;
+
+    .item-gallery {
+        width: 200px;
+        height: 150px;
+        border-radius: 5px;
+
+        .delete-item {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all linear 200ms;
+            border-radius: 5px;
+            background-color: rgb(0,0,0,0);
+            opacity: 0;
+
+            svg {
+                font-size: 30px;
+                color: var(--whiteFont);
+            }
+
+            &:hover {
+                background-color: rgb(0,0,0,0.8);
+                opacity: 1;
+                cursor: pointer;
+            }
+            
+        }
+    }
+`;
 

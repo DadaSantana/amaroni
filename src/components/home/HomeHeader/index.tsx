@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { setCurrent } from '../../../redux/reducers/appReducer';
 import { useDispatch } from 'react-redux';
 //import styles
-import { Container } from 'react-bootstrap';
+import { Container, Dropdown } from 'react-bootstrap';
 import { Aside, Content, Login, Main, Navbar, Perfil } from './styles';
 import { Link } from "react-router-dom";
 
@@ -21,6 +21,7 @@ import italia from '../../../assets/media/italia.png';
 import unitedKingdom from '../../../assets/media/united-kingdom.png';
 import german from '../../../assets/media/german.png';
 import { Auth } from '../Auth';
+import userEvent from '@testing-library/user-event';
 
 
 type Props = {
@@ -29,6 +30,8 @@ type Props = {
 
 export const HomeHeader = ({logged}:Props) => {
     const system = useAppSelector(state => state.system);
+    const user = useAppSelector(state => state.user);
+
     const dispatch = useDispatch();
     const [authWindown, setAuthWindown] = React.useState(false);
     const [floatNav,setFloatNav] = React.useState(false);
@@ -63,7 +66,10 @@ export const HomeHeader = ({logged}:Props) => {
                     </div>
                     {system.login &&
                     <span className="btn-login">
-                        <Link to="/dashboard">
+                        <Link to={
+                            user.level.admin ? '/dashboard/events' :
+                            user.level.member ? '/dashboard/attractions' : '/dashboard/support'
+                        }>
                             <LoginIcon />
                             {system.language[system.current] == 'italian' ? 'Vai a Cruscotto' : null}
                             {system.language[system.current] == 'english' ? 'Go to Dashboard' : null}
@@ -84,7 +90,7 @@ export const HomeHeader = ({logged}:Props) => {
             </Login>
             <Main>
                 <Container>
-                    <a className='Logo' href="/amaroni">
+                    <a className='Logo' href="/">
                         <img src={Logo} alt="" />
                         <span>
                             <label>Comune di</label>
@@ -108,9 +114,26 @@ export const HomeHeader = ({logged}:Props) => {
                                 </Link>                                
                             </li>
                             <li>
-                                {system.language[system.current] == 'italian' ? 'Telefoni Importanti' : null}
-                                {system.language[system.current] == 'english' ? 'Important Phones' : null}
-                                {system.language[system.current] == 'german' ? 'Nützliche Kontakte' : null}
+                                <Link to='/palazio'>
+                                    {system.language[system.current] == 'italian' ? 'Palazio Comunale' : null}
+                                    {system.language[system.current] == 'english' ? 'Palazio Comunale' : null}
+                                    {system.language[system.current] == 'german' ? 'Palazio Comunale' : null}
+                                </Link>                                
+                            </li>
+                            <li>
+                                <Dropdown id="dropdown" className="d-inline mx-2">
+                                    <Dropdown.Toggle className='btn-toggle' id="dropdown-autoclose-true">
+                                        Gammellagi
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className='drop-menu'>
+                                        <Dropdown.Item className='language-item' href="#">
+                                            <Link to='/gemmellagi/rotkreuz'>Rotkreuz</Link>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item href="#">
+                                            <Link to='/gemmellagi/lukovica'>Lukovica</Link>
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>                           
                             </li>
                         </ul>
                         <div className="social">
@@ -143,11 +166,6 @@ export const HomeHeader = ({logged}:Props) => {
                                         {system.language[system.current] == 'english' ? 'Photo Gallery' : null}
                                         {system.language[system.current] == 'german' ? 'Fotogallerie' : null}
                                     </Link>                                
-                                </li>
-                                <li>
-                                    {system.language[system.current] == 'italian' ? 'Telefoni Importanti' : null}
-                                    {system.language[system.current] == 'english' ? 'Important Phones' : null}
-                                    {system.language[system.current] == 'german' ? 'Nützliche Kontakte' : null}
                                 </li>
                             </ul>
                         </div>

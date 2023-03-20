@@ -7,6 +7,10 @@ export const Content = styled.div`
     flex-direction: column;  
     align-items: flex-start;
     justify-content: flex-start;
+
+    tr.Registered.Call {
+        background-color: rgb(0 178 255 / 6%);
+    }
 `;
 
 export const Btn = styled.span`
@@ -17,7 +21,7 @@ export const Btn = styled.span`
         padding: 5px;
         background-color: #ebebeb;
         border-radius: 5px;
-        font-size: 14px;
+        font-size: 24px;
     }
 
     svg.edit {

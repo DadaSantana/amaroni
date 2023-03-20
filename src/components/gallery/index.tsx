@@ -2,22 +2,29 @@
 import * as React from 'react';
 //import styles
 import { Content } from "./styles";
-import { Gallery } from "react-grid-gallery";
-import { Container } from 'react-bootstrap';
-//import gallery component
-import ImageGallery from 'react-image-gallery';
-import "react-image-gallery/styles/css/image-gallery.css";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 //get service and type
 import * as ServiceGallery from '../../services/gallery';
 import { Gallery as TypeGallery } from '../../types/Gallery';
-//import icons
-import CloseIcon from '@mui/icons-material/Close';
+//import components
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+// import required modules
+import { FreeMode, Navigation, Thumbs } from "swiper";
 
 
 export const GalleryContent = () => {
     const [gallery, setGallery] = React.useState<TypeGallery[]>([]);
-    const [images,setImages] = React.useState<any[]>([]);
-    const [data,setData] = React.useState<any[]>([]);
+    //Backdrop
+    const [open, setOpen] = React.useState(true);
     //get all images from gallery
     React.useEffect(()=>{
         const getImagesFromGallery = async () => {
@@ -28,70 +35,65 @@ export const GalleryContent = () => {
 
     React.useEffect(()=>{
         if (gallery.length > 0) {
-            //create images for gallery
-            let list: any = [];
-            gallery.map((item, index)=>{
-                let object = {
-                    src: item.imageUrl,
-                    width: 320,
-                    height: 174,
-                    isSelected: false,
-                    caption: item.alt,
-                    alt: item.alt,
-                    tags: [
-                        { value: item.tag, title: item.tag },
-                    ]
-                }
-                list.push(object);
-            });
-            setImages(list);
-            //create images for viewer
-            let view: any = [];
-            gallery.map((item, index)=>{
-                let object = {
-                    original: item.imageUrl,
-                    thumbnail: item.imageUrl,
-                    
-                }
-                view.push(object);
-            });
-            setData(view);
+            setOpen(false);
         }        
     }, [gallery]);
 
-    React.useEffect(()=>{
-        console.log(images);
-    }, [images])
-
-    const [show,setShow] = React.useState(false);
-    const [first,setFirst] = React.useState(true);
-    const [item,setItem] = React.useState(-1);
-
-    const myRef = React.useRef<any | null>(null)
+    const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
     React.useEffect(()=>{
-        myRef.current.slideToIndex(item);
-        if (!first) {
-            setShow(true);
-        }        
-    }, [item]);
-
-    const handleResetSettings = () => {
-        setShow(false);
-        setFirst(true);
-        setItem(-1);
-    }
+        console.log(thumbsSwiper);
+    },[thumbsSwiper])
 
     return(
         <Content>
-            <Container>
-                <ImageGallery 
-                    className='float-gallery'
-                    items={data} 
-                    showFullscreenButton={false}
-                    ref={myRef}
-                />
-            </Container>         
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+            {!open &&
+            <>
+            <Swiper
+                onSlideChange={() => console.log(thumbsSwiper)}
+                loop={false}
+                spaceBetween={10}
+                navigation={true}
+                thumbs={{ swiper: thumbsSwiper }}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="mySwiper2"
+            >
+                {gallery.map((item, index)=>(
+                    <SwiperSlide
+                        className='slide-item'
+                        style={{
+                            background: `url('${item.imageUrl}') center center / cover no-repeat`
+                        }}
+                    />
+                ))}                
+            </Swiper>
+            <Swiper
+                direction={"vertical"}
+                onSwiper={setThumbsSwiper}
+                loop={false}
+                spaceBetween={10}
+                slidesPerView={3}
+                freeMode={false}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Thumbs]}
+                className="select-image-gallery"
+            >
+                {gallery.map((item, index)=>(
+                    <SwiperSlide>
+                        <img src={item.imageUrl} alt="" />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+            
+            </>
+            }
+               
         </Content>
     );
 }

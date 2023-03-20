@@ -1,4 +1,7 @@
 import { Container } from 'react-bootstrap';
+
+import { useAppSelector } from '../../../redux/hooks/useAppSelector';
+
 import { Link } from 'react-router-dom';
 import { Content } from './styles';
 import Logo from '../../../assets/media/logo.png';
@@ -16,6 +19,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 export const Footer = () => {
+    const system = useAppSelector(state=>state.system);
+    
     return(
         <Content>
             <div className="footer-top">
@@ -29,20 +34,36 @@ export const Footer = () => {
                     </span>
                     <div className='footer-top-content'>
                         <div className="box-item">
-                            <h5>Links</h5>
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Collegamenti' : null}
+                                {system.language[system.current] === 'english' ? 'Links' : null}
+                                {system.language[system.current] === 'german' ? 'Verknüpfungen' : null}
+                            </h5>
                             <ul>
                                 <li>
                                     <TimelineIcon />
-                                    <Link to="/storia">Storia</Link>
+                                    <Link to="/storia">
+                                        {system.language[system.current] === 'italian' ? 'Storia' : null}
+                                        {system.language[system.current] === 'english' ? 'History' : null}
+                                        {system.language[system.current] === 'german' ? 'Geschichte' : null}
+                                    </Link>
                                 </li>
                                 <li>
                                     <CollectionsIcon />
-                                    <Link to="/storia">Galleria Fotogrática</Link>
+                                    <Link to="/gallery">
+                                        {system.language[system.current] === 'italian' ? 'Galleria fotografica' : null}
+                                        {system.language[system.current] === 'english' ? 'Photo gallery' : null}
+                                        {system.language[system.current] === 'german' ? 'Galleria fotografica' : null}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
                         <div className="box-item">
-                            <h5>Telefones</h5>
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Telefoni' : null}
+                                {system.language[system.current] === 'english' ? 'Phones' : null}
+                                {system.language[system.current] === 'german' ? 'Telefone' : null}
+                            </h5>
                             <ul>
                                 <li>
                                     <LocalPoliceIcon />
@@ -59,7 +80,11 @@ export const Footer = () => {
                             </ul>
                         </div>
                         <div className="box-item">
-                            <h5>Social</h5>
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Sociale' : null}
+                                {system.language[system.current] === 'english' ? 'Social' : null}
+                                {system.language[system.current] === 'german' ? 'Sozial' : null}
+                            </h5>
                             <ul>
                                 <li>
                                     <FacebookIcon />
@@ -76,7 +101,11 @@ export const Footer = () => {
                             </ul>
                         </div>
                         <div className="box-item">
-                            <h5>Sobre nós</h5>
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Chi siamo' : null}
+                                {system.language[system.current] === 'english' ? 'About Us' : null}
+                                {system.language[system.current] === 'german' ? 'Über uns' : null}
+                            </h5>
                             <ul>
                                 <li>
                                     <HomeIcon />
@@ -97,7 +126,7 @@ export const Footer = () => {
             </div>
             <div className="footer-bottom">
                 <Container>
-                    Copyright © 2009. Comune di Amaroni Powered by Didoweb. All Rights Reserved.
+                    Copyright © 2023. Powered by Comune di Amaroni. All Rights Reserved.
                 </Container>
             </div>
         </Content>

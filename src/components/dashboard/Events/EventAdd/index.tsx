@@ -214,7 +214,7 @@ export const EventAdd = ({fn}: Props) => {
                     </div>
                     <div className="input-group">
                         <InsertLink link={link} setLink={setLink} />
-                        <div className="box-item">
+                        {/* <div className="box-item">
                             <div className="upper-add-file">
                                 <input type="file" name="" id="" />                               
                             </div>
@@ -224,7 +224,7 @@ export const EventAdd = ({fn}: Props) => {
                                     <DeleteForeverIcon />
                                 </span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Registra evento

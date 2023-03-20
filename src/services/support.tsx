@@ -7,10 +7,12 @@ import {
     query, 
     getDoc,
     getDocs,
-    where
+    where,
+    updateDoc
 } from "firebase/firestore"; 
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL  } from "firebase/storage";
 import { v4 as createId } from 'uuid';
+import { writeSupportData } from './realtime';
 
 
 export const getAllCalls = async () => {
@@ -46,6 +48,8 @@ export const newSupport = async (subject: string, request: string, date: string,
         progress: progress,
         finished: finished
     });
+
+    writeSupportData(randomName,request,false);
 
     return randomName;
 }
@@ -136,5 +140,22 @@ export const getSupportAttach = async (id: any) => {
         return null;
         }) 
     }
+    
     return list;
+}
+
+export const updateSupportStatus = async (id: string, status: string) => {
+    const supportRef = doc(db, "support", id);
+    await updateDoc( supportRef, {
+        progress: status
+    });
+}
+
+export const getOpenCallsCount = async () => {
+    const supportsRef = collection(db, "support");
+    const q = query(supportsRef, where("progress", "==", 'Registered Call'));
+
+    const querySnapshot = await getDocs(q);
+    
+    return querySnapshot.size;
 }

@@ -174,7 +174,7 @@ export const Content = styled.section`
         }
     }
 
-    @media (max-width: 480px) and (orientation: portrait) {
+    @media (max-width: 760px) {
 
         form {  
             .input-top {

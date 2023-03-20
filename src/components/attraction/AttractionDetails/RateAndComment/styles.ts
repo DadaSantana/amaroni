@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const Content = styled.section`
     display: flex;
-    margin: 20px 0;
-    
+    margin: 20px 0;    
 
     .comment-box {
         display: flex;
@@ -103,6 +102,19 @@ export const Content = styled.section`
             resize: none;
             margin-bottom: 10px;
             outline: none;
+        }
+    }
+
+    @media (max-width: 760px) {
+        flex-direction: column;   
+        
+        .comment-box {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .rating-box {
+            margin: 0;
         }
     }
 `;

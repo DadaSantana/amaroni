@@ -22,7 +22,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Content } from '../styles';
+import { Content } from './styles';
 import { Btn } from './styles';
 
 type BtnProps = {
@@ -161,7 +161,7 @@ export const Callbox = ({fn}:Props) => {
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                           return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.title}>
+                          <TableRow className={row.progress} hover role="checkbox" tabIndex={-1} key={row.title}>
                               {columns.map((column) => {
                               const value = row[column.id];
                               return (

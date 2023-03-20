@@ -191,7 +191,7 @@ export const EventDetails = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="links-content">
+                    {/* <div className="links-content">
                         <span className='links-title'>
                             <FileCopyIcon />
                             <h3>
@@ -207,7 +207,7 @@ export const EventDetails = () => {
                                 {system.language[system.current] == 'german' ? 'Keine Dateien gefunden.' : null}
                             </p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </Container>
             <Link to='/'>

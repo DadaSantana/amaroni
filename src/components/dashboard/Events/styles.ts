@@ -43,7 +43,7 @@ export const TagAction = styled.div`
         }
     }
 
-    @media (max-width: 480px) and (orientation: portrait) {
+    @media (max-width: 760px) {
         max-height: 35px;
 
         .tag-group {

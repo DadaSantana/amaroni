@@ -6,34 +6,35 @@ import {
     query, 
     getDoc,
     getDocs,
-    where
+    where,
+    updateDoc
 } from "firebase/firestore"; 
 import { v4 as createId } from 'uuid';
-import { Uid } from '../types/Uid';
+import { Users } from '../types/Users';
+import { updateAccontPhoto, updateAccountName } from './auth';
 
 
-/* export const getAll = async () => {
-    let list: Attraction[] = [];
+export const getAll = async () => {
+    let list: Users[] = [];
 
-    const q = query(collection(db, "attractions"));
+    const q = query(collection(db, "users"));
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         let item = {
             id: doc.id,
-            imageUrl: doc.data().imageUrl,
-            name: doc.data().name,
-            type: doc.data().type,
-            address: doc.data().address,
-            tel: doc.data().tel,
-            map: doc.data().map,
-            description: doc.data().description
+            name: doc.data().userName,
+            email: doc.data().userEmail,
+            photo: doc.data().userPhoto,
+            phone: doc.data().userPhone,
+            levels: doc.data().levels
         }    
     list.push(item);
     });
     return list;
 }
 
+/*
 export const newAttraction = async (imageUrl: string, name: string, type: string, address: string, tel: string, map: string, description: string) => {
     let randomName = createId();
     await setDoc(doc(db, "attractions", randomName), {
@@ -48,13 +49,18 @@ export const newAttraction = async (imageUrl: string, name: string, type: string
 } */
 
 export const getUidData = async (uid: string) => {
-    let list: Uid[] = [];
+    let list: Users[] = [];
 
-    const docRef = doc(db, "uid", uid);
+    const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
         let item = {
+            id: docSnap.id,
+            name: docSnap.data().name,
+            email: docSnap.data().email,
+            photo: docSnap.data().userPhoto,
+            phone: docSnap.data().userPhone,
             levels: docSnap.data().levels
         } 
         list.push(item);        
@@ -63,8 +69,13 @@ export const getUidData = async (uid: string) => {
     return list[0];
 } 
 
-export const newUid = async (uid: string) => {
-    let item = await setDoc(doc(db, "uid", uid), {
+export const newUid = async (uid: string,name: string,email:string) => {
+    let item = await setDoc(doc(db, "users", uid), {
+        uid: uid,
+        userName: name, 
+        userEmail: email,
+        userPhoto: 'https://firebasestorage.googleapis.com/v0/b/amaroni-it.appspot.com/o/users%2Fuser-profile.png?alt=media&token=dcbee91e-dc29-4f04-9886-cd5db5f479f9',
+        userPhone: '(  )',
         levels: {
             admin: false,
             member: false,
@@ -74,6 +85,66 @@ export const newUid = async (uid: string) => {
 
     return item;
 }
+
+export const updateUserPhoto = async (imageUrl: string, id: string) => {
+    await updateAccontPhoto(imageUrl);
+
+    const userRef = doc(db, "users", id);
+    await updateDoc( userRef, {
+        userPhoto: imageUrl,
+    });
+}
+
+export const updateUserName = async (id: string, name: string) => {
+    await updateAccountName(name);
+    const userRef = doc(db, "users", id);
+    await updateDoc( userRef, {
+        userName: name
+    });
+}
+
+export const updateUserPhone = async (id: string, phone: string) => {
+    const userRef = doc(db, "users", id);
+    await updateDoc( userRef, {
+        userPhone: phone
+    });
+}
+
+export const updateUserLevel = async (id: string, level: string) => {
+    const userRef = doc(db, "users", id);
+    
+    if (level === 'admin') {
+        await updateDoc( userRef, {
+            levels: {
+                admin: true,
+                member: false,
+                guest: false
+            }
+        });
+    }
+
+    if (level === 'member') {
+        await updateDoc( userRef, {
+            levels: {
+                admin: false,
+                member: true,
+                guest: false
+            }
+        });
+    }
+
+    if (level === 'guest') {
+        await updateDoc( userRef, {
+            levels: {
+                admin: false,
+                member: false,
+                guest: true
+            }
+        });
+    }
+
+}
+
 
 /* export const getUid = async (id: string) => {
     const userRef = collection(db, "users");

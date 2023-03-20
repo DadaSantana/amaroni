@@ -40,6 +40,7 @@ export const TagAction = styled.div`
                 color: #0080ff;
             }
         }
+        
     }
 
     .alert {

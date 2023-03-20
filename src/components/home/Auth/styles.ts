@@ -69,6 +69,7 @@ export const Content = styled.div`
     
             .btn-submit {
                 width: 100%;
+                margin: 0;
                 margin-bottom: 10px;
             }
 

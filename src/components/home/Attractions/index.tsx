@@ -38,6 +38,7 @@ export const Attractions = () => {
     const [state, setState] = React.useState(false);
     const [att, setAtt] = React.useState<Attraction[]>([]);
     const [type, setType] = React.useState('all');
+    const [rating,setRating] = React.useState(0);
 
     React.useEffect(()=>{
         if (type != 'all') {
@@ -65,7 +66,7 @@ export const Attractions = () => {
             <Container>
                 <div className="title-content">
                     <h1>
-                        {system.language[system.current] == 'italian' ? 'Attrazione' : null}
+                        {system.language[system.current] == 'italian' ? 'Il Borgo' : null}
                         {system.language[system.current] == 'english' ? 'Attractions' : null}
                         {system.language[system.current] == 'german' ? 'Attraktion' : null}
                     </h1>
@@ -195,34 +196,36 @@ export const Attractions = () => {
                     {!state &&
                     att.map((item, index)=>(
                         <SwiperSlide className='slide-item'>
-                            <AttractionItem key={index}>
-                                <div 
-                                    className='att-background'
-                                    style={{
-                                        background: `url('${item.imageUrl}')`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover'
-                                    }}
-                                >
-                                    <span className='att-type'>
-                                        <ChurchIcon />
-                                        <label className='type-name'>{item.type}</label>
-                                    </span>
-                                </div>
-                                <div className='att-bottom'>
-                                    <div>
-                                        <label className='att-name'>{item.name}</label>
+                            <Link key={index} to={`attraction/${item.id}`} >
+                                <AttractionItem>
+                                    <div 
+                                        className='att-background'
+                                        style={{
+                                            background: `url('${item.imageUrl}')`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover'
+                                        }}
+                                    >
+                                        <span className='att-type'>
+                                            <ChurchIcon />
+                                            <label className='type-name'>{item.type}</label>
+                                        </span>
+                                    </div>
+                                    <div className='att-bottom'>
+                                        <div>
+                                            <label className='att-name'>{item.name}</label>
+                                        </div> 
+                                        <Rating name="read-only" value={item.rating} readOnly />                                   
+                                        <span className='view-more'>
+                                            <Link to={`attraction/${item.id}`}>
+                                                {system.language[system.current] == 'italian' ? 'Visualizza di più' : null}
+                                                {system.language[system.current] == 'english' ? 'View more' : null}
+                                                {system.language[system.current] == 'german' ? 'Mehr sehen' : null}
+                                            </Link>
+                                        </span>
                                     </div> 
-                                    <Rating name="read-only" value={2} readOnly />                                   
-                                    <span className='view-more'>
-                                        <Link to={`attraction/${item.id}`}>
-                                            {system.language[system.current] == 'italian' ? 'Visualizza di più' : null}
-                                            {system.language[system.current] == 'english' ? 'View more' : null}
-                                            {system.language[system.current] == 'german' ? 'Mehr sehen' : null}
-                                        </Link>
-                                    </span>
-                                </div>                    
-                            </AttractionItem>
+                                </AttractionItem>                                                   
+                            </Link>
                         </SwiperSlide>                        
                     ))
                     }

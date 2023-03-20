@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from '../../../../redux/hooks/useAppSelector';
 import { Content } from './styles';
 import Rating from '@mui/material/Rating';
@@ -9,6 +10,8 @@ import * as RatingService from '../../../../services/ratings';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { UserFirebase } from '../../../../types/Users';
+import { monitorAuthState } from '../../../../services/auth';
 
 type Props = {
     id: string | undefined
@@ -17,14 +20,40 @@ type Props = {
 export const RateAndComment = ({id}:Props) => {
     const user = useAppSelector(state => state.user);
     const system = useAppSelector(state => state.system);
+    const navigate = useNavigate();
     const [value, setValue] = React.useState<number | null>(0);
     const [ratings,setRatings] = React.useState<RatingType[]>([]);
     const [ratingSetted,setRatingSetted] = React.useState(false);
     const [showRatings,setShowRatings] = React.useState(false);
     const [noComments,setNoComments] = React.useState(false);
     const [loading,setLoading] = React.useState(true);
+    const [state,setState] = React.useState(true);
     const [textarea,setTextarea] = React.useState('');
     const [open, setOpen] = React.useState(false);
+
+    const [userFirebase,setUserFirebase] = React.useState<UserFirebase[]>([]);
+    const [startProcess,setStartProcess] = React.useState(true);
+
+    React.useEffect(()=>{
+        if (startProcess) {
+            const getUserFromFirebase = async () => {
+                setUserFirebase(await monitorAuthState());
+            }
+            getUserFromFirebase();
+        } else {
+            setState(!state);
+        }
+
+    }, [state]);
+
+    React.useEffect(()=>{
+        if(userFirebase.length > 0) {
+            setOpen(false);
+            setStartProcess(false);
+        } else {
+            setLoading(!state);
+        }
+    },[userFirebase]);
 
     React.useEffect(()=>{
         const getComments = async () => {
@@ -47,12 +76,16 @@ export const RateAndComment = ({id}:Props) => {
     const handleRegisterRating = async () => {
         if (id != undefined && value != null && value > 0) {
             setOpen(true);
-            await RatingService.newRating(id, user.name, user.email, value, textarea);
+            await RatingService.newRating(id, user.name, user.id, user.photo, value, textarea);
             setRatings(await RatingService.getRatingByLocalId(id));
             setTextarea('');
             setValue(0);
             setOpen(false);
         }
+    }
+
+    const handleGetRatingsPhoto = () => {
+        return 'https://firebasestorage.googleapis.com/v0/b/amaroni-it.appspot.com/o/users%2Fuser-profile.png?alt=media&token=dcbee91e-dc29-4f04-9886-cd5db5f479f9';
     }
 
     return(        
@@ -78,8 +111,16 @@ export const RateAndComment = ({id}:Props) => {
                 ratings.map((item,index)=>(
                     <div className="comment-item">
                         <div className="perfil">
-                            <span className="user-photo"/>
-                            <div className="name-and-rating">
+                            <span 
+                                className="user-photo"
+                                style={{
+                                    background: `url(${item.userPhoto})`,
+                                    backgroundPosition: open ? '' : 'center',
+                                    backgroundSize: open ? '' : 'cover',
+                                    backgroundRepeat: open ? 'no-repeat' : 'none'
+                                }}
+                            />
+                            <div className="name-and-rating">   
                                 <span className="user-name">{item.userName}</span>
                                 <span className="user-rating">
                                     <Rating name="read-only" value={item.userRating} readOnly />
@@ -94,7 +135,15 @@ export const RateAndComment = ({id}:Props) => {
             {system.login &&
             <div className="rating-box">
                 <div className="perfil">
-                    <span className="user-photo"/>
+                    <span 
+                        className="user-photo"
+                        style={{
+                            background: `url(${user.photo})`,
+                            backgroundPosition: open ? '' : 'center',
+                            backgroundSize: open ? '' : 'cover',
+                            backgroundRepeat: open ? 'no-repeat' : 'none'
+                        }}
+                    />
                     <div className="name-and-rating">
                         <span className="user-name">{user.name}</span>
                         <span className="user-rating">
@@ -124,13 +173,19 @@ export const RateAndComment = ({id}:Props) => {
                     startIcon={<AddCommentIcon />}
                     onClick={handleRegisterRating}
                 >
-                    Registrar Avaliação
+                    {system.language[system.current] === 'italian' ? 'Salva' : null}
+                    {system.language[system.current] === 'english' ? 'Save Comment' : null}
+                    {system.language[system.current] === 'german' ? 'Kommentar speichern' : null}
                 </Button>
             </div>
             }
             {!system.login &&
             <div className="rating-box">
-                <p>Faça login para comentar e avaliar este local.</p>
+                <p>
+                    {system.language[system.current] === 'italian' ? 'Accedi per commentare e valutare questo luogo.' : null}
+                    {system.language[system.current] === 'english' ? 'Login to comment and rate this place.' : null}
+                    {system.language[system.current] === 'german' ? 'Melden Sie sich an, um diesen Ort zu kommentieren und zu bewerten.' : null}
+                </p>
                 <Button 
                 type='submit' 
                 variant="contained" 
@@ -141,7 +196,9 @@ export const RateAndComment = ({id}:Props) => {
                     element?.click();
                 }}
                 >
-                    Fazer Login
+                    {system.language[system.current] === 'italian' ? 'Accedi' : null}
+                    {system.language[system.current] === 'english' ? 'Login' : null}
+                    {system.language[system.current] === 'german' ? 'Anmeldung' : null}
                 </Button>
             </div>
             }

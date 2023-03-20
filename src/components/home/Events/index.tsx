@@ -33,7 +33,7 @@ export const Events = () => {
             <Container>
                 <div className="title-content">
                     <h1>
-                        {system.language[system.current] == 'italian' ? 'Annunci' : null}
+                        {system.language[system.current] == 'italian' ? 'Eventi' : null}
                         {system.language[system.current] == 'english' ? 'Adverts' : null}
                         {system.language[system.current] == 'german' ? 'Anzeigen' : null}
                     </h1>

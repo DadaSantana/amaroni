@@ -6,6 +6,10 @@ export const Content = styled.section`
     display: flex;
     flex-direction: column;
     max-width: 100vw;
+
+    @media (max-width: 760px) {
+        padding: 10px;
+    }
 `;
 
 export const TagAction = styled.div`

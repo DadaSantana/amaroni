@@ -95,4 +95,27 @@ export const Content = styled.footer`
             text-align: center;
         }
     }
+
+    @media (max-width: 760px) {
+        .footer-top {
+            .container {
+                flex-direction: column;
+
+                .footer-top-logo {
+                    justify-content: center;
+                    margin-bottom: 10px;
+                }
+
+                .footer-top-content {
+                    padding: 10px;
+                    flex-wrap: wrap;
+                    gap: 20px;
+
+                    .box-item {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 `;

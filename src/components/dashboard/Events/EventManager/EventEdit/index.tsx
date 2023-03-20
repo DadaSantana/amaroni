@@ -27,12 +27,14 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { truncate } from 'fs';
 import { Container } from 'react-bootstrap';
+import { useAppSelector } from '../../../../../redux/hooks/useAppSelector';
 
 type Props = {
     id: string
 }
 
 export const EditContent = ({id}: Props) => {
+    const system = useAppSelector(state=>state.system);
     //Backdrop
     const [open, setOpen] = React.useState(false);
     const [eventItem,setEditItem] = React.useState<Annuncio[]>([]);
@@ -258,7 +260,7 @@ export const EditContent = ({id}: Props) => {
                             defaultValue={email}
                         />
                     </div>
-                    <div className="input-group">
+                    {/* <div className="input-group">
                         <InsertLink link={link} setLink={setLink} />
                         <div className="box-item">
                             <div className="upper-add-file">
@@ -271,9 +273,11 @@ export const EditContent = ({id}: Props) => {
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
-                    Salva le edizioni
+                        {system.language[system.current] === 'italian' ? 'Salva' : null}
+                        {system.language[system.current] === 'english' ? 'Save' : null}
+                        {system.language[system.current] === 'german' ? 'Speichern' : null}
                     </Button>
                 </div>                             
             </Box>

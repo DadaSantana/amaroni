@@ -48,7 +48,7 @@ export const Attractions = () => {
                     }}>
                         <AutoAwesomeMotionIcon />
                         <label>
-                            {system.language[system.current] == 'italian' ? 'Gestire' : null}
+                            {system.language[system.current] == 'italian' ? 'Elenco Strutture' : null}
                             {system.language[system.current] == 'english' ? 'To manage' : null}
                             {system.language[system.current] == 'german' ? 'Managen' : null}
                         </label>

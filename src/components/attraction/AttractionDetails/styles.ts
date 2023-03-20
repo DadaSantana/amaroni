@@ -19,7 +19,6 @@ export const Content = styled.section`
         section.main-presentation {
             display: flex;
             justify-content: space-between;
-            max-height: 70vh;
             width: 100%;
             flex: 1;
 
@@ -55,6 +54,7 @@ export const Content = styled.section`
                     a {
                         text-decoration: none;
                         color: #4d4d4d;
+                        margin: 0;
         
                         svg {
                             color: #4d4d4d;
@@ -77,6 +77,7 @@ export const Content = styled.section`
                     flex: 1;
                     display: flex;
                     flex-direction: column;
+                    max-height: 300px;
                     border-bottom: 1px solid rgb(187 187 187 / 15%);
                     overflow: auto;
                     scrollbar-width: auto;
@@ -110,11 +111,10 @@ export const Content = styled.section`
                         }
                     }
                     
-                    p {
+                    p.description-window {
                         height: 100%;
                         margin: 0;
-                        padding: 5px;
-                        
+                        padding: 5px;                        
                     }
                 }
             }
@@ -128,7 +128,12 @@ export const Content = styled.section`
                 object-fit: cover;
                 object-position: center;
             }
- 
+
+            .mobile {
+                display: none;
+            }
+
+             
         }
 
         section.gallery-attraction {
@@ -182,6 +187,37 @@ export const Content = styled.section`
                     }
                 }
             }
+        }
+
+        @media (max-width: 760px) {
+            padding: 50px 10px;
+
+            section.main-presentation {
+                flex-direction: column;
+                .main-details {
+                    .description-box {
+                        display: none;
+                    }
+    
+                    span.icon-data {          
+                        a {
+                            margin: 0;
+                        }
+                    }
+                }
+    
+                img {
+                    min-width: 100%;
+                    margin: 0;
+                    border-radius: 0;
+                    margin-bottom: 10px;
+                }
+    
+                .mobile {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }            
         }
     }
 

@@ -62,13 +62,52 @@ export const Content = styled.header`
         }
 
         .dropdown-menu {
-            width: 230px;
-            transform: translate(-160px, 35px);
+            width: fit-content;
+
             border-radius: 5px;
+            padding: 5px;
+
+            .dropdown-item { 
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                svg {
+                    margin-right: 10px;
+                }
+
+                label {
+                    margin: 0;
+                    cursor: pointer;
+                }                
+            }
+
+            .language-item {
+                display: flex;
+                justify-content: center;
+
+                .select-lang {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+        
+                    span {
+                        margin: 0 5px;
+
+                        img {
+                            max-height: 30px;
+                        }
+        
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }            
+                }
+            }
         }
     }
 
-    @media (max-width: 428px) and (orientation: portrait) {
+    @media (max-width: 760px) {
         padding: 0 10px;
 
         .container {

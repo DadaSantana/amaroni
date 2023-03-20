@@ -12,9 +12,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
+//import types and services
 import * as Attractions from '../../../services/attractions';
 import { Attraction } from '../../../types/Attraction';
+import * as RatingService from '../../../services/ratings';
 
 //import components
 import Backdrop from '@mui/material/Backdrop';
@@ -66,6 +67,7 @@ export const AttractionDetails = () => {
         const getAtt = async () => { 
             if (attFinished === false) {
                 setAtt(await Attractions.getAttById(attractionId));
+                setRating(await RatingService.getRatingAvarage(attractionId));
             }            
         }
         const getAttPhotos = async () => { 
@@ -83,7 +85,6 @@ export const AttractionDetails = () => {
             setImage(att[0].imageUrl);
             setTitle(att[0].name);
             setType(att[0].type);
-            setRating(4);
             setAddress(att[0].address);
             setDescription(att[0].description);
             setTelephone(att[0].tel);
@@ -145,8 +146,7 @@ export const AttractionDetails = () => {
                 <section className="main-presentation">
                     <div className="main-details">
                         <h1>{title}</h1>
-                        <div className="flex-between">
-                            
+                        <div className="flex-between">                            
                             <Rating className='rating' name="read-only" value={rating} readOnly />        
                             <span className="type-att">{type}</span>                    
                         </div>
@@ -167,11 +167,18 @@ export const AttractionDetails = () => {
                                 <DescriptionIcon />
                                 <label>Attraction Description:</label>
                             </div>
-                            <p>{description} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate sit architecto sequi porro suscipit nisi dicta corporis totam quibusdam ut soluta fugit enim rem, vitae cum, ducimus ad. Cum, illum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam expedita accusantium veritatis eaque distinctio, inventore saepe molestiae doloremque nisi! Vel, explicabo quia labore aliquid saepe nesciunt? Ducimus laboriosam fuga nemo? Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur sint eligendi tenetur nesciunt odio beatae vel at excepturi, distinctio ad, quia dicta explicabo saepe molestias quas doloribus eum corrupti dolor!</p>
+                            <p className='description-window'>{description}</p>
                         </div>
                         
                     </div>
                     <img src={image} alt="" />
+                    <div className="description-box mobile">
+                            <div className="d-b-header">
+                                <DescriptionIcon />
+                                <label>Attraction Description:</label>
+                            </div>
+                            <p>{description}</p>
+                        </div>
                 </section>
                 <section className='gallery-attraction'>
                     <h2>

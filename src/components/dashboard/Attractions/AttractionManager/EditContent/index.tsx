@@ -484,7 +484,7 @@ export const EditContent = ({id}:Props) => {
                     </div>
                     <div className="group-buttons">
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
-                        Salva le edizioni
+                        Salva
                     </Button>
                     </div>
                 </div>                             

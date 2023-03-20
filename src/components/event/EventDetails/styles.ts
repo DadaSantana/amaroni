@@ -174,6 +174,37 @@ export const Content = styled.section`
                 }
             }
         }
+
+        @media (max-width: 760px) {
+            flex-direction: column;
+            padding: 0 10px;
+
+            .content-details {
+                .date-hour-event {
+                    flex-direction: column;
+                    
+                    .d-h-datails.finish {
+                        margin-left: 0;
+                        padding-left: 0;
+                        border-left: 0;
+                    }
+                }
+
+                .additional-information {
+                    width: 100%;
+                }
+            }
+
+            .right-side {
+                margin-left: 0;
+                margin-top: 20px;
+                flex: 1;
+
+                .links-content {
+                    width: 100%;
+                }
+            }
+        }
         
     }
 

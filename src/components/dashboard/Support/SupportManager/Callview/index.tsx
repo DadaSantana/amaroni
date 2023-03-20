@@ -14,6 +14,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 //import styles
 import { Content } from './styles';
+import { SupportChat } from './SupportChat';
+//import realtime funcions
+import { lerDados, updateSupportData, listenerMessages } from '../../../../../services/realtime';
+import { messaging } from 'firebase-admin';
+import { ref, getDatabase, onValue } from 'firebase/database';
+import { updateSupportStatus } from '../../../../../services/support';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     id: string
@@ -21,6 +28,7 @@ type Props = {
 
 export const Callview = ({id}:Props) => {
     const user = useAppSelector(state => state.user);
+    const navigate = useNavigate();
     const currencies = [
         {
           value: 'Registered Call',
@@ -44,6 +52,7 @@ export const Callview = ({id}:Props) => {
     //import call
     const [callItem,setCallItem] = React.useState<Support[]>([]);
     const [initializeCall,setInitializeCall] = React.useState(false);
+    const [supportId,setSupportId] = React.useState('');
     const [date, setDate] = React.useState('');
     const [subject, setSubject] = React.useState('');
     const [userAuthor, setUserAuthor] = React.useState('');
@@ -55,6 +64,10 @@ export const Callview = ({id}:Props) => {
     const [retry,setRetry] = React.useState(false);
     const [retryServices,setRetryServices] = React.useState(false);
     const [href,setHref] = React.useState('');
+
+    const [chatMessages,setChatMessages] = React.useState<any[]>([]);
+    const [chatSetted,setChatSetted] = React.useState(false);
+
     React.useEffect(()=>{
         const getCallItemById = async () => {
             if (!initializeCall) {
@@ -67,31 +80,52 @@ export const Callview = ({id}:Props) => {
             }
             if (callItem.length === 0 || attach.length === 0) {
                 setRetryServices(!retryServices);
-            }            
+            } else { 
+            }
         }
         getCallItemById();
-    },[retry])
-    React.useEffect(()=>{
-        
-        if(callItem.length > 0 && attach.length > 0) {
+    },[listenerMessages()])
+    React.useEffect(()=>{        
+        if(callItem.length > 0) {
+            setSupportId(callItem[0].id);
             setDate(callItem[0].date);
             setSubject(callItem[0].subject);
             setUserAuthor(callItem[0].authorName);
             setSelect(callItem[0].progress);
             setDescription(callItem[0].request);
+            setSupportId(callItem[0].id);
             if (href === '') {
-                console.log('entrou');
-                console.log(attach[0]);
                 setHref(attach[0]);
             }
+
+            const getMessages = async () => {
+                let array = await lerDados(callItem[0].id);
+                setChatMessages([array]);
+            }
+            getMessages();
+
             setInitializeAttach(false);  
             setInitializeCall(false);          
             setOpen(false);
-            setUpload(false);            
+            setUpload(false);  
+
         } else {
             setRetry(!retry);
         }
-    },[retryServices]);
+    },[callItem]);
+
+    React.useEffect(()=>{
+        if (chatMessages.length > 0) {
+            setChatSetted(true);
+        }
+    },[chatMessages]);
+
+    const handleUpdateSupportStatus = async (id: string, status: string) => {
+        setOpen(true);
+        await updateSupportStatus(id,status);
+        setOpen(false);
+    }
+
     return(
         <Content>
             <Backdrop
@@ -137,6 +171,10 @@ export const Callview = ({id}:Props) => {
                     label="Selezionare"
                     defaultValue={select}
                     helperText="Change the state call"
+                    onChange={(e)=>{
+                        const status = e.target.value;
+                        handleUpdateSupportStatus(supportId,status);
+                    }}
                     >
                     {currencies.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -145,23 +183,26 @@ export const Callview = ({id}:Props) => {
                     ))}
                 </TextField>
             </div>
-            <textarea 
-                className='call-description' 
-                cols={30} 
-                rows={6}
-                value={description}
-            />
-            <div className="attach-file">
-                {!upload &&
+                        <div className="attach-file">
+                {attach.length > 0 &&
                 <>
                 <AttachFileIcon />
                 <a href={href} download="image" target='_blank'>Fare clic qui per scaricare un file immagine</a>
                 </>
                 }
             </div>
+            <div className="dialog-box">
+                {chatSetted &&
+                chatMessages[0][0].map((item: any,index: number)=>(
+                    <span className={item.by === 'user' ? 'response' : 'response admin'} >
+                        {item.message}
+                    </span>
+                ))
+                }
+            </div>
+            <SupportChat id={supportId} />
             </>
-            }
-            
+            }            
         </Content>
     );
 }

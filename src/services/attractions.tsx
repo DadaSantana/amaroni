@@ -31,7 +31,8 @@ export const getAll = async () => {
             longitude: document.data().longitude,
             description: document.data().description,
             authorId: document.data().authorId,
-            authorName: document.data().authorName
+            authorName: document.data().authorName,
+            rating: document.data().rating
         }    
     list.push(item);
     });
@@ -58,6 +59,13 @@ export const updateAttPhoto = async (imageUrl: string, id: string) => {
     const attractionRef = doc(db, "attractions", id);
     await updateDoc( attractionRef, {
         imageUrl: imageUrl,
+    });
+}
+
+export const updateAttRating = async (id: string, rating: number) => {
+    const attractionRef = doc(db, "attractions", id);
+    await updateDoc( attractionRef, {
+        rating: rating
     });
 }
 
@@ -93,7 +101,8 @@ export const getAttById = async (id: any) => {
             longitude: docSnap.data().longitude,
             description: docSnap.data().description,
             authorId: docSnap.data().authorId,
-            authorName: docSnap.data().authorName
+            authorName: docSnap.data().authorName,
+            rating: docSnap.data().rating
         } 
         list.push(item);
         
@@ -122,7 +131,8 @@ export const getAttByUser = async (id: string) => {
             longitude: doc.data().longitude,
             description: doc.data().description,
             authorId: doc.data().authorId,
-            authorName: doc.data().authorName
+            authorName: doc.data().authorName,
+            rating: doc.data().rating
         } 
         list.push(item);
     });
@@ -180,7 +190,8 @@ export const getAttByType = async (type: string) => {
             longitude: doc.data().longitude,
             description: doc.data().description,
             authorId: doc.data().authorId,
-            authorName: doc.data().authorName
+            authorName: doc.data().authorName,
+            rating: doc.data().rating
         } 
         list.push(item);
     });

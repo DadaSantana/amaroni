@@ -70,6 +70,8 @@ export const Auth = ({fn, state}: Props) => {
             dispatch(UserRed.setId(user.uid));
             dispatch(UserRed.setName(user.displayName));
             dispatch(UserRed.setEmail(user.email));            
+            dispatch(UserRed.setPhoto(user.photoURL));            
+            dispatch(UserRed.setPhone(user.phoneNumber));            
             dispatch(appRed.setLogin(true));            
             dispatch(appRed.setToken(user.getIdToken));            
        
@@ -125,6 +127,9 @@ export const Auth = ({fn, state}: Props) => {
                     dispatch(UserRed.setId(user.uid));
                     dispatch(UserRed.setName(user.displayName));
                     dispatch(UserRed.setEmail(user.email));
+                    dispatch(UserRed.setPhoto(user.photoURL));
+
+                    console.log(newAccount.levels);
 
                     if (newAccount.levels.admin) {
                         dispatch(UserRed.setLevel({admin: true, member: true, guest: true}));
@@ -134,7 +139,7 @@ export const Auth = ({fn, state}: Props) => {
                         navigate("/dashboard/attractions");
                     } else {
                         dispatch(UserRed.setLevel({admin: false, member: false, guest: true}));
-                        navigate("/");
+                        navigate("/dashboard/support");
                     }
 
                     dispatch(appRed.setLogin(true));
@@ -207,7 +212,7 @@ export const Auth = ({fn, state}: Props) => {
                         </Box>
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password">
-                                {system.language[system.current] == 'italian' ? "Parola d'ordinel" : null}
+                                {system.language[system.current] == 'italian' ? "Password" : null}
                                 {system.language[system.current] == 'english' ? 'Password' : null}
                                 {system.language[system.current] == 'german' ? 'Passwort' : null}
                             </InputLabel>
@@ -228,7 +233,7 @@ export const Auth = ({fn, state}: Props) => {
                                 </InputAdornment>
                                 }
                                 label={
-                                    system.language[system.current] == 'italian' ? "Parola d'ordinel" :
+                                    system.language[system.current] == 'italian' ? "Password" :
                                     system.language[system.current] == 'english' ? 'Password' :
                                     system.language[system.current] == 'german' ? 'Passwort' : null
                                 }
@@ -244,7 +249,7 @@ export const Auth = ({fn, state}: Props) => {
                                 variant="contained"
                                 onClick={handleSubmit}
                             >
-                                {system.language[system.current] == 'italian' ? 'Registrazione' : null}
+                                {system.language[system.current] == 'italian' ? 'Accedi' : null}
                                 {system.language[system.current] == 'english' ? 'Sign in' : null}
                                 {system.language[system.current] == 'german' ? 'Anmelden' : null}
                             </Button>
@@ -352,7 +357,7 @@ export const Auth = ({fn, state}: Props) => {
                                     </InputAdornment>
                                     }
                                     label={
-                                        system.language[system.current] == 'italian' ? "Parola d'ordine" : 
+                                        system.language[system.current] == 'italian' ? "Password" : 
                                         system.language[system.current] == 'english' ? 'Password' :
                                         system.language[system.current] == 'german' ? 'Passwort' : null
                                     }
@@ -394,17 +399,16 @@ export const Auth = ({fn, state}: Props) => {
                                 {system.language[system.current] == 'english' ? 'Loading...' : null}
                                 {system.language[system.current] == 'german' ? 'Wird geladen...' : null}
                             </span>
-                            <Stack direction="row">
-                                <Button 
-                                    type='submit'
-                                    className='btn-submit' 
-                                    variant="contained"
-                                >
-                                    {system.language[system.current] == 'italian' ? "Registrati" : null}
-                                    {system.language[system.current] == 'english' ? 'Sign In' : null}
-                                    {system.language[system.current] == 'german' ? 'Eintragen' : null}
-                                </Button>
-                            </Stack>
+                            <Button 
+                                type='submit'
+                                className='btn-submit' 
+                                variant="contained"
+                            >
+                                {system.language[system.current] == 'italian' ? "Registrati" : null}
+                                {system.language[system.current] == 'english' ? 'Sign In' : null}
+                                {system.language[system.current] == 'german' ? 'Eintragen' : null}
+                            </Button>
+
                         </Box>
                         
                     </SwiperSlide>                    

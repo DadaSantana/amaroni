@@ -7,8 +7,10 @@ import {
     query, 
     getDoc,
     getDocs,
+    deleteDoc 
 } from "firebase/firestore"; 
 import { v4 as createId } from 'uuid';
+import { deleteObject, getStorage, ref } from 'firebase/storage';
 
 
 export const getAll = async () => {
@@ -29,9 +31,10 @@ export const getAll = async () => {
     return list;
 }
 
-export const addImage = async (imageUrl: string, title: string, alt: string, tag: string) => {
+export const addImage = async (id: string, imageUrl: string, title: string, alt: string, tag: string) => {
     let randomName = createId();
-    await setDoc(doc(db, "gallery", randomName), {
+    await setDoc(doc(db, "gallery", id), {
+        id: id,
         imageUrl: imageUrl,
         title: title,
         alt: alt, 
@@ -58,4 +61,15 @@ export const getImageById = async (id: string) => {
     } 
 
     return list;
+}
+
+export const deleteGalleryPhoto = async (path: string) => {
+    const storage = getStorage();
+    // Create a reference to the file to delete
+    const pathRef = ref(storage, 'gallery/'+path);    
+    // Delete the file
+    await deleteDoc(doc(db, "gallery", path));
+    deleteObject(pathRef).then(() => {        
+    }).catch((error) => {        
+    });
 }

@@ -167,7 +167,7 @@ export const EventTable = ({en, fn}:Props) => {
               <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">
                   <TableHead>
-                      <TableRow>
+                      <TableRow style={{transform: 'translateY(-57px)'}}>
                       {columns.map((column) => (
                           <TableCell
                           key={column.id}

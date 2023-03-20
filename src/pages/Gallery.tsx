@@ -16,10 +16,10 @@ export const Gallery = () => {
         }
     }
     return(
-        <>
-        <HomeHeader logged={false} />
-        <GalleryContent />
-        <Footer/>
-        </>
+        <div id="app">
+          <HomeHeader logged={false} />
+          <GalleryContent />
+          <Footer/>
+        </div>
     );
 }

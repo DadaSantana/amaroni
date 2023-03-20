@@ -1,0 +1,124 @@
+[debug] [2023-03-15T14:57:00.453Z] ----------------------------------------------------------------------
+[debug] [2023-03-15T14:57:00.457Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\assit\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2023-03-15T14:57:00.461Z] CLI Version:   11.24.1
+[debug] [2023-03-15T14:57:00.461Z] Platform:      win32
+[debug] [2023-03-15T14:57:00.461Z] Node Version:  v16.16.0
+[debug] [2023-03-15T14:57:00.464Z] Time:          Wed Mar 15 2023 11:57:00 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2023-03-15T14:57:00.465Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-15T14:57:00.643Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-15T14:57:00.644Z] > authorizing via signed-in user (vhibycompany@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\assit\Desktop\Workana\amaroni-app
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-03-15T14:57:17.872Z] Using project from CLI flag: amaroni-it
+[debug] [2023-03-15T14:57:17.888Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it [none]
+[debug] [2023-03-15T14:57:18.384Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it 200
+[debug] [2023-03-15T14:57:18.384Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it {"projectId":"amaroni-it","projectNumber":"816978679769","displayName":"Amaroni","name":"projects/amaroni-it","resources":{"hostingSite":"amaroni-it","realtimeDatabaseInstance":"amaroni-it-default-rtdb","storageBucket":"amaroni-it.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_c9efab64-5f9d-40b1-a7f7-80456a442199"}
+[info] i  Using project amaroni-it (Amaroni) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2023-03-15T15:02:11.660Z] ----------------------------------------------------------------------
+[debug] [2023-03-15T15:02:11.663Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\assit\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2023-03-15T15:02:11.664Z] CLI Version:   11.24.1
+[debug] [2023-03-15T15:02:11.664Z] Platform:      win32
+[debug] [2023-03-15T15:02:11.664Z] Node Version:  v16.16.0
+[debug] [2023-03-15T15:02:11.666Z] Time:          Wed Mar 15 2023 12:02:11 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2023-03-15T15:02:11.667Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-15T15:02:11.809Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-15T15:02:11.810Z] > authorizing via signed-in user (vhibycompany@gmail.com)
+[debug] [2023-03-15T15:02:11.811Z] [iam] checking project amaroni-it for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-03-15T15:02:11.815Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/amaroni-it:testIamPermissions [none]
+[debug] [2023-03-15T15:02:11.815Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/amaroni-it:testIamPermissions x-goog-quota-user=projects/amaroni-it
+[debug] [2023-03-15T15:02:11.816Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/amaroni-it:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-03-15T15:02:12.806Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/amaroni-it:testIamPermissions 200
+[debug] [2023-03-15T15:02:12.807Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/amaroni-it:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-03-15T15:02:12.814Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it [none]
+[debug] [2023-03-15T15:02:13.266Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it 200
+[debug] [2023-03-15T15:02:13.267Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/amaroni-it {"projectId":"amaroni-it","projectNumber":"816978679769","displayName":"Amaroni","name":"projects/amaroni-it","resources":{"hostingSite":"amaroni-it","realtimeDatabaseInstance":"amaroni-it-default-rtdb","storageBucket":"amaroni-it.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_c9efab64-5f9d-40b1-a7f7-80456a442199"}
+[info] 
+[info] === Deploying to 'amaroni-it'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-03-15T15:02:13.289Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions [none]
+[debug] [2023-03-15T15:02:13.290Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2023-03-15T15:02:14.857Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions 200
+[debug] [2023-03-15T15:02:14.857Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions {"name":"projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[amaroni-it]: beginning deploy... 
+[info] i  hosting[amaroni-it]: found 17 files in build 
+[debug] [2023-03-15T15:02:14.918Z] [hosting] uploading with 200 concurrency
+[debug] [2023-03-15T15:02:14.957Z] [hosting] hash cache [YnVpbGQ] stored for 17 files
+[debug] [2023-03-15T15:02:14.958Z] [hosting][hash queue][FINAL] {"max":6,"min":1,"avg":1,"active":0,"complete":17,"success":17,"errored":0,"retried":0,"total":17,"elapsed":35}
+[debug] [2023-03-15T15:02:14.975Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1:populateFiles [none]
+[debug] [2023-03-15T15:02:14.975Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1:populateFiles {"files":{"/asset-manifest.json":"b74783e9e8316c1465ca2203c281cd9308ba9422d0aff65e3c1f56f133dd7c35","/favicon.ico":"eae62e993eb980ec8a25058c39d5a51feab118bd2100c4deebb2a9c158ec11f9","/index.html":"4843baf7e5be13c9ec52881705c9b6b3fa4a20912c2e6868c6863f36a5ccbbc0","/logo192.png":"3ee59515172ee198f3be375979df15ac5345183e656720a381b8872b2a39dc8b","/logo512.png":"ee7e2f3fdb8209c4b6fd7bef6ba50d1b9dba30a25bb5c3126df057e1cb6f5331","/manifest.json":"aff3449bdc238776f5d6d967f19ec491b36aed5fb7f23ccff6500736fd58494a","/robots.txt":"bfe106a3fb878dc83461c86818bf74fc1bdc7f28538ba613cd3e775516ce8b49","/static/css/main.af97dff0.css":"774e6569eb4ef5e89dc7836cf816a7cb9cb15a039a519286a133c540374dc4e4","/static/css/main.af97dff0.css.map":"561a169a550173f4006284b8af237b4e61c60b8a2e555619dda04cb28d359aaf","/static/js/787.4c277a14.chunk.js":"66d4bbd5b9a10210cabcb1c21c1819f3b8682089088a1e98f5543082dcc04e4b","/static/js/787.4c277a14.chunk.js.map":"a50d317cc87401072a30776c4fb4d4722e175d5dc5f2df456ed01364e91d6759","/static/js/main.5a6a7d3f.js":"7d14e5a768f490091db8d7f7c585aca6e74c767bcb35ab7d49869d0fdebc3ec2","/static/js/main.5a6a7d3f.js.LICENSE.txt":"74e666cdbb5882fbd9480314b011fc71067ca1c7ba7be4a9c4f0f06e9f94bb8e","/static/js/main.5a6a7d3f.js.map":"8e4a21f8c467c189881e2a0b4e871b77727ed5636f46eb4b9b898b4db3ce4008","/static/media/AmaroniComune.9f0491491bb1d0180bbe.jpg":"29c1e5a415752113c466c07906d785e20cfd52608859fa880029e2c6344623ab","/static/media/Borgo_Amaroni.e57d762acdef8f6561d3.jpg":"7b2dd4bbaedc359c9673bad71b06018aa3e77e59891070ae699cb327ac89305a","/static/media/logo.bcba8fd1d00af5d615e9.png":"172373be6af5277fe7f9ec035184d2c69bf6b8b264380d34e42092043a5cbc26"}}
+[debug] [2023-03-15T15:02:16.207Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1:populateFiles 200
+[debug] [2023-03-15T15:02:16.207Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1:populateFiles {"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/amaroni-it/versions/6d1de53850e6bae1/files"}
+[debug] [2023-03-15T15:02:16.208Z] [hosting][populate queue][FINAL] {"max":1278,"min":1278,"avg":1278,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1278}
+[debug] [2023-03-15T15:02:16.208Z] [hosting] uploads queued: 0
+[debug] [2023-03-15T15:02:16.208Z] [hosting][upload queue][FINAL] {"max":0,"min":9999999999,"avg":0,"active":0,"complete":0,"success":0,"errored":0,"retried":0,"total":0,"elapsed":1678892536208}
+[info] +  hosting[amaroni-it]: file upload complete 
+[debug] [2023-03-15T15:02:16.209Z] [hosting] deploy completed after 1343ms
+[debug] [2023-03-15T15:02:16.212Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "amaroni-it"
+    },
+    "version": "projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1"
+  }
+]
+[info] i  hosting[amaroni-it]: finalizing version... 
+[debug] [2023-03-15T15:02:16.217Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions/6d1de53850e6bae1 updateMask=status%2Cconfig
+[debug] [2023-03-15T15:02:16.218Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions/6d1de53850e6bae1 {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2023-03-15T15:02:17.338Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions/6d1de53850e6bae1 200
+[debug] [2023-03-15T15:02:17.338Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/versions/6d1de53850e6bae1 {"name":"projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2023-03-15T15:02:15.448451Z","createUser":{"email":"vhibycompany@gmail.com"},"finalizeTime":"2023-03-15T15:02:18.393178Z","finalizeUser":{"email":"vhibycompany@gmail.com"}}
+[debug] [2023-03-15T15:02:17.339Z] [hosting] finalized version for amaroni-it:[object Object]
+[info] +  hosting[amaroni-it]: version finalized 
+[info] i  hosting[amaroni-it]: releasing new version... 
+[debug] [2023-03-15T15:02:17.343Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/channels/live/releases versionName=projects%2F816978679769%2Fsites%2Famaroni-it%2Fversions%2F6d1de53850e6bae1
+[debug] [2023-03-15T15:02:17.344Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/channels/live/releases {}
+[debug] [2023-03-15T15:02:18.538Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/channels/live/releases 200
+[debug] [2023-03-15T15:02:18.538Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amaroni-it/channels/live/releases {"name":"projects/816978679769/sites/amaroni-it/channels/live/releases/1678892538942000","version":{"name":"projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2023-03-15T15:02:15.448451Z","createUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"},"finalizeTime":"2023-03-15T15:02:18.393178Z","finalizeUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"}},"type":"DEPLOY","releaseTime":"2023-03-15T15:02:18.942Z","releaseUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"}}
+[debug] [2023-03-15T15:02:18.538Z] [hosting] release: {"name":"projects/816978679769/sites/amaroni-it/channels/live/releases/1678892538942000","version":{"name":"projects/816978679769/sites/amaroni-it/versions/6d1de53850e6bae1","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2023-03-15T15:02:15.448451Z","createUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"},"finalizeTime":"2023-03-15T15:02:18.393178Z","finalizeUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"}},"type":"DEPLOY","releaseTime":"2023-03-15T15:02:18.942Z","releaseUser":{"email":"vhibycompany@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/AGNmyxaCplw8UBE8SFRvXC4Z4smIr3ghMvDuzFpkqz-z=mo"}}
+[info] +  hosting[amaroni-it]: release complete 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/amaroni-it/overview
+[info] Hosting URL: https://amaroni-it.web.app

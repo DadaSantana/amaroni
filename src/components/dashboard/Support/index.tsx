@@ -14,10 +14,12 @@ import { AttractionManager } from '../Attractions/AttractionManager';
 import Alert from 'react-bootstrap/Alert';
 import { SupportCall } from './SupportCall';
 import { SupportManager } from './SupportManager';
+import { useNavigate } from 'react-router-dom';
 
 export const Support = () => {
     const user = useAppSelector(state => state.user);
     const system = useAppSelector(state => state.system);
+    const navigate = useNavigate();
     const [action,setAction] = React.useState(1);
 
     const handleSetAction = (n: number) => {
@@ -40,6 +42,7 @@ export const Support = () => {
                     <>
                     <span className="tag-btn" onClick={() => {
                         handleSetAction(1);
+                        navigate(0);
                     }}>
                         <MoveToInboxIcon />
                         <label>

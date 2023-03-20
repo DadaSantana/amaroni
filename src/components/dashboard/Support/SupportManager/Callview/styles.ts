@@ -23,24 +23,50 @@ export const Content = styled.div`
         }
     }
 
-    .call-description {
-        margin: 20px 0;
-        width: 100%;
-        height: fit-content;
-        max-height: 600px;
-        padding: 14px;
-        box-sizing: border-box;
-        border: 1px solid #c0c0c0;
-        border-radius: 7px;
-        resize: none;
-        outline: none;
-    }
-
     .attach-file {
         display: flex;
+        margin-bottom: 20px;
 
         svg {
             margin-right: 10px;
         }
     }
+
+    .dialog-box {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 400px;
+        max-height: 600px;
+        overflow: auto;
+        padding: 10px;
+        box-shadow: 0 0 3px var(--shadow);
+        border-radius: 5px;
+
+        .response {
+            width: fit-content;
+            max-width: 75%;
+            padding: 14px;
+            box-sizing: border-box;
+            border: 1px solid #c0c0c0;
+            border-radius: 0 10px 10px 10px;
+            resize: none;
+            outline: none;
+            margin-bottom: 10px;
+            text-align: justify;    
+            background-color: #f9f9f9;
+        }
+        .response.admin {
+            width: fit-content
+            min-width: 75%;
+            align-self: flex-end;
+            text-align: justify;
+            background-color: #f3f3f3;
+            border-radius: 10px 0 10px 10px;
+        }
+    }
+
+    
+
 `;

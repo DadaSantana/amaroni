@@ -139,16 +139,38 @@ export const Navbar = styled.nav`
             margin-right: 20px;
             color: var(--whiteFont);
             transition: all linear 200ms;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-
-            &:hover {
-                
-            }
 
             a {
                 text-decoration: none;
                 color: var(--whiteFont);
+            }
+
+            #dropdown {
+                margin: 0!important;
+
+                button {
+                    padding: 0;
+                    background-color: transparent;
+                    box-shadow: none;
+                    font-size: 14px;
+                    text-transform: capitalize;
+                    font-weight: bold;
+                }
+
+                .dropdown-toggle:after {
+                    margin-left: 10px;
+                }
+
+                .drop-menu {
+                    border-radius: 0;
+                    
+                    a {
+                        color: #4d4d4d;
+                    }
+                }
             }
         }
     }

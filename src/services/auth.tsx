@@ -5,10 +5,14 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signOut,
-    updateProfile 
+    updateProfile,
+    Unsubscribe,
+    sendEmailVerification,
+    updatePassword 
 } from "firebase/auth";
 
 import * as User from './users';
+import { UserFirebase } from "../types/Users";
 
 const auth = getAuth(firebaseApp);
 
@@ -50,8 +54,10 @@ export const LoginState = async () => {
 export const createAccont = async (userName: string, userEmail : string, userPassword : string) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, userEmail, userPassword);  
+        await sendEmailVerify();
         updateProfile(userCredential.user, {
-            displayName: userName
+            displayName: userName, 
+            photoURL: 'https://firebasestorage.googleapis.com/v0/b/amaroni-it.appspot.com/o/users%2Fuser-profile.png?alt=media&token=dcbee91e-dc29-4f04-9886-cd5db5f479f9'
         }).then(() => {
         // Profile updated!
         // ...
@@ -61,7 +67,7 @@ export const createAccont = async (userName: string, userEmail : string, userPas
         // ...
         });
 
-        await User.newUid(userCredential.user.uid);
+        await User.newUid(userCredential.user.uid,userName,userEmail);
         const uid = await User.getUidData(userCredential.user.uid);
 
         return uid;
@@ -74,20 +80,95 @@ export const createAccont = async (userName: string, userEmail : string, userPas
 }
 
 export const monitorAuthState = async () => {
-    onAuthStateChanged(auth, user => {
+    let userFirebase: UserFirebase[] = [];
+    await onAuthStateChanged(auth, user => {
         if (user) {
+            console.log('entrou');
+            let item = {
+                accessToken: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                phoneNumber: user.phoneNumber,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                session: {
+                    accessToken: user.uid,
+                    expirationTime: 0
+                }
+            }
+            userFirebase.push(item);
+        } else {
             console.log(user);
-            return true;
         }
-        else {
-            console.log('não está logado, será redirecionado');
-            return false;
-        }
+
     });
+
+    return userFirebase;
 }
 
-monitorAuthState();
+export const updateAccontPhoto = async (imageUrl: string) => {
+    const user = auth.currentUser;
 
-const logout = async () => {
-    await signOut(auth);
+    if (user != null) {
+        updateProfile(user, {
+            photoURL: imageUrl
+            }).then(() => { 
+            // Profile updated!
+            // ...
+            }).catch((error) => {
+            // An error occurred
+            // ...
+            });   
+    }
+}
+
+export const updateAccountName = async (name: string) => {
+    const user = auth.currentUser;
+
+    if (user != null) {
+        updateProfile(user, {
+            displayName: name
+            }).then(() => { 
+            // Profile updated!
+            // ...
+            }).catch((error) => {
+            // An error occurred
+            // ...
+            });   
+    }
+}
+
+export const sendEmailVerify = async () => {
+    const auth = getAuth();
+    let state = false;
+
+    if  (auth.currentUser != null) {
+        state = true;
+        sendEmailVerification(auth.currentUser)
+        .then(() => {
+            
+        });
+    }
+
+    return state;
+}
+
+export const newPasswordUser = async (newPassword: string) => {
+    const auth = getAuth();
+    console.log('entrou na redefinição');
+    const user = auth.currentUser;
+
+    if (user != null) {
+        console.log('entrou na inserção');
+        updatePassword(user, newPassword).then(() => {
+            // Update successful.
+
+            }).catch((error) => {
+            // An error ocurred
+            console.log(error);
+            // ...
+            });
+    }
+
 }

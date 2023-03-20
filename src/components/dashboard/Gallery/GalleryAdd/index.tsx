@@ -21,12 +21,14 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { truncate } from 'fs';
 import { Container } from 'react-bootstrap';
+import { useAppSelector } from '../../../../redux/hooks/useAppSelector';
 
 type Props = {
     fn: () => void;
 }
 
 export const GalleryAdd = ({fn}: Props) => {
+    const system = useAppSelector(state=>state.system);
     //Backdrop
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
@@ -56,7 +58,7 @@ export const GalleryAdd = ({fn}: Props) => {
                 const alt = formData.get('alt') as string;
                 const tag = formData.get('tag') as string;
                 
-                let add = await ServiceGallery.addImage(result.url,title,alt,tag);
+                await ServiceGallery.addImage(result.name,result.url,title,alt,tag);
                 
                 setFormKey(formKey+1);
                 setImgBlob('');
@@ -81,7 +83,7 @@ export const GalleryAdd = ({fn}: Props) => {
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
             >
-              <CircularProgress color="inherit" /> Adicionando imagem à galeria...
+              <CircularProgress color="inherit" /> Aggiunta immagine alla galleria...
             </Backdrop>
             <Box
                 key={formKey}
@@ -110,7 +112,11 @@ export const GalleryAdd = ({fn}: Props) => {
                     >
                         <span className='design-click'>
                             <UploadIcon />
-                            <label>Clique aqui para escolher a imagem</label>
+                            <label>
+                                {system.language[system.current] === 'italian' ? 'Scegli immagine' : null}
+                                {system.language[system.current] === 'english' ? 'Choose image' : null}
+                                {system.language[system.current] === 'german' ? 'Bild wählen' : null}
+                            </label>
                         </span>
                         <input 
                             type="file" 
@@ -144,7 +150,11 @@ export const GalleryAdd = ({fn}: Props) => {
                             name='title'
                             required
                             id="outlined-required"
-                            label="Título da imagem"
+                            label={
+                                system.language[system.current] === 'italian' ? "Titolo dell'immagine" : 
+                                system.language[system.current] === 'english' ? 'Image title' : 
+                                system.language[system.current] === 'german' ? 'Bildtitel' : null
+                            }
                             defaultValue=""
                         />
                     </div>
@@ -153,7 +163,11 @@ export const GalleryAdd = ({fn}: Props) => {
                             className='alt-input'
                             name='alt'
                             id="outlined-basic" 
-                            label="Descrição resumida da imagem" 
+                            label={
+                                system.language[system.current] === 'italian' ? 'Descrizione' : 
+                                system.language[system.current] === 'english' ? 'Description' : 
+                                system.language[system.current] === 'german' ? 'Beschreibung' : null
+                            }
                             variant="outlined" 
                         />
                     </div>
@@ -163,13 +177,24 @@ export const GalleryAdd = ({fn}: Props) => {
                             name='tag'
                             required
                             id="outlined-required"
-                            label="Tag"
+                            label={
+                                system.language[system.current] === 'italian' ? 'Etichetta' : 
+                                system.language[system.current] === 'english' ? 'Tag' : 
+                                system.language[system.current] === 'german' ? 'Schild' : null
+                            }
                             defaultValue=""
                         />
                     </div>
                     
                     <div className="group-buttons">
-                        <input type="submit" value="Cadastrar" />
+                        <input 
+                            type="submit" 
+                            value={
+                                system.language[system.current] === 'italian' ? 'Salva' : 
+                                system.language[system.current] === 'english' ? 'Salve' : 
+                                system.language[system.current] === 'german' ? 'Speichern' : 'null'
+                            }
+                        />
                     </div>
                 </div>                             
             </Box>

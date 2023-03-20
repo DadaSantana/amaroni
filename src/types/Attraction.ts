@@ -9,5 +9,6 @@ export type Attraction   = {
     longitude: number
     description: string,
     authorId: string,
-    authorName: string
+    authorName: string,
+    rating: number
 }
