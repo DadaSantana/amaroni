@@ -7,6 +7,7 @@ export const Content = styled.div`
     flex-direction: column;  
     align-items: flex-start;
     justify-content: flex-start;
+    overflow: auto;
 
     tr.Registered.Call {
         background-color: rgb(0 178 255 / 6%);

@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { InsertLink } from './InsertLink';
+import { InsertLink } from '../../../../InsertLinks';
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
@@ -28,6 +28,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { truncate } from 'fs';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../../../../../redux/hooks/useAppSelector';
+import { PhotoManager } from '../../../../PhotoManager';
 
 type Props = {
     id: string
@@ -178,7 +179,7 @@ export const EditContent = ({id}: Props) => {
                     >
                         <span className='design-click'>
                             <UploadIcon />
-                            <label>Clique aqui para escolher a imagem</label>
+                            <label>Clicca qui per scegliere l'immagine</label>
                         </span>
                         <input 
                             name='image'
@@ -260,9 +261,9 @@ export const EditContent = ({id}: Props) => {
                             defaultValue={email}
                         />
                     </div>
-                    {/* <div className="input-group">
+                    <div className="input-group">
                         <InsertLink link={link} setLink={setLink} />
-                        <div className="box-item">
+{/*                         <div className="box-item">
                             <div className="upper-add-file">
                                 <input type="file" name="" id="" />                               
                             </div>
@@ -272,8 +273,9 @@ export const EditContent = ({id}: Props) => {
                                     <DeleteForeverIcon />
                                 </span>
                             </div>
-                        </div>
-                    </div> */}
+                        </div> */}
+                    </div>
+                    <PhotoManager path='events' id={id} />
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         {system.language[system.current] === 'italian' ? 'Salva' : null}
                         {system.language[system.current] === 'english' ? 'Save' : null}

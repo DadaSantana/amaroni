@@ -14,6 +14,7 @@ import { Users } from '../types/Users';
 import { updateAccontPhoto, updateAccountName } from './auth';
 
 
+
 export const getAll = async () => {
     let list: Users[] = [];
 
@@ -57,8 +58,8 @@ export const getUidData = async (uid: string) => {
     if (docSnap.exists()) {
         let item = {
             id: docSnap.id,
-            name: docSnap.data().name,
-            email: docSnap.data().email,
+            name: docSnap.data().userName,
+            email: docSnap.data().userEmail,
             photo: docSnap.data().userPhoto,
             phone: docSnap.data().userPhone,
             levels: docSnap.data().levels

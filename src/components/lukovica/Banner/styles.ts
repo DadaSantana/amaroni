@@ -35,10 +35,9 @@ export const Content = styled.div`
 
 
     @media (max-width: 760px) {      
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-
+        background-size: cover;
+        background-position: center;
+        height: 30vh;
     }
 
 	.container {

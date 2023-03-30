@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { SetStateAction } from 'react';
 
 import * as UserService from '../../../services/users';
-
+import { sendRedefinePassword } from '../../../services/auth';
 
 type Props = {
     fn: () => void;
@@ -70,6 +70,7 @@ export const Auth = ({fn, state}: Props) => {
             dispatch(UserRed.setId(user.uid));
             dispatch(UserRed.setName(user.displayName));
             dispatch(UserRed.setEmail(user.email));            
+            dispatch(UserRed.setVerified(user.emailVerified));            
             dispatch(UserRed.setPhoto(user.photoURL));            
             dispatch(UserRed.setPhone(user.phoneNumber));            
             dispatch(appRed.setLogin(true));            
@@ -151,6 +152,29 @@ export const Auth = ({fn, state}: Props) => {
     };
 
     const swiperSlide = useSwiperSlide();
+    const [viewAuth,setViewAuth] = React.useState(0);
+    const [isSendEmail,setIsSendEmail] = React.useState(false);
+    const [emailFailed,setEmailFailed] = React.useState(false);
+
+    const handleViewAuth = (n:number) => {
+        setViewAuth(n);
+    }
+
+    const handleRedefinePassword = async () => {
+        setLoading(true);
+        
+        const response = await sendRedefinePassword(name);
+        console.log(response);
+        if (response) {
+            setLoading(false);
+            setIsSendEmail(true);
+            setEmailFailed(false);
+        } else {
+            setLoading(false);
+            setIsSendEmail(false);
+            setEmailFailed(true);
+        }
+    }
 
     return(
         <Content
@@ -169,6 +193,7 @@ export const Auth = ({fn, state}: Props) => {
                     navigation={ { enabled: true, nextEl: 'span.register' }}
                     slidesPerView={1}
                 >
+                    {viewAuth == 0 &&
                     <SwiperSlide className='slide-item'>
                         <h2>
                             {system.language[system.current] == 'italian' ? 'Login' : null}
@@ -254,24 +279,30 @@ export const Auth = ({fn, state}: Props) => {
                                 {system.language[system.current] == 'german' ? 'Anmelden' : null}
                             </Button>
                         </Stack>
-                        <span className='loading-auth' style={{visibility: loading ? 'visible' : 'hidden'}}>
+                        <span className='loading-auth' style={{display: loading ? 'block' : 'none'}}>
                             {system.language[system.current] == 'italian' ? 'Caricamento...' : null}
                             {system.language[system.current] == 'english' ? 'Loading...' : null}
                             {system.language[system.current] == 'german' ? 'Wird geladen...' : null}
                         </span>
-                        <a href="">
+                        <span
+                            className='register'
+                            onClick={()=>{handleViewAuth(2)}}
+                        >
                             {system.language[system.current] == 'italian' ? 'Recupera la password' : null}
                             {system.language[system.current] == 'english' ? 'Recover Password' : null}
                             {system.language[system.current] == 'german' ? 'Ihr Passwort wiederherstellen' : null}    
-                        </a>
+                        </span>
                         <span 
                             className='register'
+                            onClick={()=>{handleViewAuth(1)}}
                         >
                             {system.language[system.current] == 'italian' ? 'Creare il mio account' : null}
                             {system.language[system.current] == 'english' ? 'Create my account' : null}
                             {system.language[system.current] == 'german' ? 'Erstelle meinen Account' : null}   
                         </span>
                     </SwiperSlide>
+                    }
+                    {viewAuth == 1 &&
                     <SwiperSlide className='slide-item'>
                         <h2>
                             {system.language[system.current] == 'italian' ? 'Registrati' : null}
@@ -394,7 +425,7 @@ export const Auth = ({fn, state}: Props) => {
                                     required={true}
                                 />                            
                             </FormControl>
-                            <span className='loading-auth' style={{visibility: loading ? 'visible' : 'hidden'}}>
+                            <span className='loading-auth' style={{display: loading ? 'block' : 'none'}}>
                                 {system.language[system.current] == 'italian' ? 'Caricamento...' : null}
                                 {system.language[system.current] == 'english' ? 'Loading...' : null}
                                 {system.language[system.current] == 'german' ? 'Wird geladen...' : null}
@@ -411,7 +442,87 @@ export const Auth = ({fn, state}: Props) => {
 
                         </Box>
                         
-                    </SwiperSlide>                    
+                    </SwiperSlide> 
+                    }
+                    {viewAuth == 2 &&
+                    <SwiperSlide className='slide-item'>
+                        <h2>
+                            {system.language[system.current] == 'italian' ? 'Ridefinisci password' : null}
+                            {system.language[system.current] == 'english' ? 'Redefine password' : null}
+                            {system.language[system.current] == 'german' ? 'Passwort neu definieren' : null}
+                        </h2>
+                        <div 
+                            className="alert-error"
+                            style={{visibility: loginError ? 'visible' : 'hidden'}}
+                        >
+                            <span>
+                                {system.language[system.current] == 'italian' ? 'Il nome utente o la password non sono validi. Riprova.' : null}
+                                {system.language[system.current] == 'english' ? 'Username or password is invalid. Try again.' : null}
+                                {system.language[system.current] == 'german' ? 'Der Benutzername oder das Passwort ist ungültig. Versuchen Sie es erneut.' : null}
+                            </span>
+                        </div>
+                        <Box
+                            className='input-login'
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 1, width: '25ch' },
+                            }}
+                            defaultValue=""
+                            noValidate
+                            autoComplete="off"
+                            >
+                            <TextField 
+                                id="outlined-basic" 
+                                className={loginError ? 'input-login error' : 'email-login'}
+                                label={
+                                    system.language[system.current] == 'italian' ? 'E-mail' :
+                                    system.language[system.current] == 'english' ? 'E-mail' :
+                                    system.language[system.current] == 'german' ? 'Email' : null
+                                } 
+                                variant="outlined"
+                                value={name}
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    setName(event.target.value);
+                                }} 
+                            />
+                        </Box>
+                        <Stack direction="row" spacing={2}>
+                            <Button 
+                                className='btn-submit' 
+                                variant="contained"
+                                onClick={handleRedefinePassword}
+                            >
+                                {system.language[system.current] == 'italian' ? 'Accedi' : null}
+                                {system.language[system.current] == 'english' ? 'Sign in' : null}
+                                {system.language[system.current] == 'german' ? 'Anmelden' : null}
+                            </Button>
+                        </Stack>
+                        <span className='loading-auth' style={{display: loading ? 'block' : 'none'}}>
+                            {system.language[system.current] == 'italian' ? 'Caricamento...' : null}
+                            {system.language[system.current] == 'english' ? 'Loading...' : null}
+                            {system.language[system.current] == 'german' ? 'Wird geladen...' : null}
+                        </span>
+                        <span className='loading-auth' style={{display: isSendEmail ? 'block' : 'none'}}>
+                            {system.language[system.current] == 'italian' ? 'Email inviata. Controlla la tua casella di posta.' : null}
+                            {system.language[system.current] == 'english' ? 'Email sent. Check your inbox.' : null}
+                            {system.language[system.current] == 'german' ? 'E-Mail gesendet. Überprüfe deinen Posteingang.' : null}
+                        </span>
+                        <span className='loading-auth' style={{display: emailFailed ? 'block' : 'none'}}>
+                            {system.language[system.current] == 'italian' ? 'Impossibile inviare. Rivedi i dati e riprova.' : null}
+                            {system.language[system.current] == 'english' ? 'Unable to send. Review the data and try again.' : null}
+                            {system.language[system.current] == 'german' ? 'Nicht möglich zu senden. Überprüfen Sie die Daten und versuchen Sie es erneut.' : null}
+                        </span>
+                        <span
+                            className='register'
+                            onClick={()=>{handleViewAuth(0)}}
+                        >
+                            {system.language[system.current] == 'italian' ? 'Login' : null}
+                            {system.language[system.current] == 'english' ? 'Login' : null}
+                            {system.language[system.current] == 'german' ? 'Anmeldung' : null}    
+                        </span>
+                    </SwiperSlide>
+                    }
+                                       
                 </Swiper> 
             </div>
         </Content>

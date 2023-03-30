@@ -7,14 +7,20 @@ import { Container } from "react-bootstrap";
 import { Content } from "./styles";
 //import components
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 //import services
-import { sendEmailVerify } from '../../services/auth';
+import { monitorAuthState, sendEmailVerify } from '../../services/auth';
+import { writeVerifyData, listenerVerifyData } from '../../services/realtime';
+import { monitorVerifiedState } from '../../services/auth';
 
 export const EmailVerify = () => {
     const system = useAppSelector(state=>state.system);
     const user = useAppSelector(state=>state.user);
     
+    const [again,setAgain] = React.useState(false);
+    const [stop,setStop] = React.useState(false);
     const [sendState,setSendState] = React.useState(false);
+
     const handleSendState = async () => {
         const state = await sendEmailVerify();
         console.log(state);
@@ -22,6 +28,30 @@ export const EmailVerify = () => {
             setSendState(true);
         }
     }
+
+    React.useEffect(()=>{
+        if (!user.verified) {
+            writeVerifyData(user.id);
+        }        
+    },[])
+
+    React.useEffect(()=>{
+        const data = listenerVerifyData();
+        console.log(data);
+    },[listenerVerifyData()]);
+
+    React.useEffect(()=>{
+        if (!stop) {
+            console.log('entrou');
+            const getMonitor = async () => {
+                setStop(await monitorVerifiedState());
+                if (!stop) {
+                    setAgain(!again);
+                }
+            }
+            getMonitor();
+        }
+    },[again])
 
     return(
         <Content>
@@ -54,6 +84,14 @@ export const EmailVerify = () => {
                     {system.language[system.current] === 'german' ? 'Gesendet!' : null}
                 </Button>
                 }
+                <div className="waiting">
+                    <CircularProgress />
+                    <p>
+                        {system.language[system.current] === 'italian' ? "In attesa di verifica..." : null}
+                        {system.language[system.current] === 'english' ? 'Awaiting verification...' : null}
+                        {system.language[system.current] === 'german' ? 'Wartet auf Bestätigung...' : null}
+                    </p>
+                </div>
             </Container>
         </Content>
     );

@@ -44,30 +44,30 @@ export const AttractionManager = ({en}: Props) => {
 export const currencies = [
     {
         value: 'Food',
-        label: 'Food',
+        label: 'Cibo',
     },
     {
         value: 'Square',
-        label: 'Square',
+        label: 'Piazza',
     },
     {
         value: 'Marketplace',
-        label: 'Marketplace',
+        label: 'Associazioni',
     },
     {
         value: 'Health',
-        label: 'Health',
+        label: 'Salute',
     },
     {
         value: 'Workshop',
-        label: 'Workshop',
+        label: 'Officina',
     },
     {
         value: 'Church',
-        label: 'Church',
+        label: 'Chiesa',
     },
     {
         value: 'Public Place',
-        label: 'Public Place',
+        label: 'Luogo pubblico',
     },
 ];

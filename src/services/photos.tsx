@@ -41,6 +41,7 @@ export const insert = async (file: File) => {
     }
 }
 
+//Attractions
 export const insertAtt =async (file: File) => {
     if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 
@@ -61,6 +62,26 @@ export const insertAtt =async (file: File) => {
     }
 }
 
+//News
+export const insertNewsPhoto = async (file: File) => {
+    if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+
+        let randomName = createId();
+        let newFile = ref(storage, `news/${randomName}`);
+
+        let upload = await uploadBytes(newFile, file);
+        let photoUrl = await getDownloadURL(upload.ref);
+
+        return {
+            name: upload.ref.name,
+            url: photoUrl
+        } as Photo;
+
+
+    } 
+}
+
+//User
 export const inserUserPhoto =async (file: File) => {
     if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 
@@ -81,6 +102,7 @@ export const inserUserPhoto =async (file: File) => {
     }
 }
 
+//Events
 export const insertAnn =async (file: File) => {
     if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 
@@ -101,6 +123,68 @@ export const insertAnn =async (file: File) => {
     }
 }
 
+export const getPhotoStorage = async (path: string) => {
+    let list: Photo[] = [];
+    console.log(path);
+    const imagesFolder = ref(storage, path);
+    const photoList = await listAll(imagesFolder);
+
+    for(let i in photoList.items) {
+        let photoUrl = await getDownloadURL(photoList.items[i]);
+
+        list.push({
+            name: photoList.items[i].name,
+            url: photoUrl
+        });
+    }
+
+    return list;
+}
+
+export const insertPhotoComponent = async (path: string, id: string | undefined, file: File) => {
+    if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+
+        let randomName = createId();
+        let newFile: any = '';
+        if (id != undefined) {
+            newFile = ref(storage, `${path}/${id}/${randomName}`);
+        } else {
+            newFile = ref(storage, `${path}/${randomName}`);
+        }
+        
+
+        let upload = await uploadBytes(newFile, file);
+        let photoUrl = await getDownloadURL(upload.ref);
+
+        return {
+            name: upload.ref.name,
+            url: photoUrl
+        } as Photo;
+
+
+    } else {
+        return new Error('Tipo de arquivo não permitido');
+    }
+}
+
+export const deleteEventPhoto = async (path: string) => {
+    const storage = getStorage();
+    console.log(path);
+
+    // Create a reference to the file to delete
+    const pathRef = ref(storage, path);
+    
+    // Delete the file
+    deleteObject(pathRef).then(() => {
+        
+    }).catch((error) => {
+        
+    });
+
+    return true;
+}
+
+//Support
 export const newSupportImage =async (file: File, id: string) => {
     if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 
@@ -118,6 +202,23 @@ export const newSupportImage =async (file: File, id: string) => {
     } else {
         return new Error('Tipo de arquivo não permitido');
     }
+}
+
+//Gallery
+export const deleteGalleryPhoto = async (path: string) => {
+    const storage = getStorage();
+
+    // Create a reference to the file to delete
+    const pathRef = ref(storage, path);
+    
+    // Delete the file
+    deleteObject(pathRef).then(() => {
+        
+    }).catch((error) => {
+        
+    });
+
+    return true;
 }
 
 export const insertImageGallery = async (file: File) => {
@@ -140,6 +241,7 @@ export const insertImageGallery = async (file: File) => {
     }
 }
 
+//News
 export const inserNewsImage = async (file: File) => {
     if(['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 
@@ -188,20 +290,4 @@ export const deleteNews = async (path: string) => {
     deleteObject(pathRef).then(() => {        
         }).catch((error) => {        
         });
-}
-
-export const deleteGalleryPhoto = async (path: string) => {
-    const storage = getStorage();
-
-    // Create a reference to the file to delete
-    const pathRef = ref(storage, path);
-    
-    // Delete the file
-    deleteObject(pathRef).then(() => {
-        
-    }).catch((error) => {
-        
-    });
-
-    return true;
 }

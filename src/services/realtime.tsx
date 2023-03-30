@@ -69,3 +69,45 @@ export const listenerMessages = () => {
 }
 
 listenerMessages();
+
+export const writeVerifyData = (id: string) => {
+  const db = getDatabase();
+  set(ref(db, 'verify/id/' + id), {
+    state: false
+  });
+}
+
+export const updateVerifiedState = (id: string, state: boolean) => {
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `verify/id/${id}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+        const db = getDatabase();
+
+        const postData = {
+          state: state
+        };
+
+        const updates: any = {};
+        updates[`support/chat/${id}/`] = postData;
+
+        return update(ref(db), updates); 
+    } 
+  }).catch((error) => {
+    console.error(error);
+  }); 
+}
+
+export const listenerVerifyData = (id?:string,state?: boolean) => {
+  const db = getDatabase();
+  let data: any;
+  if (id != undefined) {
+    const starCountRef = ref(db, 'verify/id/'+id);
+    onValue(starCountRef, (snapshot) => {
+      data = snapshot.val();
+      console.log(data);
+    });
+  }
+  return data;
+}
+
+listenerVerifyData();

@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { Link } from 'react-router-dom';
 import { Content } from './styles';
 import Logo from '../../../assets/media/logo.png';
+import appStore from '../../../assets/media/appStore.svg';
+import playStore from '../../../assets/media/playStore.png';
 
 import TimelineIcon from '@mui/icons-material/Timeline';
 import CollectionsIcon from '@mui/icons-material/Collections';
@@ -24,7 +26,7 @@ export const Footer = () => {
     return(
         <Content>
             <div className="footer-top">
-                <Container>
+                <div className="container">
                     <span className='footer-top-logo'>
                         <img src={Logo} alt="" />
                         <span>
@@ -121,8 +123,28 @@ export const Footer = () => {
                                 </li>
                             </ul>
                         </div>
+                        <div className="box-item">
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Scarica la nostra app' : null}
+                                {system.language[system.current] === 'english' ? 'Download our app' : null}
+                                {system.language[system.current] === 'german' ? 'Laden Sie unsere App herunter' : null}
+                            </h5>
+                            <ul>
+                                <li>
+                                    <a href="">
+                                        <img src={appStore} alt="" />
+                                    </a>                                    
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <img src={playStore} alt="" />
+                                    </a>                                    
+                                </li>
+                            </ul>
+                            
+                        </div>
                     </div>
-                </Container>
+                </div>                
             </div>
             <div className="footer-bottom">
                 <Container>

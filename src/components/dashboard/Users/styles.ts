@@ -5,6 +5,7 @@ export const Content = styled.section`
     padding: 20px 0;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 `;
 
 export const TagAction = styled.div`

@@ -5,6 +5,7 @@ import { Banner } from '../components/home/Banner';
 import { Events } from '../components/home/Events';
 import { Attractions } from '../components/home/Attractions';
 import { MapAndNumbers } from '../components/home/MapAndNumbers';
+import { Cookies } from '../components/home/Cookies';
 
 
 
@@ -26,6 +27,7 @@ export const Home = () => {
         <Events />
         <Attractions />
         <Footer/>
+        <Cookies />
         </div>
     );
 }

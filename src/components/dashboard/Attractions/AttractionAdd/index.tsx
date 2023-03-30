@@ -65,11 +65,12 @@ export const AttractionAdd = ({fn}:Props) => {
                 const type = formData.get('type') as string;
                 const address = formData.get('address') as string;
                 const tel = formData.get('tel') as string;
+                const website = formData.get('website') as string;
                 const map = formData.get('map') as string;
                 const description = formData.get('description') as string;
                 const imageUrl = result.url;
 
-                let add = await Attractions.newAttraction(imageUrl,name,type,address,tel,ltn,lng,description,author.id,author.name);
+                let add = await Attractions.newAttraction(imageUrl,name,type,address,tel,website,ltn,lng,description,author.id,author.name);
 
                 if (previewGallery.length > 0) {
                     previewGallery.map((item: any, index: number)=>(
@@ -211,6 +212,17 @@ export const AttractionAdd = ({fn}:Props) => {
                             required
                             id="outlined-required"
                             label="Numero di telefono"
+                            defaultValue=""
+                            style={{
+                                flex: '1',
+                                marginRight: '20px'
+                            }}
+                            /> 
+                            <TextField
+                            name='website'
+                            required
+                            id="outlined-required"
+                            label="Il Luogo"
                             defaultValue=""
                             /> 
                         </div>

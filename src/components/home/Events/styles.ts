@@ -54,9 +54,17 @@ export const Content = styled.section`
 
                 .slide-item {
                     display: flex;
-                    padding: 20px 20px;
                     box-sizing: border-box;
                     align-items: flex-end;
+                    height: inherit;
+                    max-width: 100%;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
         
                     .event-details {
                         display: flex;
@@ -66,6 +74,8 @@ export const Content = styled.section`
                         background-color: rgb(43 43 43 / 30%);
                         border-radius: 5px;
                         flex: 1;
+                        position: absolute;
+                        margin: 20px;
         
                         a {
                             font-size: 24px;

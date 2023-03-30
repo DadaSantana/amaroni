@@ -51,7 +51,7 @@ const BtnAction = ({id, fnEdit, fnUpdate}:BtnProps) => {
     }
   
     const handleRemoveItem = async (id: string) => {
-      let result = window.confirm("Deseja realmente exlcuir este local?");
+      let result = window.confirm("Vuoi davvero eliminare questa posizione?");
       if (result) {
         await deleteDoc(doc(db, "attractions", id));
         fnUpdate();
@@ -180,18 +180,6 @@ export const AttractionTable = ({en, fn}:Props) => {
         //get inputs value
         const name = formData.get('searchByName') as string;
         const type = formData.get('searchByType') as string;
-
-        if (name != '' && type == '') {
-          const test = Attractions.getByName(name);
-        } 
-
-        if (name == '' && type != '') {
-          console.log('preencheu o tipo');
-        } 
-
-        if (name != '' && type != '') {
-          console.log('preencheu o nome e o tipo');
-        }
       }
 
     return(

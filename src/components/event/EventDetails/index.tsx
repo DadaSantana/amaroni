@@ -3,6 +3,13 @@ import * as React from 'react';
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { Container } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+//import swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, A11y } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 import { Content } from './styles';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
@@ -11,6 +18,8 @@ import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
+import DescriptionIcon from '@mui/icons-material/Description';
+import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import { Events } from '../../home/Events';
 
 import one from '../../../assets/images/Covid_Banner.jpg';
@@ -21,6 +30,8 @@ import { Annuncio } from '../../../types/Annuncio';
 //import components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { GalleryContent, GalleryFloat } from '../../GalleryPath';
+import { Links } from '../../Links';
 
 export const EventDetails = () => {
     const system = useAppSelector(state => state.system);
@@ -29,6 +40,14 @@ export const EventDetails = () => {
     const handleClose = () => {
         setOpen(!open);
     };
+
+    const [upload,setUpload] = React.useState(false);
+    const [attPhotos,setAttPhotos] = React.useState<any[]>([]);
+    const [floatImage,setFloatImage] = React.useState('');
+
+    const handlePhotoClick = (e: string) => {
+        setFloatImage(e);
+    }
 
     const { eventId } = useParams();
     const [image,setImage] = React.useState('');
@@ -71,154 +90,77 @@ export const EventDetails = () => {
     
     return(
         <Content>
+            {open &&
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
             >
-              <CircularProgress color="inherit" />
+            <CircularProgress color="inherit" />
             </Backdrop>
+            }
             {!open &&
             <>
-            <div 
-            className="event-banner"
-            style={{
-                background: `url('${image}')`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover'
-            }}
-            >                     
-            </div>
             <Container>
-                <div className="left-side">
-                    <h1>{title}</h1>
-                    <p>{desc}</p>
-                    <div className="content-details">
-                        {dateStart != '' && dateEnd != '' &&
-                        <div className="date-hour-event">
-                            {dateStart != '' &&
-                            <div className="d-h-datails start">
-                                <label className='event-title'>
-                                    {system.language[system.current] == 'italian' ? "Inizio dell'evento" : null}
-                                    {system.language[system.current] == 'english' ? 'Event Start' : null}
-                                    {system.language[system.current] == 'german' ? 'Veranstaltungsbeginn' : null}
-                                </label>
-                                <span className='event-date'>{dateStart}</span>
-                                {timeStart != '' &&
-                                <span className='event-hour'>
-                                    <QueryBuilderIcon />
-                                    <label>{timeStart}</label>
-                                </span>
-                                }
+                <section className="main-presentation">
+                    <div className="main-details">
+                        <h1>{title}</h1>
+                        <div className="description-box">
+                            <div className="d-b-header">
+                                <DescriptionIcon />
+                                <label>Attraction Description:</label>
                             </div>
-                            }
-                            {dateEnd != '' &&
-                            <div className="d-h-datails finish">
-                                <label className='event-title'>
-                                    {system.language[system.current] == 'italian' ? "Termine dell'eventoo" : null}
-                                    {system.language[system.current] == 'english' ? 'Event Finish' : null}
-                                    {system.language[system.current] == 'german' ? 'Ende der Veranstaltung' : null}
-                                </label>
-                                <span className='event-date'>{dateEnd}</span>
-                                {timeEnd != '' &&
-                                <span className='event-hour'>
-                                    <QueryBuilderIcon />
-                                    <label>{timeEnd}</label>
-                                </span>
-                                }
-                            </div>
-                            }
+                            <p className='description-window'>{desc}</p>
                         </div>
+                        <span className='icon-data'>
+                            <a>
+                                <FmdGoodIcon />
+                            </a>                    
+                            <label>{address}</label>
+                        </span>
+                        {tel != '' &&
+                        <span className='icon-data'>
+                            <a href={`tel:${tel}`}>
+                                <LocalPhoneIcon />
+                            </a>
+                            <label>{tel}</label>
+                        </span>
                         }
-                        
-                        <div className="additional-information">
-                            {address != '' && 
-                            <div className='info-item'>
-                                <span className='board-icon-type'>
-                                    <FmdGoodIcon />
-                                    <p>
-                                        {system.language[system.current] == 'italian' ? "Indirizzo" : null}
-                                        {system.language[system.current] == 'english' ? 'Address' : null}
-                                        {system.language[system.current] == 'german' ? 'Adresse' : null}
-                                    </p>
-                                </span>
-                                <label>{address}</label>
-                            </div>
-                            }
-                            {tel != '' && 
-                            <div className='info-item'>
-                                <span className='board-icon-type'>
-                                    <LocalPhoneIcon />
-                                    <p>
-                                        {system.language[system.current] == 'italian' ? "Numero di telefono" : null}
-                                        {system.language[system.current] == 'english' ? 'Phone number' : null}
-                                        {system.language[system.current] == 'german' ? 'Telefonnummer' : null}
-                                    </p>
-                                </span>
-                                <label>{tel}</label>
-                            </div>
-                            }
-                            {email != '' && 
-                            <div className='info-item'>
-                                <span className='board-icon-type'>
-                                    <FmdGoodIcon />
-                                    <p>
-                                        {system.language[system.current] == 'italian' ? "E-mail" : null}
-                                        {system.language[system.current] == 'english' ? 'Email' : null}
-                                        {system.language[system.current] == 'german' ? 'Email' : null}
-                                    </p>
-                                </span>
-                                <label>{email}</label>
-                            </div>
-                            }
-                        </div>                        
-                    </div>
-                </div>
-                <div className="right-side">
-                    <div className="links-content">
-                        <span className='links-title'>
-                            <OpenInNewIcon />
-                            <h3>
-                                {system.language[system.current] == 'italian' ? "Link" : null}
-                                {system.language[system.current] == 'english' ? 'Links' : null}
-                                {system.language[system.current] == 'german' ? 'Verknüpfungen' : null}
-                            </h3>
+                        {dateStart != '' &&
+                        <span className='icon-data'>
+                            <a>
+                                <EventAvailableIcon />
+                            </a>
+                            <label>{dateStart} - {timeStart != '' ? timeStart : null}</label>
                         </span>
-                        <div className='links-items'>
-                            {links.map((item,index)=>(
-                                <a href={item.hrefLink} target="_blank">
-                                    {item.textLink}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                    {/* <div className="links-content">
-                        <span className='links-title'>
-                            <FileCopyIcon />
-                            <h3>
-                                {system.language[system.current] == 'italian' ? "File" : null}
-                                {system.language[system.current] == 'english' ? 'Links' : null}
-                                {system.language[system.current] == 'german' ? 'Dateien' : null}
-                            </h3>
+                        }
+                        {dateEnd != '' &&
+                        <span className='icon-data'>
+                            <a>
+                                <EventAvailableIcon />
+                            </a>
+                            <label>{dateEnd} - {timeEnd != '' ? timeEnd : null}</label>
                         </span>
-                        <div className='links-items'>
-                            <p>
-                                {system.language[system.current] == 'italian' ? "Nessun file trovato." : null}
-                                {system.language[system.current] == 'english' ? 'No files found.' : null}
-                                {system.language[system.current] == 'german' ? 'Keine Dateien gefunden.' : null}
-                            </p>
+                        }                        
+                    </div>
+                    <img src={image} alt="" />
+                    <div className="description-box mobile">
+                            <div className="d-b-header">
+                                <DescriptionIcon />
+                                <label>Attraction Description:</label>
+                            </div>
+                            <p>{desc}</p>
                         </div>
-                    </div> */}
-                </div>
+                </section>
+                <GalleryContent path='events' id={eventId} />   
+                <Links vetor={links} />                      
             </Container>
+            </>
+            }
             <Link to='/'>
                 {system.language[system.current] == 'italian' ? 'Torna alla pagina principale' : null}
                 {system.language[system.current] == 'english' ? 'Back to main page' : null}
                 {system.language[system.current] == 'german' ? 'Zurück zur Hauptseite' : null}
             </Link>
-            </>
-            
-            }
-            
         </Content>
     );
 }

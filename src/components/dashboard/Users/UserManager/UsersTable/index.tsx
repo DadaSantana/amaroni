@@ -4,6 +4,7 @@ import * as React from 'react';
 import { db } from '../../../../../libs/firebase';
 //import services and types
 import * as UserService from '../../../../../services/users';
+import * as AuthService from '../../../../../services/auth';
 import { Users } from '../../../../../types/Users';
 //import from Firebase
 import { doc, deleteDoc } from "firebase/firestore";
@@ -18,16 +19,73 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 //import icons
-import { Content, Btn, SelectInput } from './styles';
+import { Content, Btn, SelectInput, Float } from './styles';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import KeyIcon from '@mui/icons-material/Key';
 import BlockIcon from '@mui/icons-material/Block';
-import SaveIcon from '@mui/icons-material/Save';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 //import components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+
+type UserProps = {
+  id: string,
+  fn: () => void
+}
+
+const UserFloat = ({id, fn}:UserProps) => {
+  const [user,setUser] = React.useState<Users>();
+  const [loading,setLoading] = React.useState(true);
+
+  React.useEffect(()=>{
+    const getUser = async () => {
+      setUser(await UserService.getUidData(id));
+    }
+    getUser();
+  },[])
+
+  React.useEffect(()=>{
+    if (user != null) {
+      setLoading(false);
+    }
+  },[user])
+
+  return(
+    <Float>
+      <div className="user-content">
+        {loading &&
+        <CircularProgress className='progress' />
+        }
+        <div className='user-data'>
+
+          {!loading && user != null &&
+          <>
+          <img src={user.photo} alt="" />
+          <div className="user-details">
+            <h4 style={{fontWeight: 'bold'}}>{user.name}</h4>
+            <p><b>E-mail:</b> {user.email}</p>
+            <p><b>Numero di telefono:</b> {user.phone}</p>
+            <p>
+              <b>Autorizzazioni:</b>              
+              {
+                user.levels.admin ? ' Amministratore' :
+                user.levels.member ? ' Membro' : ' Ospite'
+              }
+            </p>
+          </div>
+          </>
+          }
+        </div>
+        {!loading && user != null &&        
+        <span onClick={fn}>Torna al menu precedente</span>
+        }
+      </div>
+      
+    </Float>
+  );
+}
 
 type BtnProps = {
     id: string,
@@ -38,23 +96,35 @@ type BtnProps = {
 
 const BtnAction = ({id, fnEdit, fnUpdate, saveValue}:BtnProps) => {
 
-    const handleEditItem = (id: string) => {
-      fnEdit(id);
+    const handleSendRefinePassword = async (id: string) => {
+      const userData = await UserService.getUidData(id);
+      if (userData) {
+        await AuthService.sendRedefinePassword(userData.email);
+      }
+    }
+
+    const handleCloseUser = () => {
+      setShowUser(false);
     }
   
     const handleRemoveItem = async (id: string) => {
-      let result = window.confirm("Deseja realmente exlcuir este local?");
+      let result = window.confirm("Vuoi davvero eliminare questa posizione?");
       if (result) {
         await deleteDoc(doc(db, "annuncios", id));
         fnUpdate();
       }     
     }
+
+    const [showUser,setShowUser] = React.useState(false)
   
     return(
         <Btn>
-            <KeyIcon className='edit' onClick={() => {handleEditItem(id)}}/>     
+            {showUser &&
+            <UserFloat id={id} fn={handleCloseUser} />
+            }            
+            <AssignmentIndIcon onClick={() => {setShowUser(true)}}/>
+            <KeyIcon className='edit' onClick={() => {handleSendRefinePassword(id)}}/>     
             <BlockIcon className='block' onClick={()=> {handleRemoveItem(id)}}/>
-            <SaveIcon className={saveValue ? 'save' : 'disable'}/>
         </Btn>
     );
 }
@@ -138,10 +208,10 @@ export const UsersTable = ({fn}:Props) => {
       }
       
       const columns: Column[] = [
-        { id: 'name', label: "User Name:", minWidth: 250 },
-        { id: 'email', label: "User Email:", minWidth: 250 },
+        { id: 'name', label: "Nome utente:", minWidth: 250 },
+        { id: 'email', label: "E-mail dell'utente:", minWidth: 250 },
         { id: 'id', label: "UID:", minWidth: 150 },
-        { id: 'level', label: "User Level:", minWidth: 150 },
+        { id: 'level', label: "Livello utente:", minWidth: 150 },
         {
           id: 'action',
           label: 'Azione',

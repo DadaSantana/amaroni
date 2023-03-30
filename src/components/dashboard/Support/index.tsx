@@ -42,7 +42,6 @@ export const Support = () => {
                     <>
                     <span className="tag-btn" onClick={() => {
                         handleSetAction(1);
-                        navigate(0);
                     }}>
                         <MoveToInboxIcon />
                         <label>
@@ -102,7 +101,12 @@ export const Support = () => {
                 }                
                 {action === 1 &&
                 <>
-                <SupportManager />        
+                <SupportManager render="Callbox" />        
+                </>
+                }     
+                {action === 2 &&
+                <>
+                <SupportManager render='ResolvedCalls' />        
                 </>
                 }     
                 {action === 4 &&

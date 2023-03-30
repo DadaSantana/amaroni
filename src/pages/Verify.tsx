@@ -15,9 +15,6 @@ export const Verify = () => {
     const navigate = useNavigate();
 
     React.useEffect(()=>{
-        monitorAuthState();
-    }, []);
-    React.useEffect(()=>{
         if (system.login === false) {
             navigate('/');
         } 

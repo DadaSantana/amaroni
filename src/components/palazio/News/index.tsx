@@ -1,5 +1,6 @@
 //import react
 import * as React from 'react';
+import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 //import styles
 import { Content } from "./styles";
 //import MUI components
@@ -13,18 +14,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 //import types
-import { Photo } from '../../../types/Photo';
+import { News as TypeNews }  from '../../../types/news';
 //import services
-import * as PhotoService from '../../../services/photos';
+import * as ServiceNews from '../../../services/news';
+import { useNavigate } from 'react-router-dom';
 
 export const News = () => {
-    const [news,setNews] = React.useState<Photo[]>([]);
+    const system = useAppSelector(state=>state.system);
+    const navigate = useNavigate();
+    const [news,setNews] = React.useState<TypeNews[]>([]);
     const [loading,setLoading] = React.useState(true);
 
     React.useEffect(()=>{
         const getNewsImages = async () => {
-            setNews(await PhotoService.getNews());
-            
+            setNews(await ServiceNews.getAll()); 
         }
         getNewsImages();
     },[]);
@@ -44,12 +47,26 @@ export const News = () => {
             id="slide-news"
             modules={[Navigation, Pagination]}
             navigation
+            loop={true}
             pagination={{ clickable: true }}
             spaceBetween={50}
             slidesPerView={1}
             >
                 {news.map((item,index)=>(
-                    <SwiperSlide style={{background: `url('${item.url}') center center / cover no-repeat`}} />
+                    <SwiperSlide 
+                        className='news-item'
+                        style={{background: `url('${item.imageUrl}') center center / cover no-repeat`}}
+                        onClick={()=>{navigate(`/palazzo/news/${item.id}`)}}
+                    >
+                        <h4>
+                            {system.language[system.current] == 'italian' ? 'Ultimi Aggiornamenti' : null}
+                            {system.language[system.current] == 'english' ? 'Latest updates' : null}
+                            {system.language[system.current] == 'german' ? 'Letzte Aktualisierung' : null}
+                        </h4>
+                        <span>
+                            <a href={`/palazzo/news/${item.id}`}>{item.name}</a>
+                        </span>
+                    </SwiperSlide>
                 ))}
                 
             </Swiper>

@@ -6,6 +6,11 @@ export const Content = styled.section`
     width: 100%;
 
     .container {
-        
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width: 760px) {
+            padding: 10px;
+        }
     }
 `;

@@ -28,10 +28,12 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
+import PublicIcon from '@mui/icons-material/Public';
 
 import { render } from '@testing-library/react';
 import ReactDOM from 'react-dom';
 import { RateAndComment } from './RateAndComment';
+import { GalleryContent } from '../../GalleryPath';
 
 export const AttractionDetails = () => {
     const system = useAppSelector(state => state.system);
@@ -57,6 +59,7 @@ export const AttractionDetails = () => {
     const [address,setAddress] = React.useState('');
     const [description,setDescription] = React.useState('');
     const [telephone,setTelephone] = React.useState('');
+    const [website,setWebsite] = React.useState('');
     const [latitude,setLatitude] = React.useState(0);
     const [longitude,setLongitude] = React.useState(0);
 
@@ -88,6 +91,7 @@ export const AttractionDetails = () => {
             setAddress(att[0].address);
             setDescription(att[0].description);
             setTelephone(att[0].tel);
+            setWebsite(att[0].website);
             setLatitude(att[0].latitude);
             setLongitude(att[0].longitude);
             setAttFinished(true);
@@ -150,75 +154,48 @@ export const AttractionDetails = () => {
                             <Rating className='rating' name="read-only" value={rating} readOnly />        
                             <span className="type-att">{type}</span>                    
                         </div>
+                        {address != '' &&
                         <span className='icon-data'>
                             <a>
                                 <FmdGoodIcon />
                             </a>                    
                             <label>{address}</label>
                         </span>
+                        }
+                        {telephone != '' &&
                         <span className='icon-data'>
                             <a href={`tel:${telephone}`}>
                                 <LocalPhoneIcon />
                             </a>
                             <label>{telephone}</label>
                         </span>
+                        }
+                        {website != '' &&
+                        <span className='icon-data'>
+                            <a href={`https://${website}`} target='_blank'>
+                                <PublicIcon />
+                            </a>
+                            <label>{website}</label>
+                        </span>
+                        }                        
                         <div className="description-box">
                             <div className="d-b-header">
                                 <DescriptionIcon />
                                 <label>Attraction Description:</label>
                             </div>
                             <p className='description-window'>{description}</p>
-                        </div>
-                        
+                        </div>                       
                     </div>
                     <img src={image} alt="" />
                     <div className="description-box mobile">
-                            <div className="d-b-header">
-                                <DescriptionIcon />
-                                <label>Attraction Description:</label>
-                            </div>
-                            <p>{description}</p>
+                        <div className="d-b-header">
+                            <DescriptionIcon />
+                            <label>Attraction Description:</label>
                         </div>
+                        <p>{description}</p>
+                    </div>
                 </section>
-                <section className='gallery-attraction'>
-                    <h2>
-                        {system.language[system.current] == 'italian' ? 'Fotografie' : null}
-                        {system.language[system.current] == 'english' ? 'Photos' : null}
-                        {system.language[system.current] == 'german' ? 'Fotos' : null}
-                    </h2>
-                    <Swiper
-                    // install Swiper modules
-                    modules={[Navigation, Pagination, A11y]}
-                    spaceBetween={10}
-                    slidesPerView={7}
-                    navigation
-                    >
-                        {upload &&
-                        attPhotos.map((item,index)=>(
-                            <SwiperSlide 
-                            className='slide-item' 
-                            style={{
-                                background: `url(${item.url})`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat'
-                            }}
-                            onClick={()=>{
-                                handlePhotoClick(item.url);
-                            }}
-                            >
-                                <span className='hover-indicator'>
-                                    <ZoomOutMapIcon />
-                                </span>
-                            </SwiperSlide>
-                        ))
-                        }
-                        {!upload &&
-                            <h1>Não gerou</h1>
-                        }
-
-                    </Swiper>
-                </section>                
+                <GalleryContent path='attractions' id={attractionId} />
                 {!isLoaded &&
                     <div>Loading...</div>
                 }

@@ -5,7 +5,7 @@ export const Content = styled.section`
     padding: 20px 0;
     display: flex;
     flex-direction: column;
-    max-width: 100vw;
+    max-width: 100%;
 `;
 
 export const TagAction = styled.div`

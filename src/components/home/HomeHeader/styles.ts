@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Content = styled.header`
-
     display: flex;
     flex-direction: column;
 
@@ -175,17 +174,30 @@ export const Navbar = styled.nav`
         }
     }
     .social {
+        display: flex; 
+        align-items: center;
         color: var(--whiteFont);
 
         svg {
             margin-left: 16px;
             cursor: pointer;
             transition: all linear 200ms;
+            color: var(--whiteFont);
 
             &:hover {
                 
             }
         }
+
+        .news-after {
+            display: flex;
+
+            .badge {
+                padding: 5px;
+                margin-top: -10px;
+            }
+        }
+        
     }
     
     @media (max-width: 760px) and (orientation: portrait) {
@@ -211,9 +223,8 @@ export const Aside = styled.nav`
         flex-direction: column;
         width: 100vw;
         height: 100vh;
-        background-color: rgb(249 249 249 / 95%);
+        background-color: var(--mainColor);
         z-index: 999;
-        padding: 20px;
         transition: all linear 100ms;
         transform: translateX(100vw);
 
@@ -221,14 +232,17 @@ export const Aside = styled.nav`
             display: flex;
             align-items: center;
             margin-bottom: 30px;
+            padding: 20px;
+
             svg {
                 font-size: 30px;
-                color: #4d4d4d;
+                color: #f9f9f9;
                 margin-right: 10px;
             }
             label {
                 margin: 0;
                 cursor: pointer;
+                color: #f9f9f9
             }
         }
 
@@ -242,8 +256,24 @@ export const Aside = styled.nav`
                 padding: 10px 0;
                 list-style: none;
                 font-size: 30px;
-                border-bottom: 2px dashed #4d4d4d;
-                color: var(--mainColor);
+                border-bottom: 2px solid transparent;
+                font-size: 16px;
+                background-color: transparent;
+                padding: 20px;
+                transition: all linear 200ms;
+
+                svg {
+                    margin-right: 10px;
+                }
+
+                a {
+                    color: #f9f9f9;
+                }
+
+                &:hover {
+                    background-color: #00f8ff54;
+                    border-bottom: 2px solid #f9f9f9;
+                }
             }
         }
     }

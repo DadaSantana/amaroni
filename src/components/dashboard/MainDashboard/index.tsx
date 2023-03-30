@@ -23,6 +23,7 @@ import { Gallery } from '../Gallery';
 import { Support } from '../Support';
 import { Users } from '../Users';
 import { Palazio } from '../Palazio';
+import { Gemmellagi } from '../Gemmellagi';
 
 export const MainDashboard = () => {
     const user = useAppSelector(state => state.user);
@@ -91,15 +92,14 @@ export const MainDashboard = () => {
                                 <Link to='#'>
                                     <DescriptionIcon />
                                     <label>
-                                        {system.language[system.current] == 'italian' ? 'Paginas' : null}
+                                        {system.language[system.current] == 'italian' ? 'Pagine' : null}
                                         {system.language[system.current] == 'english' ? 'Pages' : null}
-                                        {system.language[system.current] == 'german' ? 'Pages' : null}
+                                        {system.language[system.current] == 'german' ? 'Seiten' : null}
                                     </label>                                    
                                 </Link>
                                 <span className='toggle-pages'>
-                                    <Link to='/dashboard/pages/palazio'>Palazio Comunale</Link>
+                                    <Link to='/dashboard/pages/palazzo'>Palazzo Comunale</Link>
                                     <Link to='/dashboard/pages/rotkreuz'>Rotkreuz</Link>
-                                    <Link to='/dashboard/pages/lukovica'>Lukovica</Link>
                                 </span>                                
                             </li>
                             <li className={element === 'support' ? 'menu-item active' : 'menu-item'}>
@@ -188,8 +188,11 @@ export const MainDashboard = () => {
                     {element === 'support' &&
                     <Support />
                     }
-                    {element === 'palazio' &&
+                    {element === 'palazzo' &&
                     <Palazio />
+                    }
+                    {element === 'rotkreuz' &&
+                    <Gemmellagi />
                     }
                 </Container>
             </Dash.Main>

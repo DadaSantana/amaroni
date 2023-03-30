@@ -62,11 +62,9 @@ export const Callbox = ({fn}:Props) => {
         handleClose();
         const getCall = async () => {      
             if (user.level.admin) {
-                console.log(user.level.admin)
               setCall(await SupportService.getAllCalls());            
               return setOpen(false);
             } else {
-              console.log(user.id)
               setCall(await SupportService.getCallByUserId(user.id));            
               return setOpen(false);
             }

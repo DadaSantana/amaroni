@@ -15,27 +15,18 @@ import { UserFirebase } from '../types/Users';
 
 export const Dashboard = () => {
     const system = useAppSelector(state => state.system);
+    const user = useAppSelector(state => state.user);
     const navigate = useNavigate();
     const [userFirebase,setUserFirebase] = React.useState<UserFirebase[]>();
-
-/*     React.useEffect(()=>{
-        const getUserFirebase = async () => {
-            setUserFirebase(await monitorAuthState());
-        }
-        getUserFirebase();
-    }, []);
     
-    React.useEffect(()=>{
-        if (userFirebase != undefined && !userFirebase[0].emailVerified) {
-            navigate('/verify');
-        }
-    },[userFirebase]); */
-
-    React.useEffect(()=>{
+/*     React.useEffect(()=>{
         if (system.login === false) {
             navigate('/');
-        } 
-    }, [system.login]);
+        } else if (!user.verified) {
+            navigate('/verify');
+        }
+    }, []); */
+
     return(
         <div id="app">
             {system.login && 
