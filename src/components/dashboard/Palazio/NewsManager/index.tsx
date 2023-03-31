@@ -19,7 +19,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 //import services
 import * as ServiceNews from '../../../../services/news';
 import * as PhotoService from '../../../../services/photos';
-import { insertLinkFirestore, getLinks } from '../../../../services/links';
+import { insertLinkFirestore, getLinks, existLink } from '../../../../services/links';
 import { News } from '../../../../types/news';
 //import from libs
 import { db } from '../../../../libs/firebase';
@@ -50,6 +50,7 @@ export const NewsManager = ({mainContent, fn}:Props) => {
 
     const [news,setNews] = React.useState<News[]>([]);
     const [loading,setLoading] = React.useState(true);
+    const [loadingNewLinks,setLoadingNewLinks] = React.useState(true);
 
     const [id,setId] = React.useState('');
     const [title,setTitle] = React.useState('');
@@ -58,6 +59,7 @@ export const NewsManager = ({mainContent, fn}:Props) => {
     const [telephone,setTelephone] = React.useState('');
     const [email,setEmail] = React.useState('');
     const [key,setKey] = React.useState(0);
+    const [exist,setExist] = React.useState(false);
 
     React.useEffect(()=>{
         const getNewsImages = async () => {
@@ -100,11 +102,16 @@ export const NewsManager = ({mainContent, fn}:Props) => {
         const address = formData.get('address') as string;
         const telephone = formData.get('telephone') as string;
         const email = formData.get('email') as string;
+        const date = new Date();
+        const d = date.getDate();
+        const m = date.getMonth()+1;
+        const y = date.getFullYear();
+        const dateString = d+'-'+m+'-'+y;
 
         if (fileUpload != undefined) {
             const image = await PhotoService.insertNewsPhoto(fileUpload);
             if (image != undefined) {
-                await ServiceNews.setNews(image.url,title,description,address,telephone,email,links);
+                await ServiceNews.setNews(image.url,title,description,address,telephone,email,links,dateString);
                 navigate(0);
             }
         }
@@ -154,12 +161,19 @@ export const NewsManager = ({mainContent, fn}:Props) => {
     }
 
     const getNewsLinks = async (path:string, id:string) => {
-        setLoading(true);
-        setLinksNews(await getLinks(path,id));
-        console.log(linksNews)
-        setLoading(false);
-        setOpen(false);
+        setLinksNews([]);
+        setExist(await existLink(path,id));
+        if (exist) {       
+            setLinksNews(await getLinks(path,id)); 
+        } 
+        setLoadingNewLinks(false);
     }
+
+    React.useEffect(()=>{
+        if (linksNews.length > 0) {
+            setLoadingNewLinks(false);
+        }    
+    },[linksNews])
 
     React.useEffect(()=>{
         const getLinksFirestore = async () => {
@@ -378,10 +392,10 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                     </div>
                     <PhotoManager path='news' id={id} />
                     <h4>Links</h4>
-                    {!loading &&
+                    {!loadingNewLinks &&
                     <InsertLink link={linksNews} setLink={setLinksNews} />  
                     }
-                    {loading &&
+                    {loadingNewLinks &&
                     <CircularProgress />
                     }
                     <Button 
@@ -433,6 +447,7 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                                 <EditIcon 
                                     style={{marginRight: 10}}
                                     onClick={()=>{
+                                        setLoadingNewLinks(true);
                                         setOpen(true);
                                         setKey(key+1);
                                         setImgBlob(item.imageUrl);
@@ -442,7 +457,8 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                                         setAddress(item.address);
                                         setTelephone(item.telephone);
                                         setEmail(item.email);
-                                        getNewsLinks('news',id);                                         setImgSetted(true);
+                                        getNewsLinks('news',item.id); 
+                                        setImgSetted(true);
                                         setOpen(false);
                                         setEdit(true);
                                         fn(false);

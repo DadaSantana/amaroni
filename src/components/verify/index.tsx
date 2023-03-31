@@ -11,25 +11,45 @@ import CircularProgress from '@mui/material/CircularProgress';
 //import services
 import { monitorAuthState, sendEmailVerify } from '../../services/auth';
 import { writeVerifyData, listenerVerifyData } from '../../services/realtime';
-import { monitorVerifiedState } from '../../services/auth';
+import * as AuthService from '../../services/auth';
+import { getAuth, onAuthStateChanged, reload } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { setVerified } from '../../redux/reducers/userReducers';
+import { useNavigate } from 'react-router-dom';
 
 export const EmailVerify = () => {
     const system = useAppSelector(state=>state.system);
-    const user = useAppSelector(state=>state.user);
-    
-    const [again,setAgain] = React.useState(false);
-    const [stop,setStop] = React.useState(false);
+    const usuario = useAppSelector(state=>state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [sendState,setSendState] = React.useState(false);
 
     const handleSendState = async () => {
-        const state = await sendEmailVerify();
-        console.log(state);
-        if (state) {
-            setSendState(true);
-        }
+
     }
 
     React.useEffect(()=>{
+        const auth = getAuth();
+        onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            if (user.emailVerified != usuario.verified) {
+                if (user.emailVerified) {
+                    dispatch(setVerified(true));
+                    navigate('/dashboard/support');
+                }
+            } else if (user.displayName != null) {
+                await reload(user);
+            }
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+        });
+    },[])
+
+   /*  React.useEffect(()=>{
         if (!user.verified) {
             writeVerifyData(user.id);
         }        
@@ -42,7 +62,7 @@ export const EmailVerify = () => {
 
     React.useEffect(()=>{
         if (!stop) {
-            console.log('entrou');
+
             const getMonitor = async () => {
                 setStop(await monitorVerifiedState());
                 if (!stop) {
@@ -51,7 +71,7 @@ export const EmailVerify = () => {
             }
             getMonitor();
         }
-    },[again])
+    },[again]) */
 
     return(
         <Content>
@@ -62,9 +82,9 @@ export const EmailVerify = () => {
                     {system.language[system.current] === 'german' ? 'Überprüfen Sie Ihr Konto!' : null}
                 </h1>
                 <p>
-                    {system.language[system.current] === 'italian' ? `Devi verificare la tua email - ${user.email} - per ottenere l'accesso al sistema.` : null}
-                    {system.language[system.current] === 'english' ? `You need to verify your email - ${user.email} - to gain access to the system.` : null}
-                    {system.language[system.current] === 'german' ? `Sie müssen Ihre E-Mail-Adresse verifizieren - ${user.email} -, um Zugriff auf das System zu erhalten.` : null}
+                    {system.language[system.current] === 'italian' ? `Devi verificare la tua email - ${usuario.email} - per ottenere l'accesso al sistema.` : null}
+                    {system.language[system.current] === 'english' ? `You need to verify your email - ${usuario.email} - to gain access to the system.` : null}
+                    {system.language[system.current] === 'german' ? `Sie müssen Ihre E-Mail-Adresse verifizieren - ${usuario.email} -, um Zugriff auf das System zu erhalten.` : null}
                     <br />
                     {system.language[system.current] === 'italian' ? "Per inviare nuovamente l'e-mail, fare clic sul pulsante in basso." : null}
                     {system.language[system.current] === 'english' ? 'To resend the email, click the button below.' : null}

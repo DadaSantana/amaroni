@@ -19,18 +19,18 @@ export const Dashboard = () => {
     const navigate = useNavigate();
     const [userFirebase,setUserFirebase] = React.useState<UserFirebase[]>();
     
-/*     React.useEffect(()=>{
+    React.useEffect(()=>{
         if (system.login === false) {
             navigate('/');
         } else if (!user.verified) {
             navigate('/verify');
         }
-    }, []); */
+    }, []);
 
     return(
         <div id="app">
             {system.login && 
-            <>
+            <>            
             <HeaderDashboard />
             <MainDashboard />
             </>

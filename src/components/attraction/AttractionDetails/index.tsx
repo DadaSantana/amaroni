@@ -34,6 +34,7 @@ import { render } from '@testing-library/react';
 import ReactDOM from 'react-dom';
 import { RateAndComment } from './RateAndComment';
 import { GalleryContent } from '../../GalleryPath';
+import { createNonNullExpression } from 'typescript';
 
 export const AttractionDetails = () => {
     const system = useAppSelector(state => state.system);
@@ -181,7 +182,11 @@ export const AttractionDetails = () => {
                         <div className="description-box">
                             <div className="d-b-header">
                                 <DescriptionIcon />
-                                <label>Attraction Description:</label>
+                                <label>
+                                    {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                    {system.language[system.current] ==  'english' ? 'Description' : null}
+                                    {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                                </label>
                             </div>
                             <p className='description-window'>{description}</p>
                         </div>                       
@@ -190,7 +195,11 @@ export const AttractionDetails = () => {
                     <div className="description-box mobile">
                         <div className="d-b-header">
                             <DescriptionIcon />
-                            <label>Attraction Description:</label>
+                            <label>
+                                {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                {system.language[system.current] ==  'english' ? 'Description' : null}
+                                {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                            </label>
                         </div>
                         <p>{description}</p>
                     </div>

@@ -145,9 +145,9 @@ export const HomeHeader = ({logged}:Props) => {
                                 whileHover={{ translateY: -3, transition: { duration: 0.05 } }}
                             >
                                 <Link to='/gemellaggio/rotkreuz'>
-                                    {system.language[system.current] == 'italian' ? 'Gemellaggio' : null}
-                                    {system.language[system.current] == 'english' ? 'Gemellaggio' : null}
-                                    {system.language[system.current] == 'german' ? 'Gemellaggio' : null}
+                                    {system.language[system.current] == 'italian' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                    {system.language[system.current] == 'english' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                    {system.language[system.current] == 'german' ? 'Gemellaggio di Risch-Rotkreuz' : null}
                                 </Link>   
                             </motion.li>
                         </ul>
@@ -201,9 +201,9 @@ export const HomeHeader = ({logged}:Props) => {
                                 <li>
                                     <Diversity3Icon />
                                     <Link to='/gemellaggio/rotkreuz'>
-                                        {system.language[system.current] == 'italian' ? 'Gemellaggio' : null}
-                                        {system.language[system.current] == 'english' ? 'Gemellaggio' : null}
-                                        {system.language[system.current] == 'german' ? 'Gemellaggio' : null}
+                                        {system.language[system.current] == 'italian' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                        {system.language[system.current] == 'english' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                        {system.language[system.current] == 'german' ? 'Gemellaggio di Risch-Rotkreuz' : null}
                                     </Link>   
                                 </li>
                             </ul>

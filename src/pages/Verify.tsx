@@ -10,9 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { monitorAuthState } from '../services/auth';
 import { EmailVerify } from '../components/verify';
 
+
 export const Verify = () => {
     const system = useAppSelector(state => state.system);
+    const usuario = useAppSelector(state=>state.user);
     const navigate = useNavigate();
+    const [count,setCount] = React.useState(0);
+
+    setInterval(()=>{
+        setCount(count+1);
+    },10000)
+
+
 
     React.useEffect(()=>{
         if (system.login === false) {
@@ -20,11 +29,13 @@ export const Verify = () => {
         } 
     }, [system.login]);
     return(
+        
+
         <div id="app">
             {system.login && 
             <>
             <HeaderDashboard />
-            <EmailVerify />
+            <EmailVerify key={count} />
             </>
             }
         </div>

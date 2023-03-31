@@ -16,6 +16,7 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 //import components
 import { Events } from '../Events';
 import { Attractions } from '../Attractions';
@@ -24,6 +25,7 @@ import { Support } from '../Support';
 import { Users } from '../Users';
 import { Palazio } from '../Palazio';
 import { Gemmellagi } from '../Gemmellagi';
+import { Notifications } from '../Notifications';
 
 export const MainDashboard = () => {
     const user = useAppSelector(state => state.user);
@@ -99,7 +101,7 @@ export const MainDashboard = () => {
                                 </Link>
                                 <span className='toggle-pages'>
                                     <Link to='/dashboard/pages/palazzo'>Palazzo Comunale</Link>
-                                    <Link to='/dashboard/pages/rotkreuz'>Rotkreuz</Link>
+                                    <Link to='/dashboard/pages/rotkreuz'>Gemellaggio di Risch-Rotkreuz</Link>
                                 </span>                                
                             </li>
                             <li className={element === 'support' ? 'menu-item active' : 'menu-item'}>
@@ -123,6 +125,16 @@ export const MainDashboard = () => {
                                         {system.language[system.current] == 'italian' ? 'Utenti' : null}
                                         {system.language[system.current] == 'english' ? 'Users' : null}
                                         {system.language[system.current] == 'german' ? 'Benutzer' : null}
+                                    </label>
+                                </Link> 
+                            </li>
+                            <li className={element === 'notifications' ? 'menu-item active' : 'menu-item'}>
+                                <Link to='/dashboard/notifications'>
+                                    <CircleNotificationsIcon />
+                                    <label>
+                                        {system.language[system.current] == 'italian' ? 'Notifiche' : null}
+                                        {system.language[system.current] == 'english' ? 'Notifications' : null}
+                                        {system.language[system.current] == 'german' ? 'Benachrichtigungen' : null}
                                     </label>
                                 </Link> 
                             </li>
@@ -193,6 +205,9 @@ export const MainDashboard = () => {
                     }
                     {element === 'rotkreuz' &&
                     <Gemmellagi />
+                    }
+                    {element === 'notifications' &&
+                    <Notifications />
                     }
                 </Container>
             </Dash.Main>

@@ -40,9 +40,7 @@ export const Events = () => {
                         {system.language[system.current] == 'german' ? 'Anzeigen' : null}
                     </h1>
                     <div className='title-bar'>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
+                        <span className="bar"></span>
                     </div>
                 </div>
                 <Swiper

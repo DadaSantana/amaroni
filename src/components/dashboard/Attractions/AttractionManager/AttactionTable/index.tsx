@@ -85,7 +85,7 @@ export const AttractionTable = ({en, fn}:Props) => {
       
       const columns: Column[] = [
         { id: 'name', label: 'Nome del luogo:', minWidth: 250 },
-        { id: 'type', label: 'Type:', minWidth: 70 },
+        { id: 'type', label: 'Tipo:', minWidth: 70 },
         {
           id: 'address',
           label: 'Indirizzo',

@@ -86,9 +86,7 @@ export const Attractions = () => {
                         {system.language[system.current] == 'german' ? 'Attraktion' : null}
                     </h1>
                     <div className='title-bar'>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
+                        <span className="bar"></span>
                     </div>
                 </div>
                 <div className="filter-per-type">
@@ -294,7 +292,17 @@ export const Attractions = () => {
                                     >
                                         <span className='att-type'>
                                             <ChurchIcon />
-                                            <label className='type-name'>{item.type}</label>
+                                            <label className='type-name'>
+                                                {
+                                                    item.type == 'Food' ? 'Cibo' :
+                                                    item.type == 'Square' ? 'Piazza' :
+                                                    item.type == 'Marketplace' ? 'Associazioni' :
+                                                    item.type == 'Health' ? 'Salute' :
+                                                    item.type == 'Workshop' ? 'Officina' :
+                                                    item.type == 'Church' ? 'Chiesa' :
+                                                    item.type == 'Public Place' ? 'Luogo pubblico' : 'Tipo'
+                                                }
+                                            </label>
                                         </span>
                                         <div className="att-details">
                                             <div>

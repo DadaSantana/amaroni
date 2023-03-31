@@ -6,5 +6,6 @@ export type News   = {
     address: string,
     telephone: string,
     email: string,
-    links: any[];
+    links: any[],
+    create: string
 }

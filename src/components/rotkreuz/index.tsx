@@ -32,7 +32,7 @@ export const Rotkreuz = () => {
         <Content>
           <Container>
             <div>
-                <h1>Gemellaggio di Rotkreuz</h1>
+                <h1>Gemellaggio di Risch-Rotkreuz</h1>
                 <div>
                     <p>Dall’autunno 2003 è attivo il gemellaggio tra il comune di Risch, con le frazioni Rotkreuz, Holzhäusern, Buonas e Risch nel Cantone di Zugo e il comune di Amaroni in Italia.
                     Amaroni è ubicato in provincia di Catanzaro in Calabria, una splendida regione italiana. Il paese dista solo 13 km dalla costa ionica e 35 km dal mar Tirreno ed è circondato dal blu del mar Ionio e dal verde della Sila. Il comune conta circa 2500 abitanti, di cui 500 emigranti, la maggior parte dei quali vive in Svizzera, più di 50 dei quali nel nostro comune.

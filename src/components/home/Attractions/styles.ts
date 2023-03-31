@@ -29,11 +29,11 @@ export const Content = styled(motion.section)`
             justify-content: center;
             align-items: center;
 
-            span.circle {
-                height: 10px;
-                width: 10px;
-                border-radius: 50%;
+            span.bar {
+                height: 5px;
+                width: 150px;
                 background-color: #009aff;
+                border-radius: 0 0 5px 5px;
                 margin: 0 10px;
             }
         }

@@ -99,7 +99,11 @@ export const NewsDetails = () => {
                         <div className="description-box">
                             <div className="d-b-header">
                                 <DescriptionIcon />
-                                <label>Attraction Description:</label>
+                                <label>
+                                    {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                    {system.language[system.current] ==  'english' ? 'Description' : null}
+                                    {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                                </label>
                             </div>
                             <p className='description-window'>{desc}</p>
                         </div>
@@ -140,7 +144,11 @@ export const NewsDetails = () => {
                     <div className="description-box mobile">
                             <div className="d-b-header">
                                 <DescriptionIcon />
-                                <label>Attraction Description:</label>
+                                <label>
+                                    {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                    {system.language[system.current] ==  'english' ? 'Description' : null}
+                                    {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                                </label>
                             </div>
                             <p>{desc}</p>
                         </div>

@@ -123,12 +123,16 @@ export const PhotoManager = ({path, id}:Props) => {
         }, 1000);      
     }
 
-    const handleSaveImages = async () => {
+    const handleSaveImages = async (e: any) => {
+        e.preventDefault();
+        setLoadPreview(true);
         if (fileList.length > 0) {
             for(let i = 0; i < fileList.length; i++) {
                 await insertPhotoComponent(path,id,fileList[i]);
             }
         }
+        setFileList([]);
+        setLoadPreview(false);
     }
 
     const handleDeletePhoto = async (path: string,name: string,key: number,id?: string) => {
@@ -270,7 +274,7 @@ export const PhotoManager = ({path, id}:Props) => {
                                 variant="contained" 
                                 color="info" 
                                 startIcon={<BackupIcon />}
-                                onClick={handleSaveImages}
+                                onClick={(e)=>{handleSaveImages(e)}}
                             >
                                 {system.language[system.current] === 'italian' ? 'Aggiungi' : null}
                                 {system.language[system.current] === 'english' ? 'Add' : null}

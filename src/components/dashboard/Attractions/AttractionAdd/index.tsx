@@ -44,7 +44,6 @@ export const AttractionAdd = ({fn}:Props) => {
 
     const [uploading, setUploading] = React.useState(false);
 
-
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setOpen(true);

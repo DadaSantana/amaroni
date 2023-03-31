@@ -80,5 +80,4 @@ export const ViewContent = styled.div`
     .label-action {
         align-self: center;
     }
-
 `;

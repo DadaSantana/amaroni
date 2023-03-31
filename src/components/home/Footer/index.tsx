@@ -131,12 +131,12 @@ export const Footer = () => {
                             </h5>
                             <ul>
                                 <li>
-                                    <a href="">
+                                    <a>
                                         <img src={appStore} alt="" />
                                     </a>                                    
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="https://play.google.com/store/apps/details?id=it.com.borgoAmaroni" target='_blank'>
                                         <img src={playStore} alt="" />
                                     </a>                                    
                                 </li>

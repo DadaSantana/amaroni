@@ -29,7 +29,8 @@ export const getAll = async () => {
             address: doc.data().address,
             telephone: doc.data().telephone,
             email: doc.data().email,
-            links: doc.data().links
+            links: doc.data().links,
+            create: doc.data().create
         }    
     list.push(item);
     });
@@ -38,15 +39,22 @@ export const getAll = async () => {
 }
 
 export const getAllCount = async () => {
+    const date = new Date();
+    const d = date.getDate();
+    const m = date.getMonth()+1;
+    const y = date.getFullYear();
+    const dateString = d+'-'+m+'-'+y;
 
-    const q = query(collection(db, "news"));
+    console.log(dateString);
+    const newsRef = collection(db, "news");
+    const q = query(newsRef, where("create", "==", dateString));
 
     const querySnapshot = await getDocs(q);
     console.log(querySnapshot.size);
     return querySnapshot.size;
 }
 
-export const setNews = async (imageUrl: string, name: string, description: string, address: string, telephone: string, email: string, links: any[]) => {
+export const setNews = async (imageUrl: string, name: string, description: string, address: string, telephone: string, email: string, links: any[], create: string) => {
     let randomName = createId();
     await setDoc(doc(db, "news", randomName), {
         id: randomName,
@@ -56,7 +64,8 @@ export const setNews = async (imageUrl: string, name: string, description: strin
         address: address,
         telephone: telephone,
         email: email,
-        links: links
+        links: links,
+        create: create
     });
 }
 
@@ -75,7 +84,8 @@ export const getEventById = async (id: any) => {
             address: docSnap.data().address,
             telephone: docSnap.data().telephone,
             email: docSnap.data().email,
-            links: docSnap.data().links
+            links: docSnap.data().links,
+            create: docSnap.data().create
         } 
         list.push(item);
         
