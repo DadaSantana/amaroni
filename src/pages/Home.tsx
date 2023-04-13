@@ -5,20 +5,12 @@ import { Banner } from '../components/home/Banner';
 import { Events } from '../components/home/Events';
 import { Attractions } from '../components/home/Attractions';
 import { MapAndNumbers } from '../components/home/MapAndNumbers';
+import { Cookies } from '../components/home/Cookies';
+import { getAll } from "../services/tokens";
 
 
 
 export const Home = () => {
-    const [en, setEn] = React.useState(false);
-
-    const handleLanguage = (current: boolean) => {
-        if (current) {
-          setEn(false);
-        } else {
-          setEn(true);
-        }
-    }
-
     return(
         <div id="app">
         <HomeHeader logged={false} />
@@ -26,6 +18,7 @@ export const Home = () => {
         <Events />
         <Attractions />
         <Footer/>
+        <Cookies />
         </div>
     );
 }

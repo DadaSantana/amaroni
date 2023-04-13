@@ -6,6 +6,7 @@ export const Content =  styled.section`
     flex-direction: column;  
     align-items: flex-start;
     justify-content: flex-start;
+    width: 100%;
 
     .search-content {
         width: 100%;

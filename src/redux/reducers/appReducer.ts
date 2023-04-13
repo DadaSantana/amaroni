@@ -6,7 +6,8 @@ export const slice = createSlice({
         login: false,
         token: '',
         language: ['italian','english','german'],
-        current: 0
+        current: 0,
+        session: 0
     },
     reducers:{
         setLogin: (state, action) => {
@@ -17,9 +18,12 @@ export const slice = createSlice({
         },
         setCurrent: (state, action) => {
             state.current = action.payload;
+        },
+        setSession: (state, action) => {
+            state.session = action.payload;
         }
     }
 });
 
-export const { setLogin, setToken, setCurrent } = slice.actions;
+export const { setLogin, setToken, setCurrent, setSession } = slice.actions;
 export default slice.reducer;

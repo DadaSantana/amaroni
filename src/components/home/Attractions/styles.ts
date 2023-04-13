@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Content = styled.section`
+export const Content = styled(motion.section)`
     width: 100%;
     height: fit-content;
     display: flex;
@@ -28,11 +29,11 @@ export const Content = styled.section`
             justify-content: center;
             align-items: center;
 
-            span.circle {
-                height: 10px;
-                width: 10px;
-                border-radius: 50%;
+            span.bar {
+                height: 5px;
+                width: 150px;
                 background-color: #009aff;
+                border-radius: 0 0 5px 5px;
                 margin: 0 10px;
             }
         }
@@ -182,7 +183,7 @@ export const Content = styled.section`
     }
 `;
 
-export const AttractionItem = styled.div`
+export const AttractionItem = styled(motion.div)`
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -195,15 +196,16 @@ export const AttractionItem = styled.div`
 
     div.att-background {
         display: flex;
-        justify-content: flex-end;
-        align-items: flex-start;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
         max-width: 250px;
-        height: 200px;
+        height: 300px;
         object-fit: cover;
-        border-radius: 5px 5px 0 0;
-        padding: 10px;
+        border-radius: 5px;
 
         span.att-type {
+            margin: 10px;
             display: flex;
             align-items: center;
             background-color: rgb(17 17 17 / 60%);
@@ -222,6 +224,24 @@ export const AttractionItem = styled.div`
                 margin: 0;
             }
         }
+
+        .att-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            background-color: rgb(0,0,0,30%);
+            padding: 10px;
+            border-radius: 0 0 5px 5px;
+
+            label.att-name {
+                font-size: 18px;
+                font-weight: bold;
+                width: 100%;
+                color: var(--whiteFont);
+            }
+        }
+
     }
 
     div.att-bottom {

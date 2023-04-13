@@ -1,5 +1,6 @@
 //import react
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 //import redux
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 //import styles
@@ -14,6 +15,7 @@ import Alert from 'react-bootstrap/Alert';
 
 export const Attractions = () => {
     const system = useAppSelector(state => state.system);
+    const navigate = useNavigate();
     const [action,setAction] = React.useState(2);
 
     const handleSetAction = (n: number) => {
@@ -44,7 +46,7 @@ export const Attractions = () => {
                         </label>
                     </span>
                     <span className="tag-btn" onClick={() => {
-                        handleSetAction(2);
+                        navigate(0);
                     }}>
                         <AutoAwesomeMotionIcon />
                         <label>

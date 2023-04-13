@@ -89,5 +89,15 @@ export const EditGrid = styled.section`
             
         }
     }
+
+    @media (max-width: 760px) {
+        grid-template-columns: repeat(2, 180px);
+
+        .item-gallery {
+            width: 180px;
+            height: 150px;
+        }
+
+    }
 `;
 

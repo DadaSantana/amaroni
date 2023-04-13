@@ -9,6 +9,7 @@ export type Users = {
         member: boolean,
         guest: boolean
     }
+    blocked: boolean
 }
 
 export type UserFirebase = {

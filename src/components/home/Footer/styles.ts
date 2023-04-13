@@ -7,10 +7,14 @@ export const Content = styled.footer`
     .footer-top {
         flex: 1;
         background-color: var(--mainColor);
+        display: flex;
+        justify-content: center;
 
         .container {
             display: flex;
             padding: 20px 0;
+            margin: 0;
+            min-width: fit-content;
 
 
             .footer-top-logo{
@@ -74,6 +78,10 @@ export const Content = styled.footer`
                             a {
                                 color: #f9f9f9;
                                 font-size: 12px;
+
+                                img {
+                                    max-width: 110px;
+                                }
                             }
 
                             &:hover {
@@ -86,6 +94,21 @@ export const Content = styled.footer`
         }
     }
 
+    .privacy-legali {
+        background-color: var(--mainColor);
+
+        .container {
+            display: flex;
+            justify-content: center;
+
+            a {
+                margin-left: 15px;
+                color: #f9f9f9;
+                font-size: 12px;
+            }
+        }
+    }
+    
     .footer-bottom {
         background-color: var(--secondColor);
 

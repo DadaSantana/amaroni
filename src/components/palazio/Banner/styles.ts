@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import image from '../../../assets/media/BannerComuneDiAmaroni.jpg';
+import image from '../../../assets/media/palazio.jpg';
 
 export const Content = styled.div`
 	background: url('${image}');
 	overflow:hidden;
 	width: 100%;
-	height: 70vh;
+	height: 50vh;
 	background-color: black;
 	background-size: cover;
-	background-position: right bottom;
+	background-position: center;
 	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center; /* adicionado para centralizar os itens horizontalmente */
@@ -35,10 +35,9 @@ export const Content = styled.div`
 
 
     @media (max-width: 760px) {      
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-
+        background-size: cover;
+        background-position: center;
+        height: 30vh;
     }
 
 	.container {

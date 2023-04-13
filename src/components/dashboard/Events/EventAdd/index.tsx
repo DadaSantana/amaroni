@@ -2,31 +2,22 @@
 import * as React from 'react';
 //import styles
 import { Content } from './styles';
-
 //import components
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { InsertLink } from './InsertLink';
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BackupIcon from '@mui/icons-material/Backup';
 
 import * as Photos from '../../../../services/photos';
-import { Photo } from '../../../../types/Photo';
 
 import * as Annun from '../../../../services/annuncios';
-import { Annuncio } from '../../../../types/Annuncio';
 
 //import components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { truncate } from 'fs';
-import { Container } from 'react-bootstrap';
+import { InsertLink } from '../../../InsertLinks';
 
 type Props = {
     fn: () => void;
@@ -40,9 +31,7 @@ export const EventAdd = ({fn}: Props) => {
     };
 
     const [uploading, setUploading] = React.useState(false);
-    const [photos, setPhotos] = React.useState<Photo[]>([]);
-    const [state, setState] = React.useState(true);
-    const [link,setLink] = React.useState<any[]>([])
+    const [link,setLink] = React.useState<any[]>([]);
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

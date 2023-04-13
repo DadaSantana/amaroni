@@ -27,6 +27,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { PhotoManager } from '../../../PhotoManager';
+import { v4 as createId } from 'uuid';
 
 type Props = {
     fn: () => void;
@@ -43,7 +45,8 @@ export const AttractionAdd = ({fn}:Props) => {
     const author = useAppSelector(state => state.user);
 
     const [uploading, setUploading] = React.useState(false);
-
+    const [confirm,setConfirm] = React.useState(false);
+    const [previewId,setPreviewId] = React.useState('');
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -51,8 +54,10 @@ export const AttractionAdd = ({fn}:Props) => {
 
         const formData = new FormData(e.currentTarget);
         const file = formData.get('image') as File;
-
-
+        let newId: any = createId();
+        setPreviewId(newId);
+        setConfirm(true);
+        
         if(file && file.size > 0) {
             setUploading(true);
             let result: any = await Photos.insertAtt(file);
@@ -65,11 +70,12 @@ export const AttractionAdd = ({fn}:Props) => {
                 const type = formData.get('type') as string;
                 const address = formData.get('address') as string;
                 const tel = formData.get('tel') as string;
+                const website = formData.get('website') as string;
                 const map = formData.get('map') as string;
                 const description = formData.get('description') as string;
                 const imageUrl = result.url;
 
-                let add = await Attractions.newAttraction(imageUrl,name,type,address,tel,ltn,lng,description,author.id,author.name);
+                let add = await Attractions.newAttraction(newId,imageUrl,name,type,address,tel,website,ltn,lng,description,author.id,author.name);
 
                 if (previewGallery.length > 0) {
                     previewGallery.map((item: any, index: number)=>(
@@ -212,6 +218,17 @@ export const AttractionAdd = ({fn}:Props) => {
                             id="outlined-required"
                             label="Numero di telefono"
                             defaultValue=""
+                            style={{
+                                flex: '1',
+                                marginRight: '20px'
+                            }}
+                            /> 
+                            <TextField
+                            name='website'
+                            required
+                            id="outlined-required"
+                            label="Il Luogo"
+                            defaultValue=""
                             /> 
                         </div>
                         <div className="input-content">
@@ -256,76 +273,7 @@ export const AttractionAdd = ({fn}:Props) => {
                     </div> 
                 </div>
                 <div className="input-bottom">
-                    <div className='gallery'>
-                        <input 
-                            type="file" 
-                            multiple
-                            name='att-gallery' 
-                            onChange={(e: React.FormEvent<HTMLInputElement>)=>{
-                                setLoading(true);
-                                const currentFiles = e.currentTarget.files;
-
-                                let list: any[] = [];
-                                if (currentFiles != null) {
-                                    let files: FileList[] = [];
-                                    files.push(currentFiles);
-                                    setFiles(files);
-                                    for (let index = 0; index < files[0].length; index++) {
-                                        const fr = new FileReader();
-                                        const element: File = files[0][index];
-                                        fr.readAsArrayBuffer(element);
-                                        fr.onload = function() {
-                                            if (fr.result != null) {
-                                                const blob = new Blob([fr.result], { type: "image/png" });
-                                                const url = URL.createObjectURL(blob);
-                                                list.push(url);
-                                                setAuxPreview(!auxPreview);
-                                            }
-                                        }   
-                                    }  
-                                    setPreviewGallery(list);                                
-                                }                                
-                            }}/>
-                        <Swiper
-                        // install Swiper modules
-                        modules={[Navigation, Pagination, A11y]}
-                        spaceBetween={60}
-                        slidesPerView={7}
-                        navigation
-                        >
-                            {settedPreview &&
-                            previewGallery.map((item: any, index: number) => (
-                                <SwiperSlide 
-                                className='slide-item' 
-                                style={{
-                                    background: `url(${item})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat'
-                                }}
-                                >
-                                    <span className='hover-indicator'>
-                                        <DeleteForeverIcon />
-                                    </span>
-                                </SwiperSlide> 
-                            ))
-                            }
-                            {!settedPreview &&
-                            <>
-                                {loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    <CircularProgress />
-                                </Box>
-                                }
-                                {!loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    Nessun file selezionato.
-                                </Box>
-                                }
-                            </>
-                            }                         
-                        </Swiper>
-                    </div>
+                    <PhotoManager path='attractions' id={previewId} sending={confirm} />
                     <div className="group-buttons">
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Registra nuova posizione

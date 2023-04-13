@@ -8,7 +8,7 @@ export const Content = styled.div`
 			display: flex;
 
 			.left-side {
-				margin-right: 20px;
+				margin-right: 60px;
 				
 				p {
 					text-align: justify;
@@ -19,5 +19,26 @@ export const Content = styled.div`
 				flex: 1;
 			}
 		}
+
+		h4 {
+			margin-top: 20px;
+		}
+
+		.gallery-content {
+			height: fit-content;
+		}
+
+		@media (max-width: 760px) {
+			.top-inline-flex {
+				flex-direction: column;
+
+				.left-side {
+					margin-right: 0;
+				}
+			}
+			
+		}
 	}
+
+
 `;

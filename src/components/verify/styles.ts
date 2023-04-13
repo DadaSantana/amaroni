@@ -16,6 +16,19 @@ export const Content = styled.section`
             font-size: 24px;
             margin-bottom: 30px;
         }
+
+        .waiting {
+            margin-top: 50px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                margin-top: 20px;
+            }
+        }
     }
 
 `;

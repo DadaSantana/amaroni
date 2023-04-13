@@ -26,13 +26,14 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import BackupIcon from '@mui/icons-material/Backup';
 //import user data from firebase
-import { monitorAuthState, newPasswordUser } from '../../services/auth';
+import { getCurrentUser, monitorAuthState, newPasswordUser } from '../../services/auth';
 import { UserFirebase } from '../../types/Users';
 import { InputFiles } from 'typescript';
 //import types and services
 import * as PhotoService from '../../services/photos';
 import * as UserService from '../../services/users';
 import { Photo } from '../../types/Photo';
+import { auth } from '../../services/auth';
 
 export const UserPerfil = () => {
     const system = useAppSelector(state => state.system);
@@ -47,28 +48,37 @@ export const UserPerfil = () => {
     const [phoneInput,setPhoneInput] = React.useState('');
     const [startProcess,setStartProcess] = React.useState(true);
     const [loading,setLoading] = React.useState(false);
+    const [condition,setCondition] = React.useState(true);
+    const [credential,setCredential] = React.useState<any>();
 
     React.useEffect(()=>{
-        if (startProcess) {
+        if (condition) {
+            setInterval(()=>{
+                if  (credential) {
+                    setCondition(false);
+                } else {
+                    setCredential(auth);
+                }
+            },1000)
+        }
+    },[condition])
+
+    React.useEffect(()=>{
+        if (credential != undefined) {
             const getUserFromFirebase = async () => {
-                setUserFirebase(await monitorAuthState());
+                console.log('buscando...')
+                setUserFirebase(await monitorAuthState(credential));
                 setStartProcess(false);
             }
             getUserFromFirebase();
-        } else {
-            setLoading(!loading);
-        }
-
-    }, [loading]);
+        } 
+    }, [credential]);
 
     React.useEffect(()=>{
-        console.log(userFirebase);
         if(userFirebase.length > 0) {
             setOpen(false);
             setStartProcess(false);
-        } else {
-            setLoading(!loading);
-        }
+        } 
     },[userFirebase]);
 
     React.useEffect(()=>{
@@ -142,16 +152,16 @@ export const UserPerfil = () => {
     const [confirmNewPassword,setConfirmNewPassword] = React.useState('');
 
     const changePassword = async () => {
-        console.log('entrou na função')
         if (newPassword != '' && confirmNewPassword != '') {
-            console.log('tudo preenchido')
             if (newPassword == confirmNewPassword) {
                 console.log('senhas conferem')
                 await newPasswordUser(newPassword);
-                alert('A senha foi alterada!');
-                navigate(0);
+                alert('La password è stata cambiata!');
+                setNewPassword('');
+                setConfirmNewPassword('');
+                setRedefinePassword(false);
             } else {
-                alert('As senhas não conferem');
+                alert('Le password non corrispondono');
             }
         } 
     }
@@ -172,7 +182,7 @@ export const UserPerfil = () => {
                         {system.language[system.current] === 'english' ? 'User settings' : null}
                         {system.language[system.current] === 'german' ? 'Benutzereinstellungen' : null}
                     </h4>
-                    <Link to="/dashboard">
+                    <Link to="/dashboard/support">
                         <SwapHorizIcon />
                         {system.language[system.current] === 'italian' ? 'Torna alla dashboard' : null}
                         {system.language[system.current] === 'english' ? 'Back to Dashboard' : null}

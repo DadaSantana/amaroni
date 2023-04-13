@@ -29,6 +29,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { PhotoManager } from '../../../../PhotoManager';
 
 type Props = {
     id: string
@@ -45,6 +46,7 @@ export const EditContent = ({id}:Props) => {
     const [type,setType] = React.useState('');
     const [address,setAddress] = React.useState('');
     const [tel,setTel] = React.useState('');
+    const [website,setWebsite] = React.useState('');
     const [latitude,setLatitude] = React.useState(0);
     const [longitude,setLongitude] = React.useState(0);
     const [description,setDescription] = React.useState('');
@@ -84,6 +86,7 @@ export const EditContent = ({id}:Props) => {
             setType(attEditItem[0].type);
             setAddress(attEditItem[0].address);
             setTel(attEditItem[0].tel);
+            setTel(attEditItem[0].website);
             setLatitude(attEditItem[0].latitude)
             setLongitude(attEditItem[0].longitude);
             setDescription(attEditItem[0].description);
@@ -117,21 +120,19 @@ export const EditContent = ({id}:Props) => {
     },[stateRepeat])
 
     const [uploading, setUploading] = React.useState(false);
-
+    const [confirm,setConfirm] = React.useState(false);
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setConfirm(true);
         e.preventDefault();
         setOpen(true);
 
         const formData = new FormData(e.currentTarget);
         const file = formData.get('image') as File;
 
-        console.log(file);
-
         if(file && file.size > 0) {
             setUploading(true);
             let result: any = await Photos.insertAtt(file);
-            setUploading(false);
           
             if(result instanceof Error){
               alert(`${result.name} - ${result.message}`)
@@ -145,10 +146,12 @@ export const EditContent = ({id}:Props) => {
         const type = formData.get('type') as string;
         const address = formData.get('address') as string;
         const tel = formData.get('tel') as string;
+        const website = formData.get('website') as string;
         const description = formData.get('description') as string;
+        
 
-        let update = await Attractions.updateAttraction(id,name,type,address,tel,latitude,longitude,description,author.id,author.name);
-
+        let update = await Attractions.updateAttraction(id,name,type,address,tel,website,latitude,longitude,description,author.id,author.name);
+        
         setName(name);
         setType(type);
         setAddress(address);
@@ -163,7 +166,6 @@ export const EditContent = ({id}:Props) => {
             ));
         }
         
-        alert('registro atualizado');
         setOpen(false);
     }
 
@@ -310,6 +312,17 @@ export const EditContent = ({id}:Props) => {
                             id="outlined-required"
                             label="Numero di telefono"
                             defaultValue={tel}
+                            style={{
+                                flex: '1',
+                                marginRight: '20px'
+                            }}
+                            /> 
+                            <TextField
+                            name='website'
+                            required
+                            id="outlined-required"
+                            label="Il Luogo"
+                            defaultValue={website}
                             /> 
                         </div>
                         <div className="input-content">
@@ -355,133 +368,7 @@ export const EditContent = ({id}:Props) => {
                     </div> 
                 </div>
                 <div className="input-bottom">
-                    <div className='gallery'>
-                        <h5>Add new photos</h5>
-                        <hr />
-                        <input 
-                            type="file" 
-                            multiple
-                            name='att-gallery' 
-                            onChange={(e: React.FormEvent<HTMLInputElement>)=>{
-                                setLoading(true);
-                                const currentFiles = e.currentTarget.files;
-
-                                let list: any[] = [];
-                                if (currentFiles != null) {
-                                    let files: FileList[] = [];
-                                    files.push(currentFiles);
-                                    setFiles(files);
-                                    for (let index = 0; index < files[0].length; index++) {
-                                        const fr = new FileReader();
-                                        const element: File = files[0][index];
-                                        fr.readAsArrayBuffer(element);
-                                        fr.onload = function() {
-                                            if (fr.result != null) {
-                                                const blob = new Blob([fr.result], { type: "image/png" });
-                                                const url = URL.createObjectURL(blob);
-                                                list.push(url);
-                                                setAuxPreview(!auxPreview);
-                                            }
-                                        }   
-                                    }  
-
-                                    if (previewGallery.length > 0) {
-                                        setPreviewGallery([...previewGallery, list]);  
-                                    } else {
-                                        setPreviewGallery(list);  
-                                    }
-
-                                }
-                                
-                                
-                            }}/>
-                        <Swiper
-                        // install Swiper modules
-                        modules={[Navigation, Pagination, A11y]}
-                        spaceBetween={60}
-                        slidesPerView={4}
-                        navigation
-                        >
-                            {settedPreview &&
-                            previewGallery.map((item: any, index: number) => (
-                                <SwiperSlide 
-                                className='slide-item' 
-                                style={{
-                                    background: `url(${item})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat'
-                                }}
-                                >
-                                    <span className='hover-indicator'>
-                                        <DeleteForeverIcon onClick={()=>{
-                                            handleDeletePreviewPhoto(item, index)
-                                        }} />
-                                    </span>
-                                </SwiperSlide>
-                            ))
-                            }
-                            {!settedPreview &&
-                            <>
-                                {loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    <CircularProgress />
-                                </Box>
-                                }
-                                {!loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    Aggiungi nuove foto alla tua galleria
-                                </Box>
-                                }
-                            </>
-
-                            }                         
-                        </Swiper>
-                        <h5>Edit Gallery</h5>
-                        <hr />
-                        <Swiper
-                        // install Swiper modules
-                        modules={[Navigation, Pagination, A11y]}
-                        spaceBetween={60}
-                        slidesPerView={7}
-                        navigation
-                        >
-                            {settedPreview &&
-                            editItemsGallery.map((item: any, index: number) => (
-                                <SwiperSlide 
-                                className='slide-item' 
-                                style={{
-                                    background: `url(${item.url})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat'
-                                }}
-                                >
-                                    <span className='hover-indicator'>
-                                        <DeleteForeverIcon onClick={()=>{
-                                            handleDeleteAttPhoto(item.path, index)
-                                        }} />
-                                    </span>
-                                </SwiperSlide>
-                            ))
-                            }
-                            {!settedPreview &&
-                            <>
-                                {loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    <CircularProgress />
-                                </Box>
-                                }
-                                {!loading &&
-                                <Box className="circular-progress" sx={{ display: 'flex' }}>
-                                    Aggiungi nuove foto alla tua galleria
-                                </Box>
-                                }
-                            </>
-
-                            }                         
-                        </Swiper>
-                    </div>
+                    <PhotoManager path='attractions' id={id} sending={confirm} />
                     <div className="group-buttons">
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Salva

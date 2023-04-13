@@ -7,11 +7,10 @@ import { Content, AttractionItem } from './styles';
 import { Container } from 'react-bootstrap';
 //import swiper component
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, A11y } from 'swiper';
+import { Navigation, Autoplay } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 //get service and type
 import * as AttractionService from '../../../services/attractions';
 import { Attraction } from '../../../types/Attraction';
@@ -24,11 +23,13 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import PublicIcon from '@mui/icons-material/Public';
 import ChurchIcon from '@mui/icons-material/Church';
+import HotelIcon from '@mui/icons-material/Hotel';
 //import components
 import Rating from '@mui/material/Rating';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { motion } from 'framer-motion';
 
 export const Attractions = () => {
     const system = useAppSelector(state => state.system);
@@ -39,6 +40,7 @@ export const Attractions = () => {
     const [att, setAtt] = React.useState<Attraction[]>([]);
     const [type, setType] = React.useState('all');
     const [rating,setRating] = React.useState(0);
+    const [attStarted,setAttStated] = React.useState(true);
 
     React.useEffect(()=>{
         if (type != 'all') {
@@ -61,8 +63,21 @@ export const Attractions = () => {
     const handleSetType = (t: string) => {
         setType(t);
     }
+
+    const attributes = {
+        start: { opacity: 0, translateY: '-30px' },
+        view: { opacity: 1, translateY: '0px' }
+    }
+
     return(
-        <Content>
+        <Content 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{
+                ease: 'linear',
+                duration: 1
+            }}
+        >
             <Container>
                 <div className="title-content">
                     <h1>
@@ -71,15 +86,20 @@ export const Attractions = () => {
                         {system.language[system.current] == 'german' ? 'Attraktion' : null}
                     </h1>
                     <div className='title-bar'>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
+                        <span className="bar"></span>
                     </div>
                 </div>
                 <div className="filter-per-type">
-                    <span 
+                    <motion.span 
                         className={type == 'all' ? 'type all active' : 'type all'} 
                         onClick={()=>{handleSetType('all')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.100
+                        }}
                     >
                         <ClearAllIcon />
                         <label>
@@ -87,43 +107,71 @@ export const Attractions = () => {
                             {system.language[system.current] == 'english' ? 'All' : null}
                             {system.language[system.current] == 'german' ? 'Alle' : null}
                         </label>
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Food' ? 'type food active' : 'type food'} 
                         onClick={()=>{handleSetType('Food')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.150
+                        }}
                     >
                         <RestaurantIcon />
                         <label>
-                            {system.language[system.current] == 'italian' ? 'Cibo' : null}
+                            {system.language[system.current] == 'italian' ? 'Dove Mangiare' : null}
                             {system.language[system.current] == 'english' ? 'Food' : null}
                             {system.language[system.current] == 'german' ? 'Essen' : null}
                         </label>
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Square' ? 'type food square' : 'type square'} 
                         onClick={()=>{handleSetType('Square')}}
+                        variants={attributes}
+                        initial="start"
+                        whileInView="view"
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.175
+                        }}
                     >
-                        <ParkIcon />
+                        <HotelIcon />
                         <label>
-                            {system.language[system.current] == 'italian' ? 'Piazza' : null}
+                            {system.language[system.current] == 'italian' ? 'Dove Dormire' : null}
                             {system.language[system.current] == 'english' ? 'Square' : null}
                             {system.language[system.current] == 'german' ? 'Quadrat' : null}
                         </label>
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Marketplace' ? 'type marketplace active' : 'type marketplace'} 
                         onClick={()=>{handleSetType('Marketplace')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.200
+                        }}
                     >
                         <LocalGroceryStoreIcon />
                         <label>
-                            {system.language[system.current] == 'italian' ? 'Mercato' : null}
+                            {system.language[system.current] == 'italian' ? 'Associazioni' : null}
                             {system.language[system.current] == 'english' ? 'Marketplace' : null}
                             {system.language[system.current] == 'german' ? 'Marktplatz' : null}
                         </label>
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Health' ? 'type health active' : 'type health'} 
                         onClick={()=>{handleSetType('Health')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.225
+                        }}
                     >
                         <LocalHospitalIcon />
                         <label>
@@ -131,32 +179,17 @@ export const Attractions = () => {
                             {system.language[system.current] == 'english' ? 'Health' : null}
                             {system.language[system.current] == 'german' ? 'Gesundheit' : null}
                         </label>
-                    </span>
-                    <span 
-                        className={type == 'Workshop' ? 'type workshop active' : 'type workshop'} 
-                        onClick={()=>{handleSetType('Workshop')}}
-                    >
-                        <HomeRepairServiceIcon />
-                        <label>
-                            {system.language[system.current] == 'italian' ? 'Officina' : null}
-                            {system.language[system.current] == 'english' ? 'Workshop' : null}
-                            {system.language[system.current] == 'german' ? 'Werkstatt' : null}
-                        </label>
-                    </span>
-                    <span 
-                        className={type == 'Church' ? 'type church active' : 'type church'} 
-                        onClick={()=>{handleSetType('Church')}}
-                    >
-                        <ChurchIcon />
-                        <label>
-                            {system.language[system.current] == 'italian' ? 'Chiesa' : null}
-                            {system.language[system.current] == 'english' ? 'Church' : null}
-                            {system.language[system.current] == 'german' ? 'Kirche' : null} 
-                        </label>
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Public Place' ? 'type public active' : 'type public'} 
                         onClick={()=>{handleSetType('Public Place')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.300
+                        }}
                     >
                         <PublicIcon />
                         <label>
@@ -164,7 +197,7 @@ export const Attractions = () => {
                             {system.language[system.current] == 'english' ? 'Public Place' : null}
                             {system.language[system.current] == 'german' ? 'öffentlicher Platz' : null} 
                         </label>
-                    </span>
+                    </motion.span>
                 </div>
                 <p className="description">
                     {system.language[system.current] == 'italian' ? 'Selezionare un tipo per definire un filtro.' : null}
@@ -173,18 +206,23 @@ export const Attractions = () => {
                 </p>
                 <Swiper
                 // install Swiper modules
-                modules={[Navigation, Autoplay, A11y]}
+                navigation={true} 
                 spaceBetween={30}
+                slidesPerGroup={
+                    windowSize.current[0] <= 480 ? 1 : 
+                    windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3 
+                }
+                pagination={{ clickable: true }}
+                modules={[Navigation, Autoplay]}                
                 slidesPerView={
                     windowSize.current[0] <= 480 ? 1 : 
-                    windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3
+                    windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3 
                 }
                 autoplay={{
                     delay: 2000,
                     disableOnInteraction: true,
                 }}
-                navigation
-                pagination={{ clickable: true }}
+                
                 >
                     {state &&
                     <>
@@ -197,7 +235,22 @@ export const Attractions = () => {
                     att.map((item, index)=>(
                         <SwiperSlide className='slide-item'>
                             <Link key={index} to={`attraction/${item.id}`} >
-                                <AttractionItem>
+                                <AttractionItem 
+                                    initial={{ opacity: 0, translateX: '20px', translateY: '20px' }}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileInView={{ opacity: 1, translateX: '0px', translateY: '0px'}}
+                                    onViewportEnter={() => {setAttStated(false)}}
+                                    onViewportLeave={() => {setAttStated(true)}}
+                                    transition={{
+                                        ease: 'linear',
+                                        duration: 0.250,
+                                        delay: attStarted ? 
+                                            index == 0 ? 0.250 : 
+                                            index == 1 ? 0.350 :
+                                            index == 2 ? 0.450 : 0.250
+                                        : 0
+                                    }}
+                                >
                                     <div 
                                         className='att-background'
                                         style={{
@@ -208,22 +261,24 @@ export const Attractions = () => {
                                     >
                                         <span className='att-type'>
                                             <ChurchIcon />
-                                            <label className='type-name'>{item.type}</label>
+                                            <label className='type-name'>
+                                                {
+                                                    item.type == 'Food' ? 'Dove Mangiare' :
+                                                    item.type == 'Square' ? 'Dove Dormire' :
+                                                    item.type == 'Marketplace' ? 'Associazioni' :
+                                                    item.type == 'Health' ? 'Salute' :
+                                                    item.type == 'Public Place' ? 'Luogo pubblico' : 'Tipo'
+                                                }
+                                            </label>
                                         </span>
+                                        <div className="att-details">
+                                            <div>
+                                                <label className='att-name'>{item.name}</label>
+                                            </div> 
+                                            <Rating name="read-only" value={item.rating} readOnly /> 
+                                        </div>
                                     </div>
-                                    <div className='att-bottom'>
-                                        <div>
-                                            <label className='att-name'>{item.name}</label>
-                                        </div> 
-                                        <Rating name="read-only" value={item.rating} readOnly />                                   
-                                        <span className='view-more'>
-                                            <Link to={`attraction/${item.id}`}>
-                                                {system.language[system.current] == 'italian' ? 'Visualizza di più' : null}
-                                                {system.language[system.current] == 'english' ? 'View more' : null}
-                                                {system.language[system.current] == 'german' ? 'Mehr sehen' : null}
-                                            </Link>
-                                        </span>
-                                    </div> 
+                                    
                                 </AttractionItem>                                                   
                             </Link>
                         </SwiperSlide>                        

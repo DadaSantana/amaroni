@@ -5,6 +5,7 @@ export type Attraction   = {
     type: string,
     address: string,
     tel: string,
+    website: string,
     latitude: number,
     longitude: number
     description: string,

@@ -6,6 +6,7 @@ export const slice = createSlice({
         id: 'default',
         name: 'default',
         email: 'default',
+        verified: false,
         photo: 'default',
         phone: 'default',
         level: {
@@ -24,6 +25,9 @@ export const slice = createSlice({
         setEmail: (state, action) => {
             state.email = action.payload;
         },
+        setVerified: (state, action) => {
+            state.verified = action.payload;
+        },
         setPhoto: (state, action) => {
             state.photo = action.payload;
         },
@@ -36,5 +40,5 @@ export const slice = createSlice({
     }
 });
 
-export const { setId, setName, setEmail, setPhoto, setPhone, setLevel } = slice.actions;
+export const { setId, setName, setEmail, setVerified, setPhoto, setPhone, setLevel } = slice.actions;
 export default slice.reducer;

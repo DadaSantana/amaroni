@@ -22,6 +22,43 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 
 
 export const GalleryContent = () => {
+    const windowSize = React.useRef([window.innerWidth, window.innerHeight]);
+    const [items,setItems] = React.useState(0);
+    const [resize,setResize] = React.useState(false);
+
+    React.useEffect(()=>{
+        if (windowSize.current[0] <= 760) {
+            setMobile(true);
+        } else {
+            setMobile(false);
+        }
+    },[])
+
+    React.useEffect(()=>{
+        if (windowSize.current[0] > windowSize.current[1]) {
+            let total = (windowSize.current[1] - 125) / 160;
+            setItems(total);
+        } else {
+            let total = (windowSize.current[0] - 125) / 160;
+            setItems(total+1);
+        }
+    },[resize])
+
+    const [mobile,setMobile] = React.useState(false);
+
+    window.addEventListener("resize", (event: any) => {
+        if (event != null) {
+            const width = event.target.innerWidth;
+            if (width <= 760) {
+                setMobile(true);
+                setResize(!resize);
+            } else {
+                setMobile(false);
+                setResize(!resize);
+            }
+        }
+    });
+
     const [gallery, setGallery] = React.useState<TypeGallery[]>([]);
     //Backdrop
     const [open, setOpen] = React.useState(true);
@@ -57,28 +94,28 @@ export const GalleryContent = () => {
             <>
             <Swiper
                 onSlideChange={() => console.log(thumbsSwiper)}
-                loop={false}
-                spaceBetween={10}
+                loop={true}
                 navigation={true}
+                slidesPerView={1}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper2"
+                className="swiper-gallery"
             >
                 {gallery.map((item, index)=>(
                     <SwiperSlide
                         className='slide-item'
                         style={{
-                            background: `url('${item.imageUrl}') center center / cover no-repeat`
+                            background: `url('${item.imageUrl}') center center / contain no-repeat`
                         }}
                     />
                 ))}                
             </Swiper>
             <Swiper
-                direction={"vertical"}
+                direction={mobile ? 'horizontal' : 'vertical'}
                 onSwiper={setThumbsSwiper}
                 loop={false}
                 spaceBetween={10}
-                slidesPerView={3}
+                slidesPerView={items}
                 freeMode={false}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Thumbs]}
@@ -89,8 +126,7 @@ export const GalleryContent = () => {
                         <img src={item.imageUrl} alt="" />
                     </SwiperSlide>
                 ))}
-            </Swiper>
-            
+            </Swiper>                  
             </>
             }
                

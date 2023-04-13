@@ -15,6 +15,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import LoginIcon from '@mui/icons-material/Login';
 import { TextField } from '@mui/material';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 
 import Logo from '../../../assets/media/logo.png';
 import italia from '../../../assets/media/italia.png';
@@ -22,6 +27,8 @@ import unitedKingdom from '../../../assets/media/united-kingdom.png';
 import german from '../../../assets/media/german.png';
 import { Auth } from '../Auth';
 import userEvent from '@testing-library/user-event';
+import { getAllCount } from '../../../services/news';
+import { motion } from 'framer-motion';
 
 
 type Props = {
@@ -31,10 +38,17 @@ type Props = {
 export const HomeHeader = ({logged}:Props) => {
     const system = useAppSelector(state => state.system);
     const user = useAppSelector(state => state.user);
-
+    const [newsCount,setNewsCount] = React.useState(0);
     const dispatch = useDispatch();
     const [authWindown, setAuthWindown] = React.useState(false);
     const [floatNav,setFloatNav] = React.useState(false);
+
+    React.useEffect(()=>{
+        const getNewsCount = async () => {
+            setNewsCount(await getAllCount());
+        }
+        getNewsCount();
+    })
 
     const handleClick = () => {
         setAuthWindown(!authWindown);
@@ -49,7 +63,7 @@ export const HomeHeader = ({logged}:Props) => {
     }
 
     return(
-        <Content>
+        <Content className='home-header'>
             <Auth fn={handleClick} state={authWindown} /> 
             <Login>
                 <Container> 
@@ -99,45 +113,51 @@ export const HomeHeader = ({logged}:Props) => {
                     </a>
                     <Navbar>                               
                         <ul>
-                            <li>
+                            <motion.li
+                                whileHover={{ translateY: -3, transition: { duration: 0.05 } }}
+                            >
                                 <Link to='/storia'>
                                     {system.language[system.current] == 'italian' ? 'Storia' : null}
                                     {system.language[system.current] == 'english' ? 'History' : null}
                                     {system.language[system.current] == 'german' ? 'Geschichte' : null}
                                 </Link>
-                            </li>
-                            <li>
+                            </motion.li>
+                            <motion.li
+                                whileHover={{ translateY: -3, transition: { duration: 0.05 } }}
+                            >
                                 <Link to='/gallery'>
                                     {system.language[system.current] == 'italian' ? 'Galleria Fotografica' : null}
                                     {system.language[system.current] == 'english' ? 'Photo Gallery' : null}
                                     {system.language[system.current] == 'german' ? 'Fotogallerie' : null}
                                 </Link>                                
-                            </li>
-                            <li>
-                                <Link to='/palazio'>
-                                    {system.language[system.current] == 'italian' ? 'Palazio Comunale' : null}
-                                    {system.language[system.current] == 'english' ? 'Palazio Comunale' : null}
-                                    {system.language[system.current] == 'german' ? 'Palazio Comunale' : null}
+                            </motion.li>
+                            <motion.li
+                                whileHover={{ translateY: -3, transition: { duration: 0.05 } }}
+                            >
+                                <Link to='/palazzo'>
+                                    {system.language[system.current] == 'italian' ? 'Palazzo Comunale' : null}
+                                    {system.language[system.current] == 'english' ? 'Palazzo Comunale' : null}
+                                    {system.language[system.current] == 'german' ? 'Palazzo Comunale' : null}
                                 </Link>                                
-                            </li>
-                            <li>
-                                <Dropdown id="dropdown" className="d-inline mx-2">
-                                    <Dropdown.Toggle className='btn-toggle' id="dropdown-autoclose-true">
-                                        Gammellagi
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className='drop-menu'>
-                                        <Dropdown.Item className='language-item' href="#">
-                                            <Link to='/gemmellagi/rotkreuz'>Rotkreuz</Link>
-                                        </Dropdown.Item>
-                                        <Dropdown.Item href="#">
-                                            <Link to='/gemmellagi/lukovica'>Lukovica</Link>
-                                        </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>                           
-                            </li>
+                            </motion.li>
+                            <motion.li
+                                whileHover={{ translateY: -3, transition: { duration: 0.05 } }}
+                            >
+                                <Link to='/gemellaggio/rotkreuz'>
+                                    {system.language[system.current] == 'italian' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                    {system.language[system.current] == 'english' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                    {system.language[system.current] == 'german' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                </Link>   
+                            </motion.li>
                         </ul>
-                        <div className="social">
-                            <FacebookIcon />
+                        <div className="social">                              
+                            <Link to="/palazzo" className="news-after">
+                                <NewReleasesIcon />
+                                <span className="badge">{newsCount == 0 ? '' : newsCount}</span>
+                            </Link>                            
+                            <a href="https://www.facebook.com/comunediamaroni" target="_blank">
+                                <FacebookIcon />
+                            </a>                            
                             <InstagramIcon />
                         </div>                              
                     </Navbar>
@@ -154,6 +174,7 @@ export const HomeHeader = ({logged}:Props) => {
                             </span>
                             <ul>
                                 <li>
+                                    <AutoStoriesIcon />
                                     <Link to='/storia'>
                                         {system.language[system.current] == 'italian' ? 'Storia' : null}
                                         {system.language[system.current] == 'english' ? 'History' : null}
@@ -161,11 +182,28 @@ export const HomeHeader = ({logged}:Props) => {
                                     </Link>
                                 </li>
                                 <li>
+                                    <CollectionsIcon />
                                     <Link to='/gallery'>
                                         {system.language[system.current] == 'italian' ? 'Galleria Fotografica' : null}
                                         {system.language[system.current] == 'english' ? 'Photo Gallery' : null}
                                         {system.language[system.current] == 'german' ? 'Fotogallerie' : null}
                                     </Link>                                
+                                </li>
+                                <li>
+                                    <LocationCityIcon />
+                                    <Link to='/palazzo'>
+                                        {system.language[system.current] == 'italian' ? 'Palazzo Comunale' : null}
+                                        {system.language[system.current] == 'english' ? 'Palazzo Comunale' : null}
+                                        {system.language[system.current] == 'german' ? 'Palazzo Comunale' : null}
+                                    </Link>                                
+                                </li>
+                                <li>
+                                    <Diversity3Icon />
+                                    <Link to='/gemellaggio/rotkreuz'>
+                                        {system.language[system.current] == 'italian' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                        {system.language[system.current] == 'english' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                        {system.language[system.current] == 'german' ? 'Gemellaggio di Risch-Rotkreuz' : null}
+                                    </Link>   
                                 </li>
                             </ul>
                         </div>

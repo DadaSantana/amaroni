@@ -32,19 +32,19 @@ export const Callview = ({id}:Props) => {
     const currencies = [
         {
           value: 'Registered Call',
-          label: 'Registered Call',
+          label: 'Chiamata registrata',
         },
         {
           value: 'Analyzing',
-          label: 'Analyzing',
+          label: 'Analizzando',
         },
         {
           value: 'Waiting for reply',
-          label: 'Waiting for reply',
+          label: 'In attesa di risposta',
         },
         {
           value: 'Finished',
-          label: 'Finished',
+          label: 'Finito',
         },
     ];
     //Backdrop
@@ -182,14 +182,6 @@ export const Callview = ({id}:Props) => {
                         </MenuItem>
                     ))}
                 </TextField>
-            </div>
-                        <div className="attach-file">
-                {attach.length > 0 &&
-                <>
-                <AttachFileIcon />
-                <a href={href} download="image" target='_blank'>Fare clic qui per scaricare un file immagine</a>
-                </>
-                }
             </div>
             <div className="dialog-box">
                 {chatSetted &&

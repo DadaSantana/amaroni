@@ -104,7 +104,11 @@ export const RateAndComment = ({id}:Props) => {
                 }
                 {!loading && noComments &&
                 <Box className="circular-progress" sx={{ display: 'flex' }}>
-                    <p>Sem comentários</p>
+                    <p>
+                        {system.language[system.current] == 'italian' ? 'Nessuna recensione trovata.' : null}
+                        {system.language[system.current] == 'english' ? 'No reviews found.' : null}
+                        {system.language[system.current] == 'germna' ? 'Keine Bewertungen gefunden.' : null}
+                    </p>
                 </Box>
                 }
                 {showRatings &&

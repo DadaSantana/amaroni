@@ -136,57 +136,8 @@ export const Content = styled.section`
              
         }
 
-        section.gallery-attraction {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-            width: 100%;
-
-            h2 {
-                margin: 0;
-            }
-
-            .swiper {
-                margin: 0;
-                width: 100%;
-                padding: 20px 0;
-    
-                .swiper-wrapper {
-                    max-width: 100%;
-    
-                    .slide-item {
-                        display: flex;
-                        border-radius: 5px;
-                        min-height: 150px;
-                        min-width: 150px;
-                        max-height: 150px;
-                        max-width: 150px;
-                        box-shadow: 0 0 5px var(--shadow);
-                        margin: 5px;
-
-                        .hover-indicator {
-                            width: 100%;
-                            height: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            background-color: rgb(0 0 0 / 35%);
-                            border-radius: 5px;
-                            cursor: pointer;
-                            opacity: 0;
-                            transition: all linear 200ms;
-
-                            svg {
-                                color: var(--whiteFont);
-                            }
-
-                            &:hover {
-                                opacity: 1;
-                            }
-                        }
-                    }
-                }
-            }
+        .gallery-content {
+            margin-bottom: 50px;
         }
 
         @media (max-width: 760px) {

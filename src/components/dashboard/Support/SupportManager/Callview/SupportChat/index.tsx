@@ -44,7 +44,7 @@ export const SupportChat = ({id}: ChatProps) => {
             >
                 <TextField
                     id="filled-multiline-flexible"
-                    label="Type a message"
+                    label="Scrivi un messaggio"
                     multiline
                     maxRows={4}
                     variant="filled"

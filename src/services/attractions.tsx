@@ -27,6 +27,7 @@ export const getAll = async () => {
             type: document.data().type,
             address: document.data().address,
             tel: document.data().tel,
+            website: document.data().website,
             latitude: document.data().latitude,
             longitude: document.data().longitude,
             description: document.data().description,
@@ -39,14 +40,14 @@ export const getAll = async () => {
     return list;
 }
 
-export const newAttraction = async (imageUrl: string, name: string, type: string, address: string, tel: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
-    let randomName = createId();
-    await setDoc(doc(db, "attractions", randomName), {
+export const newAttraction = async (id:string,imageUrl: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
+    await setDoc(doc(db, "attractions", id), {
         imageUrl: imageUrl,
         name: name,
         type: type, 
         address: address,
         tel: tel,
+        website: website,
         latitude: latitude,
         longitude: longitude,
         description: description,
@@ -69,13 +70,14 @@ export const updateAttRating = async (id: string, rating: number) => {
     });
 }
 
-export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
+export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
     const attractionRef = doc(db, "attractions", id);
     await updateDoc( attractionRef, {
         name: name,
         type: type, 
         address: address,
         tel: tel,
+        website: website,
         latitude: latitude,
         longitude: longitude,
         description: description,
@@ -97,6 +99,7 @@ export const getAttById = async (id: any) => {
             type: docSnap.data().type,
             address: docSnap.data().address,
             tel: docSnap.data().tel,
+            website: docSnap.data().website,
             latitude: docSnap.data().latitude,
             longitude: docSnap.data().longitude,
             description: docSnap.data().description,
@@ -127,6 +130,7 @@ export const getAttByUser = async (id: string) => {
             type: doc.data().type,
             address: doc.data().address,
             tel: doc.data().tel,
+            website: doc.data().website,
             latitude: doc.data().latitude,
             longitude: doc.data().longitude,
             description: doc.data().description,
@@ -186,6 +190,7 @@ export const getAttByType = async (type: string) => {
             type: doc.data().type,
             address: doc.data().address,
             tel: doc.data().tel,
+            website: doc.data().website,
             latitude: doc.data().latitude,
             longitude: doc.data().longitude,
             description: doc.data().description,

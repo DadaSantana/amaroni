@@ -40,6 +40,25 @@ export const TagAction = styled.div`
                 color: #0080ff;
             }
         }
+
+        @media (max-width: 760px) {
+            max-height: 35px;
+            justify-content: center;
+    
+            .tag-group {
+                flex: 1;
+                justify-content: center;
+        
+                .span.tag-btn {
+                    height: fit-content;
+                    padding: 5px;
+    
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
         
     }
 

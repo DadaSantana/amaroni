@@ -17,7 +17,29 @@ import { writeSupportData } from './realtime';
 
 export const getAllCalls = async () => {
     let list: Support[] = [];
-    const q = query(collection(db, "support"));
+    const q = query(collection(db, "support"), where("finished", "==", false));
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((document) => {
+        let item = {
+            id: document.id,
+            subject: document.data().subject,
+            request: document.data().request,
+            date: document.data().date,
+            authorId: document.data().authorId,
+            authorName: document.data().authorName,
+            progress: document.data().progress,
+            finished: document.data().finished
+        }    
+    list.push(item);
+    });
+    return list;
+}
+
+export const getResolvedCalls = async () => {
+    let list: Support[] = [];
+    const q = query(collection(db, "support"), where("finished", "==", true));
 
     const querySnapshot = await getDocs(q);
 
@@ -146,9 +168,17 @@ export const getSupportAttach = async (id: any) => {
 
 export const updateSupportStatus = async (id: string, status: string) => {
     const supportRef = doc(db, "support", id);
-    await updateDoc( supportRef, {
-        progress: status
-    });
+    if (status == 'Finished') {
+        await updateDoc( supportRef, {
+            progress: status,
+            finished: true
+        });
+    } else {
+        await updateDoc( supportRef, {
+            progress: status,
+            finished: false
+        });
+    }
 }
 
 export const getOpenCallsCount = async () => {

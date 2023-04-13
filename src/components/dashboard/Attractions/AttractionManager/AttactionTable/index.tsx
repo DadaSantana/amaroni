@@ -51,7 +51,7 @@ const BtnAction = ({id, fnEdit, fnUpdate}:BtnProps) => {
     }
   
     const handleRemoveItem = async (id: string) => {
-      let result = window.confirm("Deseja realmente exlcuir este local?");
+      let result = window.confirm("Vuoi davvero eliminare questa posizione?");
       if (result) {
         await deleteDoc(doc(db, "attractions", id));
         fnUpdate();
@@ -85,7 +85,7 @@ export const AttractionTable = ({en, fn}:Props) => {
       
       const columns: Column[] = [
         { id: 'name', label: 'Nome del luogo:', minWidth: 250 },
-        { id: 'type', label: 'Type:', minWidth: 70 },
+        { id: 'type', label: 'Tipo:', minWidth: 70 },
         {
           id: 'address',
           label: 'Indirizzo',
@@ -157,7 +157,17 @@ export const AttractionTable = ({en, fn}:Props) => {
     const rows: Data[] = [];
     
     att.forEach(element => {
-      rows.push(createData(element.name, element.type, element.address, element.tel, element.authorName, <BtnAction id={element.id} fnEdit={fn} fnUpdate={handleSetAtt} />));
+      rows.push(createData(
+        element.name, 
+        element.type == 'Food' ? 'Dove Mangiare' :
+        element.type == 'Square' ? 'Dove Dormire' :
+        element.type == 'Marketplace' ? 'Associazioni' :
+        element.type == 'Health' ? 'Salute' :
+        element.type == 'Public Place' ? 'Luogo pubblico' : 'Tipo', 
+        element.address,
+        element.tel, 
+        element.authorName, 
+        <BtnAction id={element.id} fnEdit={fn} fnUpdate={handleSetAtt} />));
     });
 
 
@@ -180,18 +190,6 @@ export const AttractionTable = ({en, fn}:Props) => {
         //get inputs value
         const name = formData.get('searchByName') as string;
         const type = formData.get('searchByType') as string;
-
-        if (name != '' && type == '') {
-          const test = Attractions.getByName(name);
-        } 
-
-        if (name == '' && type != '') {
-          console.log('preencheu o tipo');
-        } 
-
-        if (name != '' && type != '') {
-          console.log('preencheu o nome e o tipo');
-        }
       }
 
     return(
