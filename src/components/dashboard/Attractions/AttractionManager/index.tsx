@@ -48,19 +48,11 @@ export const currencies = [
     },
     {
         value: 'Food',
-<<<<<<< HEAD
         label: 'Dove Mangiare',
     },
     {
         value: 'Square',
         label: 'Dove Dormire',
-=======
-        label: 'Cibo',
-    },
-    {
-        value: 'Square',
-        label: 'Piazza',
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     },
     {
         value: 'Marketplace',

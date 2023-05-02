@@ -85,7 +85,6 @@ export const Auth = ({fn, state}: Props) => {
                 dispatch(UserRed.setPhoto(user.photoURL));            
                 dispatch(UserRed.setPhone(user.phoneNumber));            
                 dispatch(appRed.setLogin(true));            
-<<<<<<< HEAD
                 dispatch(appRed.setToken(user.getIdToken)); 
                 if (markSession) {
                     dispatch(appRed.setSession(4133905200000));
@@ -93,10 +92,6 @@ export const Auth = ({fn, state}: Props) => {
                     dispatch(appRed.setSession(now));
                 } 
                 
-=======
-                dispatch(appRed.setToken(user.getIdToken));     
-                dispatch(appRed.setSession(now));
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
            
                 if (loggedAccont.levels.admin) {
                     dispatch(UserRed.setLevel({admin: true, member: false, guest: false}));

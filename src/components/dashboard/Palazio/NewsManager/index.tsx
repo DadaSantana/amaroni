@@ -27,10 +27,7 @@ import { db } from '../../../../libs/firebase';
 import { doc, deleteDoc } from "firebase/firestore";
 import { InsertLink } from '../../../InsertLinks';
 import { PhotoManager } from '../../../PhotoManager';
-<<<<<<< HEAD
 import { Alert } from '../../../alert';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     mainContent: boolean,
@@ -51,13 +48,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
     const [linksNews,setLinksNews] = React.useState<any[]>([]);
     const [ulinks,setuLinks] = React.useState<any[]>([]);
 
-<<<<<<< HEAD
-=======
-    const [links,setLinks] = React.useState<any[]>([]);
-    const [linksNews,setLinksNews] = React.useState<any[]>([]);
-    const [ulinks,setuLinks] = React.useState<any[]>([]);
-
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     const [edit,setEdit] = React.useState(false);
     const [send,setSend] = React.useState(false);
     const [sendEdit,setSendEdit] = React.useState(false);
@@ -120,11 +110,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
         e.preventDefault();
         setOpen(true);
 
-<<<<<<< HEAD
-=======
-        let newId: any = createId();
-        setPreviewId(newId);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         const formData = new FormData(e.currentTarget);
         const title = formData.get('title') as string;
         const description = formData.get('description') as string;
@@ -138,7 +123,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
         const dateString = d+'-'+m+'-'+y;
 
         if (fileUpload != undefined) {
-<<<<<<< HEAD
             if (title != '' || description != '') {
                 const image = await PhotoService.insertNewsPhoto(fileUpload);
                 if (image != undefined) {
@@ -172,13 +156,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
               setShowAlert(false);              
             },6000)  
             setOpen(false);  
-=======
-            const image = await PhotoService.insertNewsPhoto(fileUpload);
-            if (image != undefined) {
-                await ServiceNews.setNews(newId,image.url,title,description,address,telephone,email,links,dateString);
-                setConfirm(true);
-            }
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         }
     }
 
@@ -200,10 +177,7 @@ export const NewsManager = ({mainContent, fn}:Props) => {
             }
         }
         await ServiceNews.updateEvent(id,title,description,address,telephone,email,linksNews);
-<<<<<<< HEAD
         setOpen(false);
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     }
 
     const handleRemoveItem = async (id: string) => {
@@ -375,11 +349,7 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                         />
                     </div>
                     <PhotoManager path='news' id={previewId} sending={confirm} />
-<<<<<<< HEAD
                     <InsertLink link={newLink} setLink={setNewLink} />  
-=======
-                    <InsertLink link={linksNews} setLink={setLinksNews} />  
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     <Button 
                         className='button-submit'
                         type='submit' 
@@ -499,11 +469,8 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                     <div 
                         className="item-gallery add"
                         onClick={()=>{
-<<<<<<< HEAD
                             setLinksNews([]);
                             setImgBlob('');
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                             setEdit(false);
                             fn(false);
                         }}
@@ -555,7 +522,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                 }                    
             </div>
             }
-<<<<<<< HEAD
             <span 
                 onClick={()=>{
                     setEdit(false);
@@ -566,12 +532,6 @@ export const NewsManager = ({mainContent, fn}:Props) => {
                 {system.language[system.current] === 'english' ? 'To go back' : null}
                 {system.language[system.current] === 'german' ? 'Zurück zu gehen' : null}
             </span>
-=======
-            <span onClick={()=>{
-                setEdit(false);
-                fn(true);
-            }}>Voltar</span>
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
             <hr />            
         </Content>
     );

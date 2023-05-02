@@ -3,10 +3,7 @@ import * as React from 'react';
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { Container } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-<<<<<<< HEAD
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper';
@@ -168,7 +165,6 @@ export const EventDetails = () => {
                             <p>{desc}</p>
                         </div>
                 </section>
-<<<<<<< HEAD
                 {!isLoaded &&
                     <div>Loading...</div>
                 }
@@ -184,8 +180,6 @@ export const EventDetails = () => {
                     </GoogleMap>
                 </>
                 }
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                 <GalleryContent path='events' id={eventId} />   
                 <Links vetor={links} />                      
             </Container>

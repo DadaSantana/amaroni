@@ -29,11 +29,8 @@ import 'swiper/css/scrollbar';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { PhotoManager } from '../../../PhotoManager';
 import { v4 as createId } from 'uuid';
-<<<<<<< HEAD
 import { Alert } from '../../../alert';
 import { InsertLink } from '../../../InsertLinks';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     fn: () => void;
@@ -52,7 +49,6 @@ export const AttractionAdd = ({fn}:Props) => {
     const [uploading, setUploading] = React.useState(false);
     const [confirm,setConfirm] = React.useState(false);
     const [previewId,setPreviewId] = React.useState('');
-<<<<<<< HEAD
     const [showAlert,setShowAlert] = React.useState(false);
     const [variant,setVariant] = React.useState('');
     const [message,setMessage] = React.useState('');
@@ -62,8 +58,6 @@ export const AttractionAdd = ({fn}:Props) => {
         let newId: any = createId();
         setPreviewId(newId);
     },[])
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -71,11 +65,6 @@ export const AttractionAdd = ({fn}:Props) => {
 
         const formData = new FormData(e.currentTarget);
         const file = formData.get('image') as File;
-<<<<<<< HEAD
-=======
-        let newId: any = createId();
-        setPreviewId(newId);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         setConfirm(true);
         
         if(file && file.size > 0) {
@@ -95,7 +84,6 @@ export const AttractionAdd = ({fn}:Props) => {
                 const description = formData.get('description') as string;
                 const imageUrl = result.url;
 
-<<<<<<< HEAD
                 if (name == '' || address == '' || description == '') {
                     setVariant('danger');
                     setMessage("Il titolo, l'indirizzo e la descrizione sono campi obbligatori.");
@@ -106,9 +94,6 @@ export const AttractionAdd = ({fn}:Props) => {
                     setOpen(false);
                 } else {
                     let add = await Attractions.newAttraction(previewId,imageUrl,name,type,address,tel,website,ltn,lng,description,author.id,author.name,link);
-=======
-                let add = await Attractions.newAttraction(newId,imageUrl,name,type,address,tel,website,ltn,lng,description,author.id,author.name);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
                     if (previewGallery.length > 0) {
                         previewGallery.map((item: any, index: number)=>(
@@ -272,11 +257,7 @@ export const AttractionAdd = ({fn}:Props) => {
                             name='website'
                             required
                             id="outlined-required"
-<<<<<<< HEAD
                             label="Sito web"
-=======
-                            label="Il Luogo"
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                             defaultValue=""
                             /> 
                         </div>
@@ -323,10 +304,7 @@ export const AttractionAdd = ({fn}:Props) => {
                 </div>
                 <div className="input-bottom">
                     <PhotoManager path='attractions' id={previewId} sending={confirm} />
-<<<<<<< HEAD
                     <InsertLink link={link} setLink={setLink} />
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     <div className="group-buttons">
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Registra nuova posizione

@@ -32,10 +32,7 @@ import PublicIcon from '@mui/icons-material/Public';
 
 import { RateAndComment } from './RateAndComment';
 import { GalleryContent } from '../../GalleryPath';
-<<<<<<< HEAD
 import { Links } from '../../Links';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 
 export const AttractionDetails = () => {
@@ -159,10 +156,7 @@ export const AttractionDetails = () => {
                             <Rating className='rating' name="read-only" value={rating} readOnly />        
                             <span className="type-att">
                                 {
-<<<<<<< HEAD
                                     type == 'Art' ? 'Arte e Cultura' :
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                                     type == 'Food' ? 'Dove Mangiare' :
                                     type == 'Square' ? 'Dove Dormire' :
                                     type == 'Marketplace' ? 'Associazioni' :
@@ -204,11 +198,7 @@ export const AttractionDetails = () => {
                                     {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
                                 </label>
                             </div>
-<<<<<<< HEAD
                             <p>{description}</p>
-=======
-                            <p className='description-window'>{description}</p>
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                         </div>                       
                     </div>
                     <img src={image} alt="" />
@@ -222,10 +212,7 @@ export const AttractionDetails = () => {
                             </label>
                         </div>
                         <p>{description}</p>
-<<<<<<< HEAD
                         {/* <textarea name="description" readOnly value= /> */}
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     </div>
                 </section>
                 <GalleryContent path='attractions' id={attractionId} />

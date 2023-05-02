@@ -60,38 +60,6 @@ export const Footer = () => {
                                         {system.language[system.current] === 'german' ? 'Galleria fotografica' : null}
                                     </Link>
                                 </li>
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <HomeIcon />
-                                    <Link to="/palazzo">
-                                        Palazzo Comunale
-                                    </Link>
-                                </li>
-                                <li>
-                                    <HomeIcon />
-                                    <Link to="/gemellaggio/rotkreuz">
-                                        Gemellaggio di Risch-Rotkreuz
-                                    </Link>
-                                </li>
-                                <li>
-                                    <PrivacyTipIcon />
-                                    <a href="/privacy-policy">Privacy policy</a>
-                                </li>
-                                <li>
-                                    <NotesIcon />
-                                    <a href="/note-legali">Note legali</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="box-item">
-                            <h5>
-                                {system.language[system.current] === 'italian' ? 'Telefoni' : null}
-                                {system.language[system.current] === 'english' ? 'Phones' : null}
-                                {system.language[system.current] === 'german' ? 'Telefone' : null}
-                            </h5>
-                            <ul>
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                                 <li>
                                     <HomeIcon />
                                     <Link to="/palazzo">

@@ -41,11 +41,7 @@ export const getAll = async () => {
     return list;
 }
 
-<<<<<<< HEAD
 export const newAttraction = async (id:string,imageUrl: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string,links: any[]) => {
-=======
-export const newAttraction = async (id:string,imageUrl: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     await setDoc(doc(db, "attractions", id), {
         imageUrl: imageUrl,
         name: name,
@@ -102,11 +98,7 @@ export const updateAttRating = async (id: string, rating: number) => {
     });
 }
 
-<<<<<<< HEAD
 export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, links: any[]) => {
-=======
-export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     const attractionRef = doc(db, "attractions", id);
     await updateDoc( attractionRef, {
         name: name,

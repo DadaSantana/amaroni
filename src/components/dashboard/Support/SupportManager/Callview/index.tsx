@@ -183,7 +183,6 @@ export const Callview = ({id}:Props) => {
                         </MenuItem>
                     ))}
                 </TextField>
-<<<<<<< HEAD
                 }
                 {!user.level.admin &&
                 <TextField
@@ -196,8 +195,6 @@ export const Callview = ({id}:Props) => {
                     }}
                 />
                 }                
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
             </div>
             <div className="dialog-box">
                 {chatSetted &&

@@ -1,16 +1,11 @@
 import * as React from 'react';
 //import reducers
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
-<<<<<<< HEAD
 import { Content, ViewContent, ListNotifications } from "./styles";
-=======
-import { Content, ViewContent } from "./styles";
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import components
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-<<<<<<< HEAD
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
@@ -20,18 +15,10 @@ import * as NotificationService from '../../../services/notifications';
 import { Notification } from '../../../types/Notification';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from '../../alert';
-=======
-import SendToMobileIcon from '@mui/icons-material/SendToMobile';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-//import service
-import * as NotificationService from '../../../services/notifications';
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 export const Notifications = () => {  
 
   const user = useAppSelector(state=>state.user);
-<<<<<<< HEAD
   const system = useAppSelector(state=>state.system);
   const navigate = useNavigate();
 
@@ -58,10 +45,6 @@ export const Notifications = () => {
   },[notifications])
 
 
-=======
-  const [open, setOpen] = React.useState(false);
-  const [key,setKey] = React.useState(0);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -73,7 +56,6 @@ export const Notifications = () => {
 
       if (title != '' && message != '') {
           await NotificationService.newNotification(title,message,user.name,user.id,date);
-<<<<<<< HEAD
           setVariant('success');
           if (system.language[system.current] === 'italian') {
               setMessage('Avviso inviato!');
@@ -88,8 +70,6 @@ export const Notifications = () => {
           },6000); 
           setReload(!reload);
           setLoadNotifications(false);
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
           setKey(key+1);
           setOpen(false);
       }
@@ -97,12 +77,9 @@ export const Notifications = () => {
 
   return(
     <Content>
-<<<<<<< HEAD
         {showAlert &&
             Alert(variant,message)
         }
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
@@ -148,7 +125,6 @@ export const Notifications = () => {
                     Invia nuova notifica
                 </Button>                          
             </Box>
-<<<<<<< HEAD
             <ListNotifications>
                 <h4>
                     {system.language[system.current] === 'italian' ? 'Ultime notifiche inviate' : null}
@@ -190,9 +166,6 @@ export const Notifications = () => {
             </ListNotifications> 
         </ViewContent> 
                  
-=======
-        </ViewContent>            
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     </Content>
   );
 }

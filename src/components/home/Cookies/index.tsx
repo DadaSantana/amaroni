@@ -43,11 +43,7 @@ export const Cookies = () => {
                         setCookie('privacy-policy', true);
                     }}
                 >
-<<<<<<< HEAD
                     {system.language[system.current] == 'italian' ? 'Procedi' : null}
-=======
-                    {system.language[system.current] == 'italian' ? 'Proceder' : null}
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     {system.language[system.current] == 'english' ? 'Proceed' : null}
                     {system.language[system.current] == 'german' ? 'Fortfahren' : null}
                 </Button>

@@ -7,7 +7,7 @@ import { Content, AttractionItem } from './styles';
 import { Container } from 'react-bootstrap';
 //import swiper component
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper';
+import { Navigation, Autoplay, Pagination, A11y } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -24,6 +24,8 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import PublicIcon from '@mui/icons-material/Public';
 import ChurchIcon from '@mui/icons-material/Church';
 import HotelIcon from '@mui/icons-material/Hotel';
+import GroupsIcon from '@mui/icons-material/Groups';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 //import components
 import Rating from '@mui/material/Rating';
 import { Link } from 'react-router-dom';
@@ -41,6 +43,7 @@ export const Attractions = () => {
     const [type, setType] = React.useState('all');
     const [rating,setRating] = React.useState(0);
     const [attStarted,setAttStated] = React.useState(true);
+    const [activeSlide,setActiveSlide] = React.useState(0);
 
     React.useEffect(()=>{
         if (type != 'all') {
@@ -109,6 +112,24 @@ export const Attractions = () => {
                         </label>
                     </motion.span>
                     <motion.span 
+                        className={type == 'Art' ? 'type art active' : 'type art'} 
+                        onClick={()=>{handleSetType('Art')}}
+                        initial="start"
+                        whileInView="view"
+                        variants={attributes}
+                        transition={{
+                            ease: 'linear',
+                            delay: 0.150
+                        }}
+                    >
+                        <TheaterComedyIcon />
+                        <label>
+                            {system.language[system.current] == 'italian' ? 'Arte e Cultura' : null}
+                            {system.language[system.current] == 'english' ? 'Art and Culture' : null}
+                            {system.language[system.current] == 'german' ? 'Kunst und Kultur' : null}
+                        </label>
+                    </motion.span>
+                    <motion.span 
                         className={type == 'Food' ? 'type food active' : 'type food'} 
                         onClick={()=>{handleSetType('Food')}}
                         initial="start"
@@ -155,7 +176,7 @@ export const Attractions = () => {
                             delay: 0.200
                         }}
                     >
-                        <LocalGroceryStoreIcon />
+                        <GroupsIcon />
                         <label>
                             {system.language[system.current] == 'italian' ? 'Associazioni' : null}
                             {system.language[system.current] == 'english' ? 'Marketplace' : null}
@@ -205,24 +226,29 @@ export const Attractions = () => {
                     {system.language[system.current] == 'german' ? 'Wählen Sie einen Typ aus, um einen Filter zu definieren.' : null} 
                 </p>
                 <Swiper
-                // install Swiper modules
-                navigation={true} 
-                spaceBetween={30}
-                slidesPerGroup={
-                    windowSize.current[0] <= 480 ? 1 : 
-                    windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3 
-                }
-                pagination={{ clickable: true }}
-                modules={[Navigation, Autoplay]}                
+                className='slide-swiper'
+                modules={[Navigation, Pagination, Autoplay, A11y]}
+                spaceBetween={50}
                 slidesPerView={
                     windowSize.current[0] <= 480 ? 1 : 
                     windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3 
                 }
+                slidesPerGroup={                    
+                    windowSize.current[0] <= 480 ? 1 : 
+                    windowSize.current[0] > 480 && windowSize.current[0] < 860 ? 2 : 3 
+                }
                 autoplay={{
-                    delay: 2000,
+                    delay: 5000,
                     disableOnInteraction: true,
                 }}
-                
+                loop={
+                    att.length > 5 ? true : false
+                }
+                navigation
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+                onSwiper={(swiper) => {setActiveSlide(swiper.activeIndex)}}
+                onSlideChange={(swiper) => {setActiveSlide(swiper.activeIndex)}}                
                 >
                     {state &&
                     <>
@@ -260,9 +286,17 @@ export const Attractions = () => {
                                         }}
                                     >
                                         <span className='att-type'>
-                                            <ChurchIcon />
+                                            {
+                                                item.type == 'Art' ? <TheaterComedyIcon /> :
+                                                item.type == 'Food' ? <RestaurantIcon /> :
+                                                item.type == 'Square' ? <HotelIcon /> :
+                                                item.type == 'Marketplace' ? <GroupsIcon /> :
+                                                item.type == 'Health' ? <LocalHospitalIcon /> :
+                                                item.type == 'Public Place' ? <PublicIcon /> : <PublicIcon />
+                                            }
                                             <label className='type-name'>
                                                 {
+                                                    item.type == 'Art' ? 'Arte e Cultura' :
                                                     item.type == 'Food' ? 'Dove Mangiare' :
                                                     item.type == 'Square' ? 'Dove Dormire' :
                                                     item.type == 'Marketplace' ? 'Associazioni' :
@@ -289,4 +323,3 @@ export const Attractions = () => {
         </Content>
     );
 }
-

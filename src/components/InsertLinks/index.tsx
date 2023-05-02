@@ -4,10 +4,7 @@ import { Content } from './styles';
 import TextField from '@mui/material/TextField';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AddLinkIcon from '@mui/icons-material/AddLink';
-<<<<<<< HEAD
 import EditIcon from '@mui/icons-material/Edit';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     link: any[],
@@ -20,7 +17,6 @@ export const InsertLink = ({link, setLink}:Props) => {
     const [href,setHref] = React.useState('');
     const [showLinks,setShowLinks] = React.useState(false);
     const [updateMap,setUpdateMap] = React.useState(false);
-<<<<<<< HEAD
     const [editMode,setEditMode] = React.useState(false);
     const [editIndex,setEditIndex] = React.useState(0);
 
@@ -44,16 +40,6 @@ export const InsertLink = ({link, setLink}:Props) => {
         
     }
 
-=======
-
-    const handleNewLink = () => {
-        if (text != '' && href != '') {
-            setShowLinks(false);
-            setLink([...link, {textLink: text, hrefLink: href}]);
-            setUpdateMap(!updateMap);
-        }
-    }
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     const handleRemoveLink = (e: number) => {
         setShowLinks(false);
         if (e > -1) { // only splice array when item is found
@@ -62,7 +48,6 @@ export const InsertLink = ({link, setLink}:Props) => {
         }      
     }
 
-<<<<<<< HEAD
     const handleEditLink = (e: number) => {
         setEditMode(true);
         setEditIndex(e);
@@ -70,8 +55,6 @@ export const InsertLink = ({link, setLink}:Props) => {
         setHref(link[e].hrefLink);
     }
 
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     React.useEffect(()=>{
         if (link.length > 0) {
             setShowLinks(true);
@@ -90,10 +73,7 @@ export const InsertLink = ({link, setLink}:Props) => {
                         system.language[system.current] == 'german' ? 'Linktitel' : ''
                     }
                     variant="filled" 
-<<<<<<< HEAD
                     value={text}
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     onChange={(e)=>{
                         setText(e.currentTarget.value);
                     }}
@@ -107,10 +87,7 @@ export const InsertLink = ({link, setLink}:Props) => {
                         system.language[system.current] == 'german' ? 'Linkadresse' : ''
                     } 
                     variant="filled"
-<<<<<<< HEAD
                     value={href}
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     onChange={(e)=>{
                         setHref(e.currentTarget.value);
                     }}
@@ -129,14 +106,10 @@ export const InsertLink = ({link, setLink}:Props) => {
                 link.map((item,index)=>(
                     <span className='link-item'>
                         <a href={item.hrefLink} target="_blank">{item.textLink}</a>
-<<<<<<< HEAD
                         <span>
                             <EditIcon onClick={()=>{handleEditLink(index)}} />
                             <DeleteForeverIcon id="delete-icon" onClick={()=>{handleRemoveLink(index)}}/>
                         </span>                        
-=======
-                        <DeleteForeverIcon id="delete-icon" onClick={()=>{handleRemoveLink(index)}}/>
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     </span> 
                 ))
 

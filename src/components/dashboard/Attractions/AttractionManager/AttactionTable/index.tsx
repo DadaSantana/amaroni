@@ -159,10 +159,7 @@ export const AttractionTable = ({en, fn}:Props) => {
     att.forEach(element => {
       rows.push(createData(
         element.name, 
-<<<<<<< HEAD
         element.type == 'Art' ? 'Arte e Cultura' :
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         element.type == 'Food' ? 'Dove Mangiare' :
         element.type == 'Square' ? 'Dove Dormire' :
         element.type == 'Marketplace' ? 'Associazioni' :

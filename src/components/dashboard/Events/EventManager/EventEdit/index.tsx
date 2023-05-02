@@ -9,10 +9,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { InsertLink } from '../../../../InsertLinks';
-<<<<<<< HEAD
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
@@ -125,11 +122,7 @@ export const EditContent = ({id}: Props) => {
         const tel = formData.get('tel') as string;
         const email = formData.get('email') as string;
 
-<<<<<<< HEAD
         await Annun.updateEvent(id,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,latitude,longitude,link);
-=======
-        await Annun.updateEvent(id,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,link);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         setConfirm(true);
 
         setTitle(name);
@@ -279,7 +272,6 @@ export const EditContent = ({id}: Props) => {
                         />
                     </div>
                     <div className="input-group">
-<<<<<<< HEAD
                         {!isLoaded &&
                             <div>Caricamento...</div>
                         }
@@ -306,8 +298,6 @@ export const EditContent = ({id}: Props) => {
                         }
                     </div>
                     <div className="input-group">
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                         <InsertLink link={link} setLink={setLink} />
 {/*                         <div className="box-item">
                             <div className="upper-add-file">

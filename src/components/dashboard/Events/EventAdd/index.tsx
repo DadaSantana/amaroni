@@ -6,10 +6,7 @@ import { Content } from './styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-<<<<<<< HEAD
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
 import BackupIcon from '@mui/icons-material/Backup';
@@ -22,12 +19,9 @@ import * as Annun from '../../../../services/annuncios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InsertLink } from '../../../InsertLinks';
-<<<<<<< HEAD
 import { Alert } from '../../../alert';
 import { PhotoManager } from '../../../PhotoManager';
 import { v4 as createId } from 'uuid';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     fn: () => void;
@@ -45,7 +39,6 @@ export const EventAdd = ({fn}: Props) => {
 
     const [uploading, setUploading] = React.useState(false);
     const [link,setLink] = React.useState<any[]>([]);
-<<<<<<< HEAD
     const [showAlert,setShowAlert] = React.useState(false);
     const [variant,setVariant] = React.useState('');
     const [message,setMessage] = React.useState('');
@@ -55,8 +48,6 @@ export const EventAdd = ({fn}: Props) => {
         let newId: any = createId();
         setPreviewId(newId);
     },[])
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

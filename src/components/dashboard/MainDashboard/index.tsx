@@ -78,18 +78,11 @@ export const MainDashboard = () => {
                 dispatch(setLogin(false));
                 navigate('/');
             },10000);            
-<<<<<<< HEAD
         } else if (system.session > now && system.session <= (now + 1000000)) {
             const updateTime = Date.now() + 1000000;
             dispatch(setSession(updateTime));
         } else {
             dispatch(setSession(4133905200000));
-=======
-        } else {
-            const updateTime = Date.now() + 1000000;
-            dispatch(setSession(updateTime));
-            console.log(system.session);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         }
     },[element])
 

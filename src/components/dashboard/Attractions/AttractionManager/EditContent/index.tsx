@@ -30,10 +30,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { PhotoManager } from '../../../../PhotoManager';
-<<<<<<< HEAD
 import { InsertLink } from '../../../../InsertLinks';
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     id: string
@@ -91,11 +88,7 @@ export const EditContent = ({id}:Props) => {
             setType(attEditItem[0].type);
             setAddress(attEditItem[0].address);
             setTel(attEditItem[0].tel);
-<<<<<<< HEAD
             setWebsite(attEditItem[0].website);
-=======
-            setTel(attEditItem[0].website);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
             setLatitude(attEditItem[0].latitude)
             setLongitude(attEditItem[0].longitude);
             setDescription(attEditItem[0].description);
@@ -160,11 +153,7 @@ export const EditContent = ({id}:Props) => {
         const description = formData.get('description') as string;
         
 
-<<<<<<< HEAD
         let update = await Attractions.updateAttraction(id,name,type,address,tel,website,latitude,longitude,description,link);
-=======
-        let update = await Attractions.updateAttraction(id,name,type,address,tel,website,latitude,longitude,description,author.id,author.name);
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
         
         setName(name);
         setType(type);
@@ -336,11 +325,7 @@ export const EditContent = ({id}:Props) => {
                             name='website'
                             required
                             id="outlined-required"
-<<<<<<< HEAD
                             label="Sito web"
-=======
-                            label="Il Luogo"
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                             defaultValue={website}
                             /> 
                         </div>
@@ -388,10 +373,7 @@ export const EditContent = ({id}:Props) => {
                 </div>
                 <div className="input-bottom">
                     <PhotoManager path='attractions' id={id} sending={confirm} />
-<<<<<<< HEAD
                     <InsertLink link={link} setLink={setLink} />
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                     <div className="group-buttons">
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Salva

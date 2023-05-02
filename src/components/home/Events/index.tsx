@@ -23,10 +23,7 @@ export const Events = () => {
     const system = useAppSelector(state => state.system);
     const [ann, setAnn] = React.useState<Annuncio[]>([]);
     const [activeSlide,setActiveSlide] = React.useState(0);
-<<<<<<< HEAD
     const navigate = useNavigate();
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     React.useEffect(()=>{
         const getAnn = async () => {
@@ -77,12 +74,9 @@ export const Events = () => {
                                         ease: 'easeIn',
                                         duration: activeSlide == index ? 10 : 0.5
                                     }}
-<<<<<<< HEAD
                                     onClick={()=>{
                                         navigate(`event/${item.id}`);
                                     }}
-=======
->>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                                 />
                                 <div className="event-details">
                                     <Link to={`event/${item.id}`}>{item.name}</Link>
