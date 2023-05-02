@@ -27,12 +27,12 @@ export const Content = styled.section`
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-                span.circle {
-                    height: 10px;
-                    width: 10px;
-                    border-radius: 50%;
+    
+                span.bar {
+                    height: 5px;
+                    width: 150px;
                     background-color: #009aff;
+                    border-radius: 0 0 5px 5px;
                     margin: 0 10px;
                 }
             }
@@ -52,11 +52,24 @@ export const Content = styled.section`
             .swiper-wrapper {
                 height: inherit;
 
+
                 .slide-item {
                     display: flex;
-                    padding: 20px 20px;
                     box-sizing: border-box;
                     align-items: flex-end;
+                    height: inherit;
+                    max-width: 100%;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+<<<<<<< HEAD
+                        cursor: pointer;
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+                    }
         
                     .event-details {
                         display: flex;
@@ -66,6 +79,8 @@ export const Content = styled.section`
                         background-color: rgb(43 43 43 / 30%);
                         border-radius: 5px;
                         flex: 1;
+                        position: absolute;
+                        margin: 20px;
         
                         a {
                             font-size: 24px;
@@ -81,6 +96,8 @@ export const Content = styled.section`
                     }
         
                 }
+
+                
             }
 
             

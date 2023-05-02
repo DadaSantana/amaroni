@@ -4,6 +4,7 @@ import * as React from 'react';
 import { db } from '../../../../../libs/firebase';
 //import services and types
 import * as UserService from '../../../../../services/users';
+import * as AuthService from '../../../../../services/auth';
 import { Users } from '../../../../../types/Users';
 //import from Firebase
 import { doc, deleteDoc } from "firebase/firestore";
@@ -18,16 +19,75 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 //import icons
-import { Content, Btn, SelectInput } from './styles';
+import { Content, Btn, SelectInput, Float } from './styles';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import KeyIcon from '@mui/icons-material/Key';
 import BlockIcon from '@mui/icons-material/Block';
-import SaveIcon from '@mui/icons-material/Save';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 //import components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Alert } from '../../../../alert';
+
+type UserProps = {
+  id: string,
+  fn: () => void
+}
+
+const UserFloat = ({id, fn}:UserProps) => {
+  const [user,setUser] = React.useState<Users>();
+  const [loading,setLoading] = React.useState(true);
+
+  React.useEffect(()=>{
+    const getUser = async () => {
+      setUser(await UserService.getUidData(id));
+    }
+    getUser();
+  },[])
+
+  React.useEffect(()=>{
+    if (user != null) {
+      setLoading(false);
+    }
+  },[user])
+
+  return(
+    <Float>
+      <div className="user-content">
+        {loading &&
+        <CircularProgress className='progress' />
+        }
+        <div className='user-data'>
+
+          {!loading && user != null &&
+          <>
+          <img src={user.photo} alt="" />
+          <div className="user-details">
+            <h4 style={{fontWeight: 'bold'}}>{user.name}</h4>
+            <p><b>E-mail:</b> {user.email}</p>
+            <p><b>Numero di telefono:</b> {user.phone}</p>
+            <p>
+              <b>Autorizzazioni:</b>              
+              {
+                user.levels.admin ? ' Amministratore' :
+                user.levels.member ? ' Membro' : ' Ospite'
+              }
+            </p>
+          </div>
+          </>
+          }
+        </div>
+        {!loading && user != null &&        
+        <span onClick={fn}>Torna al menu precedente</span>
+        }
+      </div>
+      
+    </Float>
+  );
+}
 
 type BtnProps = {
     id: string,
@@ -38,23 +98,55 @@ type BtnProps = {
 
 const BtnAction = ({id, fnEdit, fnUpdate, saveValue}:BtnProps) => {
 
-    const handleEditItem = (id: string) => {
-      fnEdit(id);
+  const [showUser,setShowUser] = React.useState(false);
+  const [showAlert,setShowAlert] = React.useState(false);
+  const [variant,setVariant] = React.useState('');
+  const [message,setMessage] = React.useState('');
+
+  const handleSendRefinePassword = async (id: string) => {
+    const userData = await UserService.getUidData(id);
+    if (userData) {
+      await AuthService.sendRedefinePassword(userData.email);
+      setVariant('success');
+      setMessage('Email di reimpostazione password inviata!');
+      setShowAlert(true);
+      setTimeout(()=>{
+        setShowAlert(false);
+      },6000)
     }
+  }
+
+  const handleCloseUser = () => {
+    setShowUser(false);
+  }
   
-    const handleRemoveItem = async (id: string) => {
-      let result = window.confirm("Deseja realmente exlcuir este local?");
-      if (result) {
-        await deleteDoc(doc(db, "annuncios", id));
-        fnUpdate();
-      }     
-    }
+  const handleRemoveItem = async (id: string) => {
+    let result = window.confirm("Vuoi davvero bloccare questo utente?");
+    if (result) {
+      await UserService.blockUser(id);
+      setVariant('success');
+      setMessage('Utente bloccato con successo');
+      setShowAlert(true);
+      setTimeout(()=>{
+        setShowAlert(false);
+      },6000)
+      fnUpdate();        
+    }     
+  }
+
+    
   
     return(
         <Btn>
-            <KeyIcon className='edit' onClick={() => {handleEditItem(id)}}/>     
+            {showAlert &&
+              Alert(variant,message)
+            }
+            {showUser &&
+            <UserFloat id={id} fn={handleCloseUser} />
+            }            
+            <AssignmentIndIcon onClick={() => {setShowUser(true)}}/>
+            <KeyIcon className='edit' onClick={() => {handleSendRefinePassword(id)}}/>     
             <BlockIcon className='block' onClick={()=> {handleRemoveItem(id)}}/>
-            <SaveIcon className={saveValue ? 'save' : 'disable'}/>
         </Btn>
     );
 }
@@ -81,9 +173,17 @@ const SelectLevel = ({current, id, name}:CurrentLevel) => {
     }
   ];
 
+  const [open,setOpen] = React.useState(false);
+  const [showAlert,setShowAlert] = React.useState(false);
+
   const handleUpdateUserLevel = async (id: string, name: string, level: string) => {
+    setOpen(true);
     await UserService.updateUserLevel(id,level);
-    alert('As permissões para o usuário '+name+' foram atualizadas para '+level+'.');
+    setOpen(false);
+    setShowAlert(true);
+    setTimeout(()=>{
+      setShowAlert(false);
+    },6000)
   } 
 
   return(
@@ -96,6 +196,15 @@ const SelectLevel = ({current, id, name}:CurrentLevel) => {
       autoComplete="off"
     >
     <div>
+      {showAlert &&
+      Alert('success',`Le autorizzazioni per l'utente ${name} sono state aggiornate!`)
+      }
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <TextField
         id="standard-select-currency"
         select  
@@ -138,10 +247,10 @@ export const UsersTable = ({fn}:Props) => {
       }
       
       const columns: Column[] = [
-        { id: 'name', label: "User Name:", minWidth: 250 },
-        { id: 'email', label: "User Email:", minWidth: 250 },
-        { id: 'id', label: "UID:", minWidth: 150 },
-        { id: 'level', label: "User Level:", minWidth: 150 },
+        { id: 'name', label: "Nome utente:", minWidth: 220 },
+        { id: 'email', label: "E-mail dell'utente:", minWidth: 220 },
+        { id: 'id', label: "UID:", minWidth: 130 },
+        { id: 'level', label: "Livello utente:", minWidth: 60 },
         {
           id: 'action',
           label: 'Azione',
@@ -174,17 +283,27 @@ export const UsersTable = ({fn}:Props) => {
     }
     //Get all annuncios from firebase
     const [users, setUsers] = React.useState<Users[]>([]); 
-    const [userLevel, setUserLevel] = React.useState('')
+    const [usersAutoComplete, setUsersAutoComplete] = React.useState<any[]>([]);
     React.useEffect(()=>{
         handleClose();
         const getUsers = async () => {            
             setUsers(await UserService.getAll());
             return setOpen(false);
-        } 
-        
+        }         
         getUsers();
 
     }, [getUsers]); 
+
+    React.useEffect(()=>{
+      if (users.length > 0) {
+        let item: any[] = [];
+        users.forEach(element => {
+          item.push({label: element.name, id: element.id});
+        });
+
+        setUsersAutoComplete(item);
+      }
+    },[users])
 
     //create link between elements
     const [saveButtonState,setSaveButtonState] = React.useState(false);
@@ -223,6 +342,8 @@ export const UsersTable = ({fn}:Props) => {
       setPage(0);
     };
 
+    const [value, setValue] = React.useState<any>(null);    
+
     return(
         <Content>
             <Backdrop
@@ -231,6 +352,28 @@ export const UsersTable = ({fn}:Props) => {
             >
               <CircularProgress color="inherit" />
             </Backdrop>
+            <div className="filter-component">
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={usersAutoComplete}
+                sx={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Cerca utente:" variant="standard" />}
+                value={value}
+                onChange={async (event: any, newValue: any | null) => {
+                  setOpen(true);
+                  if (newValue != null) {
+                    setValue(newValue);
+                    let uid: string = newValue.id;
+                    setUsers([await UserService.getUidData(uid)]);
+                  } else {
+                    setUsers(await UserService.getAll());
+                  }
+                  setOpen(false);
+                }}
+              />
+            </div>
+            
             <Paper sx={{ width: '100%' }} className='table-content'>
               <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">

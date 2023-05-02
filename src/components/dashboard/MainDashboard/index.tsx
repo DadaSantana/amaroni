@@ -1,6 +1,6 @@
 //import react
 import * as React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 //import reducers from redux
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 //import services
@@ -16,6 +16,9 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 //import components
 import { Events } from '../Events';
 import { Attractions } from '../Attractions';
@@ -23,13 +26,26 @@ import { Gallery } from '../Gallery';
 import { Support } from '../Support';
 import { Users } from '../Users';
 import { Palazio } from '../Palazio';
+import { Gemmellagi } from '../Gemmellagi';
+import { Notifications } from '../Notifications';
+import { useDispatch } from 'react-redux';
+import { SignOut } from '../../../services/auth';
+import { setLogin, setSession } from '../../../redux/reducers/appReducer';
+import { Alert } from '../../alert';
 
 export const MainDashboard = () => {
     const user = useAppSelector(state => state.user);
     const system = useAppSelector(state => state.system);
+    const navigate = useNavigate();
     const { element } = useParams();
     const [openCalls,setOpenCalls] = React.useState(false);
     const [count,setCount] = React.useState(0);
+    const dispatch = useDispatch();
+    const [showAlert,setShowAlert] = React.useState(false);
+    const [variant,setVariant] = React.useState('');
+    const [message,setMessage] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+    
     React.useEffect(()=>{
         const getOpenCalls = async () => {
             setCount(await SupportService.getOpenCallsCount());       
@@ -41,11 +57,55 @@ export const MainDashboard = () => {
             setOpenCalls(true);
         }
     },[count])
+    React.useEffect(()=>{
+        const now = Date.now();
+        if (system.session <= now) {
+            setOpen(true);
+            setVariant('danger');
+            if (system.language[system.current] === 'italian') {
+                setMessage('Sessione scaduta. Accedi di nuovo.');
+            } else if (system.language[system.current] === 'english') {
+                setMessage('Session expired. Log in again.');
+            } else if (system.language[system.current] === 'german') {
+                setMessage('Sitzung abgelaufen. Nochmal anmelden.');
+            }                
+            setShowAlert(true);
+            setTimeout(()=>{
+              setShowAlert(false);
+            },6000);
+            setTimeout(()=>{
+                SignOut();
+                dispatch(setLogin(false));
+                navigate('/');
+            },10000);            
+<<<<<<< HEAD
+        } else if (system.session > now && system.session <= (now + 1000000)) {
+            const updateTime = Date.now() + 1000000;
+            dispatch(setSession(updateTime));
+        } else {
+            dispatch(setSession(4133905200000));
+=======
+        } else {
+            const updateTime = Date.now() + 1000000;
+            dispatch(setSession(updateTime));
+            console.log(system.session);
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+        }
+    },[element])
 
     return(
         <Dash.Content>
             <Dash.Navbar>
                 <Container>
+                    {showAlert &&
+                        Alert(variant,message)
+                    }
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={open}
+                    >
+                    <CircularProgress color="inherit" /> 
+                    </Backdrop>
                     <div className="group-menu">
                         {user.level.admin &&
                         <ul>
@@ -91,15 +151,14 @@ export const MainDashboard = () => {
                                 <Link to='#'>
                                     <DescriptionIcon />
                                     <label>
-                                        {system.language[system.current] == 'italian' ? 'Paginas' : null}
+                                        {system.language[system.current] == 'italian' ? 'Pagine' : null}
                                         {system.language[system.current] == 'english' ? 'Pages' : null}
-                                        {system.language[system.current] == 'german' ? 'Pages' : null}
+                                        {system.language[system.current] == 'german' ? 'Seiten' : null}
                                     </label>                                    
                                 </Link>
                                 <span className='toggle-pages'>
-                                    <Link to='/dashboard/pages/palazio'>Palazio Comunale</Link>
-                                    <Link to='/dashboard/pages/rotkreuz'>Rotkreuz</Link>
-                                    <Link to='/dashboard/pages/lukovica'>Lukovica</Link>
+                                    <Link to='/dashboard/pages/palazzo'>Palazzo Comunale</Link>
+                                    <Link to='/dashboard/pages/rotkreuz'>Gemellaggio di Risch-Rotkreuz</Link>
                                 </span>                                
                             </li>
                             <li className={element === 'support' ? 'menu-item active' : 'menu-item'}>
@@ -126,6 +185,16 @@ export const MainDashboard = () => {
                                     </label>
                                 </Link> 
                             </li>
+                            <li className={element === 'notifications' ? 'menu-item active' : 'menu-item'}>
+                                <Link to='/dashboard/notifications'>
+                                    <CircleNotificationsIcon />
+                                    <label>
+                                        {system.language[system.current] == 'italian' ? 'Notifiche' : null}
+                                        {system.language[system.current] == 'english' ? 'Notifications' : null}
+                                        {system.language[system.current] == 'german' ? 'Benachrichtigungen' : null}
+                                    </label>
+                                </Link> 
+                            </li>
                         </ul>
                         }
                         {user.level.member &&
@@ -136,7 +205,7 @@ export const MainDashboard = () => {
                                 <Link to='/dashboard/attractions'>
                                     <AttractionsIcon />
                                     <label>
-                                        {system.language[system.current] == 'italian' ? 'Attrazioni' : null}
+                                        {system.language[system.current] == 'italian' ? 'Il Borgo' : null}
                                         {system.language[system.current] == 'english' ? 'Attractions' : null}
                                         {system.language[system.current] == 'german' ? 'Sehenswürdigkeiten' : null}
                                     </label>
@@ -188,8 +257,14 @@ export const MainDashboard = () => {
                     {element === 'support' &&
                     <Support />
                     }
-                    {element === 'palazio' &&
+                    {element === 'palazzo' &&
                     <Palazio />
+                    }
+                    {element === 'rotkreuz' &&
+                    <Gemmellagi />
+                    }
+                    {element === 'notifications' &&
+                    <Notifications />
                     }
                 </Container>
             </Dash.Main>

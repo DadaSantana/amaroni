@@ -5,10 +5,15 @@ export const Content = styled.section`
     padding: 20px 0;
     display: flex;
     flex-direction: column;
-    max-width: 100vw;
+    max-width: 100%;
 
     @media (max-width: 760px) {
         padding: 10px;
+    }
+
+    @media (max-width: 850px) {
+        max-width: 100%;
+        padding: 20px 0;
     }
 `;
 

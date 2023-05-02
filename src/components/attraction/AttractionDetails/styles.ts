@@ -21,11 +21,13 @@ export const Content = styled.section`
             justify-content: space-between;
             width: 100%;
             flex: 1;
+            heigth: fit-content;
 
             .main-details {
                 display: flex;
                 flex-direction: column;
                 margin-right: 20px;
+                width: 100%;
 
                 .flex-between {
                     display: flex;
@@ -70,6 +72,8 @@ export const Content = styled.section`
                         padding: 0 10px;
                         border-radius: 0 5px 5px 0;
                         margin: 0;
+                        max-width: 100%;
+                        word-wrap: break-word;
                     }
                 }
     
@@ -82,6 +86,7 @@ export const Content = styled.section`
                     overflow: auto;
                     scrollbar-width: auto;
                     scrollbar-color: #ededed #ffffff;
+                    width: 100%;
 
                     &::-webkit-scrollbar {
                         width: 10px;
@@ -111,10 +116,10 @@ export const Content = styled.section`
                         }
                     }
                     
-                    p.description-window {
-                        height: 100%;
-                        margin: 0;
-                        padding: 5px;                        
+                    p {
+                        white-space: pre;
+                        white-space: pre-line;
+                        white-space: pre-wrap; 
                     }
                 }
             }
@@ -123,70 +128,28 @@ export const Content = styled.section`
                 margin-left: 20px;
                 min-width: 50%;
                 max-width: 50%;
+                max-height: 600px;
                 background-color: #ededed;
                 border-radius: 5px;
                 object-fit: cover;
                 object-position: center;
             }
 
-            .mobile {
+            .description-box.mobile {
                 display: none;
+
+                p {
+                    white-space: pre;
+                    white-space: pre-line;
+                    white-space: pre-wrap; 
+                }
             }
 
              
         }
 
-        section.gallery-attraction {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-            width: 100%;
-
-            h2 {
-                margin: 0;
-            }
-
-            .swiper {
-                margin: 0;
-                width: 100%;
-                padding: 20px 0;
-    
-                .swiper-wrapper {
-                    max-width: 100%;
-    
-                    .slide-item {
-                        display: flex;
-                        border-radius: 5px;
-                        min-height: 150px;
-                        min-width: 150px;
-                        max-height: 150px;
-                        max-width: 150px;
-                        box-shadow: 0 0 5px var(--shadow);
-                        margin: 5px;
-
-                        .hover-indicator {
-                            width: 100%;
-                            height: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            background-color: rgb(0 0 0 / 35%);
-                            border-radius: 5px;
-                            cursor: pointer;
-                            opacity: 0;
-                            transition: all linear 200ms;
-
-                            svg {
-                                color: var(--whiteFont);
-                            }
-
-                            &:hover {
-                                opacity: 1;
-                            }
-                        }
-                    }
-                }
-            }
+        .gallery-content {
+            margin-bottom: 50px;
         }
 
         @media (max-width: 760px) {
@@ -194,6 +157,7 @@ export const Content = styled.section`
 
             section.main-presentation {
                 flex-direction: column;
+
                 .main-details {
                     .description-box {
                         display: none;
@@ -213,7 +177,7 @@ export const Content = styled.section`
                     margin-bottom: 10px;
                 }
     
-                .mobile {
+                .description-box.mobile {
                     display: flex;
                     flex-direction: column;
                 }

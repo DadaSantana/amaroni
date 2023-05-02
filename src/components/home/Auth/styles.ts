@@ -16,7 +16,7 @@ export const Content = styled.div`
     transition: all linear 200ms;
 
     .login-content {
-        max-width: 250px;
+        width: 380px;
         background-color: #f9f9f9;
         box-shadow: 0 0 5px var(--shadow);
         
@@ -48,6 +48,12 @@ export const Content = styled.div`
                 margin: 0;
                 margin-bottom: 10px;
                 width: 100%;
+            }
+
+            .box-session {
+                display: flex; 
+                justify-content: center;
+                margin: 10px 0;
             }
 
             .input-login.error {
@@ -82,7 +88,9 @@ export const Content = styled.div`
     
             a,span.register {
                 text-align: center;
-                display: block;
+                display: flex;
+                width: 100%;
+                justify-content: center;
                 margin-top: 20px;
                 transition: all linear 200ms;
                 color: #1976d2;
@@ -90,6 +98,11 @@ export const Content = styled.div`
                 &:hover {
                     cursor: pointer;
                     font-weight: bold;
+                }
+
+                span {
+                    width: 100%;
+                    text-align: center;
                 }
             }
         }

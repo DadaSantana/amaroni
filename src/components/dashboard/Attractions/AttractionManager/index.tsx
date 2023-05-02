@@ -43,31 +43,35 @@ export const AttractionManager = ({en}: Props) => {
 
 export const currencies = [
     {
+        value: 'Art',
+        label: 'Arte e Cultura',
+    },
+    {
         value: 'Food',
-        label: 'Food',
+<<<<<<< HEAD
+        label: 'Dove Mangiare',
     },
     {
         value: 'Square',
-        label: 'Square',
+        label: 'Dove Dormire',
+=======
+        label: 'Cibo',
+    },
+    {
+        value: 'Square',
+        label: 'Piazza',
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     },
     {
         value: 'Marketplace',
-        label: 'Marketplace',
+        label: 'Associazioni',
     },
     {
         value: 'Health',
-        label: 'Health',
-    },
-    {
-        value: 'Workshop',
-        label: 'Workshop',
-    },
-    {
-        value: 'Church',
-        label: 'Church',
+        label: 'Salute',
     },
     {
         value: 'Public Place',
-        label: 'Public Place',
+        label: 'Luogo pubblico',
     },
 ];

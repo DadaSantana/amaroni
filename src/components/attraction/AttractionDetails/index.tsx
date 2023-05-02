@@ -28,10 +28,15 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
+import PublicIcon from '@mui/icons-material/Public';
 
-import { render } from '@testing-library/react';
-import ReactDOM from 'react-dom';
 import { RateAndComment } from './RateAndComment';
+import { GalleryContent } from '../../GalleryPath';
+<<<<<<< HEAD
+import { Links } from '../../Links';
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+
 
 export const AttractionDetails = () => {
     const system = useAppSelector(state => state.system);
@@ -57,8 +62,10 @@ export const AttractionDetails = () => {
     const [address,setAddress] = React.useState('');
     const [description,setDescription] = React.useState('');
     const [telephone,setTelephone] = React.useState('');
+    const [website,setWebsite] = React.useState('');
     const [latitude,setLatitude] = React.useState(0);
     const [longitude,setLongitude] = React.useState(0);
+    const [links,setLinks] = React.useState<any[]>([]);
 
     //Get all attractions from firebase
     const [att, setAtt] = React.useState<Attraction[]>([]); 
@@ -88,8 +95,10 @@ export const AttractionDetails = () => {
             setAddress(att[0].address);
             setDescription(att[0].description);
             setTelephone(att[0].tel);
+            setWebsite(att[0].website);
             setLatitude(att[0].latitude);
             setLongitude(att[0].longitude);
+            setLinks(att[0].links);
             setAttFinished(true);
         }   
 
@@ -148,77 +157,78 @@ export const AttractionDetails = () => {
                         <h1>{title}</h1>
                         <div className="flex-between">                            
                             <Rating className='rating' name="read-only" value={rating} readOnly />        
-                            <span className="type-att">{type}</span>                    
+                            <span className="type-att">
+                                {
+<<<<<<< HEAD
+                                    type == 'Art' ? 'Arte e Cultura' :
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+                                    type == 'Food' ? 'Dove Mangiare' :
+                                    type == 'Square' ? 'Dove Dormire' :
+                                    type == 'Marketplace' ? 'Associazioni' :
+                                    type == 'Health' ? 'Salute' :
+                                    type == 'Public Place' ? 'Luogo pubblico' : 'Tipo'
+                                }
+                            </span>                    
                         </div>
+                        {address != '' &&
                         <span className='icon-data'>
                             <a>
                                 <FmdGoodIcon />
                             </a>                    
                             <label>{address}</label>
                         </span>
+                        }
+                        {telephone != '' &&
                         <span className='icon-data'>
                             <a href={`tel:${telephone}`}>
                                 <LocalPhoneIcon />
                             </a>
                             <label>{telephone}</label>
                         </span>
+                        }
+                        {website != '' &&
+                        <span className='icon-data'>
+                            <a href={`https://${website}`} target='_blank'>
+                                <PublicIcon />
+                            </a>
+                            <label>{website}</label>
+                        </span>
+                        }                        
                         <div className="description-box">
                             <div className="d-b-header">
                                 <DescriptionIcon />
-                                <label>Attraction Description:</label>
+                                <label>
+                                    {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                    {system.language[system.current] ==  'english' ? 'Description' : null}
+                                    {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                                </label>
                             </div>
+<<<<<<< HEAD
+                            <p>{description}</p>
+=======
                             <p className='description-window'>{description}</p>
-                        </div>
-                        
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+                        </div>                       
                     </div>
                     <img src={image} alt="" />
                     <div className="description-box mobile">
-                            <div className="d-b-header">
-                                <DescriptionIcon />
-                                <label>Attraction Description:</label>
-                            </div>
-                            <p>{description}</p>
+                        <div className="d-b-header">
+                            <DescriptionIcon />
+                            <label>
+                                {system.language[system.current] ==  'italian' ? 'Descrizione' : null}
+                                {system.language[system.current] ==  'english' ? 'Description' : null}
+                                {system.language[system.current] ==  'german' ? 'Beschreibung' : null}
+                            </label>
                         </div>
+                        <p>{description}</p>
+<<<<<<< HEAD
+                        {/* <textarea name="description" readOnly value= /> */}
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+                    </div>
                 </section>
-                <section className='gallery-attraction'>
-                    <h2>
-                        {system.language[system.current] == 'italian' ? 'Fotografie' : null}
-                        {system.language[system.current] == 'english' ? 'Photos' : null}
-                        {system.language[system.current] == 'german' ? 'Fotos' : null}
-                    </h2>
-                    <Swiper
-                    // install Swiper modules
-                    modules={[Navigation, Pagination, A11y]}
-                    spaceBetween={10}
-                    slidesPerView={7}
-                    navigation
-                    >
-                        {upload &&
-                        attPhotos.map((item,index)=>(
-                            <SwiperSlide 
-                            className='slide-item' 
-                            style={{
-                                background: `url(${item.url})`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat'
-                            }}
-                            onClick={()=>{
-                                handlePhotoClick(item.url);
-                            }}
-                            >
-                                <span className='hover-indicator'>
-                                    <ZoomOutMapIcon />
-                                </span>
-                            </SwiperSlide>
-                        ))
-                        }
-                        {!upload &&
-                            <h1>Não gerou</h1>
-                        }
-
-                    </Swiper>
-                </section>                
+                <GalleryContent path='attractions' id={attractionId} />
                 {!isLoaded &&
                     <div>Loading...</div>
                 }
@@ -235,6 +245,7 @@ export const AttractionDetails = () => {
                 </>
                 }
                 <RateAndComment id={attractionId} />
+                <Links vetor={links} />
                 <Link to='/'>
                     {system.language[system.current] == 'italian' ? 'Torna alla pagina principale' : null}
                     {system.language[system.current] == 'english' ? 'Back to main page' : null}

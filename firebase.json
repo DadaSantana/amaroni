@@ -12,5 +12,12 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "config": {
+    "firebase": {
+      "databaseURL": "https://amaroni-it.firebaseio.com",
+      "storageBucket": "gs://amaroni-it.appspot.com",
+      "projectId": "amaroni-it"
+    }
+  }  
 }

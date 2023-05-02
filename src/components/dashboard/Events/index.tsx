@@ -12,10 +12,12 @@ import { AttractionManager } from '../Attractions/AttractionManager';
 import { EventAdd } from './EventAdd';
 import { EventManager } from './EventManager';
 import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router-dom';
 
 export const Events = () => {
     const system = useAppSelector(state => state.system);
     const [action,setAction] = React.useState(2);
+    const navigate = useNavigate();
 
     const handleSetAction = (n: number) => {
         setAction(n);
@@ -45,6 +47,7 @@ export const Events = () => {
                     </span>
                     <span className="tag-btn" onClick={() => {
                         handleSetAction(2);
+                        navigate(0);
                     }}>
                         <AutoAwesomeMotionIcon />
                         <label>

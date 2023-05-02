@@ -1,0 +1,24 @@
+.flex-content img.img-right {
+    margin-left: 30px;
+}
+.flex-content img.img-left {
+    margin-right: 30px;
+}
+
+@media (max-width: 760px) {
+    .flex-content {
+        flex-direction: column;
+    }
+    .flex-content .texts {
+        margin: 0;
+        margin-bottom: 30px;
+    }
+    .flex-content img.img-right {
+        margin-left: 0;
+        max-width: 100%;
+    }
+    .flex-content img.img-left {
+        margin-right: 0;
+        max-width: 100%;
+    }
+}

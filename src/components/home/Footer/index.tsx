@@ -5,6 +5,8 @@ import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { Link } from 'react-router-dom';
 import { Content } from './styles';
 import Logo from '../../../assets/media/logo.png';
+import appStore from '../../../assets/media/appStore.svg';
+import playStore from '../../../assets/media/playStore.png';
 
 import TimelineIcon from '@mui/icons-material/Timeline';
 import CollectionsIcon from '@mui/icons-material/Collections';
@@ -14,9 +16,11 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import HomeIcon from '@mui/icons-material/Home';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import NotesIcon from '@mui/icons-material/Notes';
+import HomeIcon from '@mui/icons-material/Home';
 
 export const Footer = () => {
     const system = useAppSelector(state=>state.system);
@@ -24,7 +28,7 @@ export const Footer = () => {
     return(
         <Content>
             <div className="footer-top">
-                <Container>
+                <div className="container">
                     <span className='footer-top-logo'>
                         <img src={Logo} alt="" />
                         <span>
@@ -56,6 +60,28 @@ export const Footer = () => {
                                         {system.language[system.current] === 'german' ? 'Galleria fotografica' : null}
                                     </Link>
                                 </li>
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <HomeIcon />
+                                    <Link to="/palazzo">
+                                        Palazzo Comunale
+                                    </Link>
+                                </li>
+                                <li>
+                                    <HomeIcon />
+                                    <Link to="/gemellaggio/rotkreuz">
+                                        Gemellaggio di Risch-Rotkreuz
+                                    </Link>
+                                </li>
+                                <li>
+                                    <PrivacyTipIcon />
+                                    <a href="/privacy-policy">Privacy policy</a>
+                                </li>
+                                <li>
+                                    <NotesIcon />
+                                    <a href="/note-legali">Note legali</a>
+                                </li>
                             </ul>
                         </div>
                         <div className="box-item">
@@ -65,17 +91,26 @@ export const Footer = () => {
                                 {system.language[system.current] === 'german' ? 'Telefone' : null}
                             </h5>
                             <ul>
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                                 <li>
-                                    <LocalPoliceIcon />
-                                    <a href="tel:+55199">199</a>
+                                    <HomeIcon />
+                                    <Link to="/palazzo">
+                                        Palazzo Comunale
+                                    </Link>
                                 </li>
                                 <li>
-                                    <FireTruckIcon />
-                                    <a href="tel:+55199">199</a>
+                                    <HomeIcon />
+                                    <Link to="/gemellaggio/rotkreuz">
+                                        Gemellaggio di Risch-Rotkreuz
+                                    </Link>
                                 </li>
                                 <li>
-                                    <LocalHospitalIcon />
-                                    <a href="tel:+55199">199</a>
+                                    <PrivacyTipIcon />
+                                    <a href="/privacy-policy">Privacy policy</a>
+                                </li>
+                                <li>
+                                    <NotesIcon />
+                                    <a href="/note-legali">Note legali</a>
                                 </li>
                             </ul>
                         </div>
@@ -121,8 +156,28 @@ export const Footer = () => {
                                 </li>
                             </ul>
                         </div>
+                        <div className="box-item">
+                            <h5>
+                                {system.language[system.current] === 'italian' ? 'Scarica la nostra app' : null}
+                                {system.language[system.current] === 'english' ? 'Download our app' : null}
+                                {system.language[system.current] === 'german' ? 'Laden Sie unsere App herunter' : null}
+                            </h5>
+                            <ul>
+                                <li>
+                                    <a>
+                                        <img src={appStore} alt="" />
+                                    </a>                                    
+                                </li>
+                                <li>
+                                    <a href="https://play.google.com/store/apps/details?id=it.com.borgoAmaroni" target='_blank'>
+                                        <img src={playStore} alt="" />
+                                    </a>                                    
+                                </li>
+                            </ul>
+                            
+                        </div>
                     </div>
-                </Container>
+                </div>                
             </div>
             <div className="footer-bottom">
                 <Container>

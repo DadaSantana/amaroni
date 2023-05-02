@@ -73,10 +73,26 @@ export const Navbar = styled.aside`
                 }
 
                 @media (max-width: 760px) {
-                    padding: 5px 20px;
+                    padding: 7px;
 
                     a {
                         font-size: 12px;                        
+                    
+                        svg {
+                            margin: 0;
+                        }
+
+                        label {
+                            display: none;
+                        }
+                    }
+                }
+
+                @media (min-width: 761px) and (max-width: 850px) {
+                    padding: 20px;
+
+                    a {
+                        font-size: 20px;                        
                     
                         svg {
                             margin: 0;

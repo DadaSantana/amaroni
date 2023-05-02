@@ -8,7 +8,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { InsertLink } from './InsertLink';
+import { InsertLink } from '../../../../InsertLinks';
+<<<<<<< HEAD
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
@@ -28,6 +32,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { truncate } from 'fs';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../../../../../redux/hooks/useAppSelector';
+import { PhotoManager } from '../../../../PhotoManager';
 
 type Props = {
     id: string
@@ -35,6 +40,7 @@ type Props = {
 
 export const EditContent = ({id}: Props) => {
     const system = useAppSelector(state=>state.system);
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCuYb09NVdhj70cCO_dQsLIid6nyzeOm-s", })
     //Backdrop
     const [open, setOpen] = React.useState(false);
     const [eventItem,setEditItem] = React.useState<Annuncio[]>([]);
@@ -55,6 +61,8 @@ export const EditContent = ({id}: Props) => {
     const [address,setAddress] = React.useState('');
     const [tel,setTel] = React.useState('');
     const [email,setEmail] = React.useState('');
+    const [latitude,setLatitude] = React.useState(0);
+    const [longitude,setLongitude] = React.useState(0);
 
     React.useEffect(()=>{
         const getEventToEdit = async () => {
@@ -75,10 +83,14 @@ export const EditContent = ({id}: Props) => {
             setAddress(eventItem[0].address);
             setTel(eventItem[0].tel);
             setEmail(eventItem[0].email);
+            setLatitude(eventItem[0].latitude)
+            setLongitude(eventItem[0].longitude);
             setLink(eventItem[0].links);
             setOpen(false);
         }
     },[eventItem])
+
+    const [confirm,setConfirm] = React.useState(false);
 
     const handleUpdateFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -113,7 +125,12 @@ export const EditContent = ({id}: Props) => {
         const tel = formData.get('tel') as string;
         const email = formData.get('email') as string;
 
+<<<<<<< HEAD
+        await Annun.updateEvent(id,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,latitude,longitude,link);
+=======
         await Annun.updateEvent(id,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,link);
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+        setConfirm(true);
 
         setTitle(name);
         setDescription(description);
@@ -149,7 +166,7 @@ export const EditContent = ({id}: Props) => {
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
             >
-              <CircularProgress color="inherit" /> Cadastrando Evento...
+              <CircularProgress color="inherit" /> Registrazione...
             </Backdrop>
             {!open &&
             <Box
@@ -178,11 +195,12 @@ export const EditContent = ({id}: Props) => {
                     >
                         <span className='design-click'>
                             <UploadIcon />
-                            <label>Clique aqui para escolher a imagem</label>
+                            <label>Clicca qui per scegliere l'immagine</label>
                         </span>
                         <input 
                             name='image'
                             type="file" 
+                            accept=".png, .jpg, .jpeg"
                             hidden 
                             onChange={(e)=>{
                                 setImgSetted(false);
@@ -260,9 +278,38 @@ export const EditContent = ({id}: Props) => {
                             defaultValue={email}
                         />
                     </div>
-                    {/* <div className="input-group">
+                    <div className="input-group">
+<<<<<<< HEAD
+                        {!isLoaded &&
+                            <div>Caricamento...</div>
+                        }
+                        {isLoaded &&
+                            <GoogleMap 
+                            zoom={18} 
+                            center={{lat: latitude, lng: longitude }}
+                            mapContainerStyle={{flex: 1, minHeight: '300px'}}
+                            onClick={(e) => {
+                                let newMarker = e.latLng;
+                                if (newMarker != null) {
+                                    let str = newMarker.toString();
+                                    let arrayStr: string[] = []
+                                    arrayStr = str.split(",");
+                                    let newLtn = arrayStr[0].substring(1);
+                                    let newLng = arrayStr[1].replaceAll(")","");
+                                    setLatitude(parseFloat(newLtn));
+                                    setLongitude(parseFloat(newLng));
+                                } 
+                            }}
+                            >
+                                <Marker position={{lat: latitude, lng: longitude}} />
+                            </GoogleMap>
+                        }
+                    </div>
+                    <div className="input-group">
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                         <InsertLink link={link} setLink={setLink} />
-                        <div className="box-item">
+{/*                         <div className="box-item">
                             <div className="upper-add-file">
                                 <input type="file" name="" id="" />                               
                             </div>
@@ -272,8 +319,9 @@ export const EditContent = ({id}: Props) => {
                                     <DeleteForeverIcon />
                                 </span>
                             </div>
-                        </div>
-                    </div> */}
+                        </div> */}
+                    </div>
+                    <PhotoManager path='events' id={id} sending={confirm} />
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         {system.language[system.current] === 'italian' ? 'Salva' : null}
                         {system.language[system.current] === 'english' ? 'Save' : null}

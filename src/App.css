@@ -21,6 +21,19 @@
     overflow-x: hidden;
   }
 
+.flex-content {
+  display: flex;
+  margin-bottom: 50px;
+}
+.flex-content .texts {
+  flex: 1;
+}
+.flex-content img {
+  flex: 1;
+  max-width: 50%;
+  border-radius: 10px;
+}
+
 @media (max-width: 480px) and (orientation: portrait) {
   .container {
     padding: 0 20px;

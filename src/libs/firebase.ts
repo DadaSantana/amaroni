@@ -3,6 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
+import { getMessaging } from 'firebase/messaging';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
@@ -22,3 +23,4 @@ const analytics = getAnalytics(firebaseApp);
 export const storage = getStorage(firebaseApp);
 export const database = getDatabase(firebaseApp);
 export const db = getFirestore(firebaseApp);
+export const messaging = getMessaging(firebaseApp);

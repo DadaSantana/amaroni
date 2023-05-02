@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../redux/hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../../redux/reducers/appReducer';
 import { setCurrent } from '../../../redux/reducers/appReducer';
+import { setVerified } from '../../../redux/reducers/userReducers';
 //import styles
 import { Content } from './styles';
 import { Container } from 'react-bootstrap';
@@ -30,8 +31,10 @@ export const HeaderDashboard = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        dispatch(setLogin(false));
         SignOut();
+        dispatch(setLogin(false));
+        dispatch(setVerified(false));
+        navigate('/');
     }
     const handleCurrentLang = (n: number) => {
         dispatch( setCurrent(n) );

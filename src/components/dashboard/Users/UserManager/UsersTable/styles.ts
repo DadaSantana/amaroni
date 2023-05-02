@@ -7,6 +7,7 @@ export const Content =  styled.section`
     flex-direction: column;  
     align-items: flex-start;
     justify-content: flex-start;
+    overflow: auto;
 
     .search-content {
         width: 100%;
@@ -15,6 +16,7 @@ export const Content =  styled.section`
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        overflow: auto;
   
 
         .input-search {
@@ -37,7 +39,11 @@ export const Content =  styled.section`
     .label-search {
         margin: 20px 0;
     }
-
+    
+    .filter-component {
+        display: flex;
+        margin-bottom: 20px;
+    }
     .table-content {
         flex: 1;
 
@@ -71,10 +77,15 @@ export const Btn = styled.span`
         @media (max-width: 480px) and (orientation: portrait) {
             font-size: 24px;
         }
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     svg.edit {
         margin-right: 5px;
+        margin-left: 5px;
 
         &:hover {
             cursor: pointer;            
@@ -108,5 +119,74 @@ export const Btn = styled.span`
 
     svg.disable {
         color: gray;
+    }
+`;
+
+export const Float = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0,0,0,80%);
+    z-index: 999;
+
+    .user-content {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 0 5px var(--shadow);
+        background-color: #ebebeb;
+        width: 600px;
+        height: 300px;
+        border-radius: 5px;
+
+        .progress {
+            align-self: center;
+        }
+
+        .user-data {
+            display: flex;
+            img {
+                width: 200px;
+                height: 200px;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 5px;
+            }
+            .user-details {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                flex: 1;
+                padding: 0 10px;
+
+                h4, p {
+                    padding: 5px;
+                    border-radius: 5px;
+                    background-color: #e1e1e1;
+                    width: 100%;
+                    text-align: left;
+                }
+            }
+        }
+
+        span {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+
+            &:hover {
+                text-decoration: underline;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+
+        
     }
 `;

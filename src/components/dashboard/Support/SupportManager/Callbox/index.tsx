@@ -62,11 +62,9 @@ export const Callbox = ({fn}:Props) => {
         handleClose();
         const getCall = async () => {      
             if (user.level.admin) {
-                console.log(user.level.admin)
               setCall(await SupportService.getAllCalls());            
               return setOpen(false);
             } else {
-              console.log(user.id)
               setCall(await SupportService.getCallByUserId(user.id));            
               return setOpen(false);
             }
@@ -75,7 +73,7 @@ export const Callbox = ({fn}:Props) => {
     }, [updateBtnState]); 
     //column interface
     interface Column {
-        id: 'date' | 'title' | 'progress' | 'user' | 'action';
+        id: 'status' | 'date' | 'title' | 'progress' | 'user' | 'action';
         label: string;
         minWidth?: number;
         align?: 'right';
@@ -83,6 +81,7 @@ export const Callbox = ({fn}:Props) => {
     }
     //column table
     const columns: Column[] = [
+        { id: 'status', label: 'Status:', minWidth: 50 },
         { id: 'date', label: 'Data:', minWidth: 100 },
         { id: 'title', label: 'Oggetto della chiamata:', minWidth: 250 },
         {
@@ -100,6 +99,7 @@ export const Callbox = ({fn}:Props) => {
     ];
     //interface Data
     interface Data {
+        status: any;
         date: string;
         title: string;
         progress: string;
@@ -108,13 +108,14 @@ export const Callbox = ({fn}:Props) => {
     }
     //create Data
     function createData(
+        status: any,
         date: string,
         title: string,
         progress: string,
         user: string,
         action: any
     ): Data {
-        return { date, title, progress, user, action };
+        return { status, date, title, progress, user, action };
     }
     //create table
     const rows: Data[] = [];
@@ -135,7 +136,18 @@ export const Callbox = ({fn}:Props) => {
     }
     //insert data from firebase support 
     call.forEach(element => {
-        rows.push(createData(element.date, element.subject, element.progress, element.authorName, <BtnAction id={element.id} fnEdit={fn} fnUpdate={handleUpdateBtnState} />));
+        rows.push(
+            createData(
+                <span className={`status ${element.progress}`}>
+                    <span className='circle' />
+                </span>, 
+                element.date, 
+                element.subject, 
+                element.progress === 'Registered Call' ? 'Chiamata registrata' :
+                element.progress === 'Analyzing' ? 'Analizzando' :
+                element.progress === 'Waiting for reply' ? 'In attesa di resposta' : 'Finito', 
+                element.authorName, 
+                <BtnAction id={element.id} fnEdit={fn} fnUpdate={handleUpdateBtnState} />));
     });
 
     return(

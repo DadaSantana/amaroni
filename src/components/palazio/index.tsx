@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import { useAppSelector } from '../../redux/hooks/useAppSelector';
 import { HomeHeader } from '../home/HomeHeader';
 import { Footer } from '../home/Footer';
 import { Banner } from './Banner';
@@ -9,9 +10,22 @@ import logo from '../../assets/media/german.png';
 import { Container } from 'react-bootstrap';
 import { Content } from './styles';
 import { News } from './News';
+import { GalleryContent } from '../GalleryPath';
+import { Links } from '../Links';
+import { getLinks, insertLinkFirestore } from '../../services/links';
+
 SwiperCore.use([Pagination, Navigation]);
 
-export const Palazio = () => {
+export const Palazzo = () => {
+  const system = useAppSelector(state=>state.system);
+
+  const [links,setLinks]  = React.useState<any[]>([]);
+  React.useEffect(()=>{
+    const getLinksFirestore = async () => {
+        setLinks(await getLinks('palazzo','main'));
+    }
+      getLinksFirestore();
+  },[])
   
   const images = [
     { id: 1, src: '../../assets/media/german.png' },
@@ -24,45 +38,38 @@ export const Palazio = () => {
         <Banner/>
         <Content>
           <Container>
-            <div>
-                <h1>Palazio Comunale</h1>
+            <div>                
                 <div className="top-inline-flex">
                   <div className="left-side">
-                    <p>Dall’autunno 2003 è attivo il gemellaggio tra il comune di Risch, con le frazioni Rotkreuz, Holzhäusern, Buonas e Risch nel Cantone di Zugo e il comune di Amaroni in Italia.
-                    Amaroni è ubicato in provincia di Catanzaro in Calabria, una splendida regione italiana. Il paese dista solo 13 km dalla costa ionica e 35 km dal mar Tirreno ed è circondato dal blu del mar Ionio e dal verde della Sila. Il comune conta circa 2500 abitanti, di cui 500 emigranti, la maggior parte dei quali vive in Svizzera, più di 50 dei quali nel nostro comune.
-                    Nel 2007 il Consiglio comunale di Risch ha affidato all’associazione «Amici di Amaroni» il compito di gestire il gemellaggio attraverso un contratto di prestazione di servizi.
+                    <h1>Palazzo Comunale</h1>
+<<<<<<< HEAD
+                    <p>Palazzo Canale, oggi sede municipale, fu costruito dal principe De Gregorio nel 1666 e ereditato dalla famiglia Canale, che lo abitò fino al 1905.<br />
+                    L’edificio, oggetto di interventi di recupero, dell’originaria struttura mantiene i balconi di ferro battuto e il cornicione in pietra intagliata a zigzag; lo stemma posto all’ingresso raffigura un tulipano, in passato simbolo delle famiglie nobili.<br />
+                    A Palazzo Canale è stato annesso “Palazzo Cancelliere” attraverso la realizzazione di una passerella di collegamento sospesa; ospita alcuni uffici comunali e la sala consiliare, inaugurata il 28 luglio 2002, dove è possibile ammirare il “polittico” di sei tavole raffiguranti la vita e il martirio di Santa Barbara, protettrice di Amaroni, realizzato dal maestro dipintore Giuseppe Rocca.<br />
+                    Su Palazzo Canale ancora viva nella memoria degli amaronesi la leggenda della “mano insanguinata”. Si narra che l’ultimo rampollo della famiglia, un giovane viziato e prepotente, frequentasse un giro poco raccomandabile di amici; ricercato dalle Forze dell’Ordine, trovò rifugio ad Amaroni nel Palazzo di famiglia dove, il pittore amaronese Francesco stava eseguendo dei lavori di restauro.<br />
+                    Tra il baroncino e Francesco un giorno occorse un diverbio; la discussione attrasse l’attenzione dei passanti che, preoccupati, avvisarono i Carabinieri.<br />
+                    Un brigadiere tentò una mediazione con il baroncino, chiedendo la collaborazione di Francesco per fare ingresso nel Palazzo; questi minacciò che avrebbe usato la pistola se solo qualcuno avesse tentato di avvicinarsi a lui.<br />
+                    Il brigadiere s’introdusse con astuzia e il baroncino, colto di sorpresa, sparò un colpo ferendo a morte Francesco che, nell’accasciarsi al suolo, lasciò l’impronta della sua mano insanguinata sulla parete della stanza che oggi è occupata dal sindaco.<br />
+                    L’omicida fu arrestato ma rilasciato su cauzione. Il rimorso non lo abbandonò mai, conducendolo a una morte terribile e solitaria.
                     </p>
-                    <h3>Estratto dell’accordo di prestazione di servizi:</h3>
-                    <p>L’associazione Amici di Amaroni</p>
-                    <li>promuove le relazioni reciproche in campo culturale e sociale attraverso visite di persone singole o gruppi</li>
-                    <li>estende il gemellaggio a diversi ambiti</li>
-                    <li>coltiva l’amicizia comune e promuove la comprensione reciproca tra i due paesi</li>
-                    <li>coordina e supporta i contatti tra le scuole</li>
-                    <li>presenta al Consiglio comunale un rapporto annuale di attività con relativo bilancio</li>
-                    <li>può realizzare autonomamente ulteriori progetti che non rientrino nell’ambito dei servizi del presente contratt</li>
+=======
+                    <p>Tra i beni storico – culturali di Amaroni, oltre alla Chiesa Matrice di Santa Barbara, “ Palazzo Canale” costruito dal principe De Gregorio nel 1666.
+                    L’edificio fu ereditato dalla famiglia Canale, che lo abitò fino al 1905.
+                    Annota il prof. Mario Truglia: “ occupa una superficie di 760 mq; misura in lunghezza 38 m e in larghezza 20 m. Al piano terra sul lato nord ovest insistono cinque ampi magazzini; al primo piano tre stanze sul lato nord, detto “scivolata”, e tre stanze sul lato ovest.Il secondo piano si compone di dieci stanze. Il pavimento di alcune di esse è in cemento liscio, con disegni incisi raffiguranti quadrati e rettangoli; quello delle altre stanze è in mattoni di terracotta. Il soffitto è pitturato con sfondo bianco e nel centro sono disegnate figure di donne dell’epoca. I balconi sono in ferro battuto. Il cornicione è in pietra e lo stemma posto all’entrata dell’edificio raffigura un tulipano”, il fiore preferito dalle famiglie nobili.
+                    </p>
+                    <p>Il palazzo poggia sulla roccia e non ha fondamenta; il tetto è di tegole, in stile antico, mentre il cornicione è in pietra intagliata a zig zag.</p>
+                    <p>Le porte erano di legno di castagno, realizzate da mano d’opera amaronese, pitturate in colore nero e raffiguranti gendarmi in stato di guerra.</p>
+                    <p>Dopo anni di abbandono è stato acquisito al patrimonio comunale e ristrutturato, divenendo sede Municipale.</p>
+                    <p>A Palazzo Canale è stato annesso “Palazzo Cancelliere” attraverso la realizzazione di una passerella di collegamento sospesa; ospita alcuni uffici comunali e la sala consiliare, inaugurata il 28 luglio 2002, dove è possibile ammirare il “polittico” di sei tavole raffiguranti la vita e il martirio di Santa Barbara, protettrice di Amaroni, realizzato dal maestro Giuseppe Rocca.</p>
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
                   </div>
                   <div className="right-side">
                     <News />
                   </div>
-                </div>
-                
-
-                <p style={{marginTop:30}}>Da questi presupposti è nata negli ultimi anni una stretta e vivace collaborazione. Durante le nostre visite reciproche abbiamo avuto modo di conoscere e apprezzare le due diverse culture in tutte le loro sfaccettature. Il nostro gemellaggio prospera grazie a persone di tutte le età di entrambi i comuni.</p>
-                <p>Coltiviamo e rafforziamo la nostra collaborazione grazie ad Auxilia (sostegno di Spitex ad Amaroni) e attraverso varie attività come i corsi di cucito, realizzati con macchine da cucire donate dalle scuole di Rotkreuz, le indimenticabili gite scolastiche, i corsi di cucina con Renato dalla Calabria, il mercato paesano, gli straordinari viaggi di gruppo ad Amaroni, le campagne di vendita di arance per beneficienza e molto altro.</p>   
-                <Swiper
-                spaceBetween={30}
-                slidesPerView={3}
-                navigation
-                pagination={{ clickable: true }}
-                >
-                {images.map((image) => (
-                    <SwiperSlide key={image.id}>
-                    <img src={logo} alt={`Imagem ${image.id}`} />
-                    </SwiperSlide>
-                ))}
-                </Swiper>
-            
+                </div>            
             </div>
+            <GalleryContent path='palazio' />
+            <Links vetor={links} />
           </Container>
         </Content>        
         <Footer/> 

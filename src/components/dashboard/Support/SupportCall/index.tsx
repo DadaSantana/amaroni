@@ -98,7 +98,6 @@ export const SupportCall = ({fn}: Props) => {
                     placeholder="Descrivi la tua richiestat"
                     style={{ width: '100%' }}
                 />
-                <input type="file" name="attach-file" id="attach-file" />
                 <hr />
                 <Button type='submit' variant="contained" color="success" startIcon={<ForwardToInboxIcon />}>
                     Registrazione chiamata

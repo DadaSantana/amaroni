@@ -7,9 +7,47 @@ export const Content = styled.div`
     flex-direction: column;  
     align-items: flex-start;
     justify-content: flex-start;
+    overflow: auto;
 
-    tr.Registered.Call {
-        background-color: rgb(0 178 255 / 6%);
+    tr {
+        .status {
+            display: block;
+            padding: 1px;
+            height: 12px;
+            width: 12px;
+            border: 1px solid var(--shadow);
+            border-radius: 50%;
+            box-shadow: 0 0 3px var(--shadow);
+            
+            .circle {
+                display: block;
+                height: 100%;
+                width: 100%;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    tr {
+        .status.Registered.Call {           
+            .circle {
+                background-color: green;
+            }
+        }
+    }
+    tr {
+        .status.Analyzing {           
+            .circle {
+                background-color: #4c4cff;
+            }
+        }
+    }
+    tr {
+        .status.Waiting.for.reply {           
+            .circle {
+                background-color: orange;
+            }
+        }
     }
 `;
 

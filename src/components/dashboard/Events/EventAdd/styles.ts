@@ -4,7 +4,7 @@ export const Content = styled.section`
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-width: 100vw;
+    max-width: 100%;
 
     form {
         flex: 1;

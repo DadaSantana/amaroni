@@ -2,37 +2,41 @@
 import * as React from 'react';
 //import styles
 import { Content } from './styles';
-
 //import components
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { InsertLink } from './InsertLink';
+<<<<<<< HEAD
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 //import icons 
 import UploadIcon from '@mui/icons-material/Upload';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BackupIcon from '@mui/icons-material/Backup';
 
 import * as Photos from '../../../../services/photos';
-import { Photo } from '../../../../types/Photo';
 
 import * as Annun from '../../../../services/annuncios';
-import { Annuncio } from '../../../../types/Annuncio';
 
 //import components
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { truncate } from 'fs';
-import { Container } from 'react-bootstrap';
+import { InsertLink } from '../../../InsertLinks';
+<<<<<<< HEAD
+import { Alert } from '../../../alert';
+import { PhotoManager } from '../../../PhotoManager';
+import { v4 as createId } from 'uuid';
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
 type Props = {
     fn: () => void;
 }
 
 export const EventAdd = ({fn}: Props) => {
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCuYb09NVdhj70cCO_dQsLIid6nyzeOm-s", })
+    const [ltn,setLtn] = React.useState(38.79369601315858);
+    const [lng,setLng] = React.useState(16.448302046559704);
     //Backdrop
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
@@ -40,9 +44,19 @@ export const EventAdd = ({fn}: Props) => {
     };
 
     const [uploading, setUploading] = React.useState(false);
-    const [photos, setPhotos] = React.useState<Photo[]>([]);
-    const [state, setState] = React.useState(true);
-    const [link,setLink] = React.useState<any[]>([])
+    const [link,setLink] = React.useState<any[]>([]);
+<<<<<<< HEAD
+    const [showAlert,setShowAlert] = React.useState(false);
+    const [variant,setVariant] = React.useState('');
+    const [message,setMessage] = React.useState('');
+    const [previewId,setPreviewId] = React.useState('');
+
+    React.useEffect(()=>{
+        let newId: any = createId();
+        setPreviewId(newId);
+    },[])
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -69,14 +83,32 @@ export const EventAdd = ({fn}: Props) => {
                 const tel = formData.get('tel') as string;
                 const email = formData.get('email') as string;
                 
-                await Annun.newAnnuncio(result.url,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,link);
+                if (name == '' || description == '') {
+                    setVariant('danger');
+                    setMessage("Il titolo e la descrizione sono campi obbligatori.");
+                    setShowAlert(true);
+                    setTimeout(()=>{
+                      setShowAlert(false);              
+                    },6000)  
+                    setOpen(false);
+                } else {
+                    await Annun.newAnnuncio(previewId,result.url,name,description,dateStart,timeStart,dateEnd,timeEnd,address,tel,email,ltn,lng,link);
                 
-                setFormKey(formKey+1);
-                setImgBlob('');
-                setOpen(false);
-                fn();
+                    setFormKey(formKey+1);
+                    setImgBlob('');
+                    setOpen(false);
+                    fn();
+                }                
             }
-        }      
+        } else {
+            setVariant('danger');
+            setMessage("Devi inserire un'immagine");
+            setShowAlert(true);
+            setTimeout(()=>{
+              setShowAlert(false);              
+            },6000)  
+            setOpen(false);   
+        }
 
     }
 
@@ -93,6 +125,9 @@ export const EventAdd = ({fn}: Props) => {
     }
     return(
         <Content>
+            {showAlert &&
+               Alert(variant,message)
+            }
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
@@ -131,6 +166,7 @@ export const EventAdd = ({fn}: Props) => {
                         <input 
                             type="file" 
                             name='image' 
+                            accept=".png, .jpg, .jpeg"
                             hidden 
                             onChange={(e)=>{
                                 setImgSetted(false);
@@ -213,19 +249,35 @@ export const EventAdd = ({fn}: Props) => {
                         />
                     </div>
                     <div className="input-group">
-                        <InsertLink link={link} setLink={setLink} />
-                        {/* <div className="box-item">
-                            <div className="upper-add-file">
-                                <input type="file" name="" id="" />                               
-                            </div>
-                            <div className="bottom-add-file">
-                                <span className='file-item'>
-                                    <label>file.pdf</label>
-                                    <DeleteForeverIcon />
-                                </span>
-                            </div>
-                        </div> */}
+                        {!isLoaded &&
+                            <div>Caricamento...</div>
+                        }
+                        {isLoaded &&
+                            <GoogleMap 
+                            zoom={18} 
+                            center={{lat: 38.79369601315858, lng: 16.448302046559704}}
+                            mapContainerStyle={{flex: 1, minHeight: '300px'}}
+                            onClick={(e) => {
+                                let newMarker = e.latLng;
+                                if (newMarker != null) {
+                                    let str = newMarker.toString();
+                                    let arrayStr: string[] = []
+                                    arrayStr = str.split(",");
+                                    let newLtn = arrayStr[0].substring(1);
+                                    let newLng = arrayStr[1].replaceAll(")","");
+                                    setLtn(parseFloat(newLtn));
+                                    setLng(parseFloat(newLng));
+                                } 
+                            }}
+                            >
+                                <Marker position={{lat: ltn, lng: lng}} />
+                            </GoogleMap>
+                        }
                     </div>
+                    <div className="input-group">
+                        <InsertLink link={link} setLink={setLink} />
+                    </div>
+                    <PhotoManager path='events' id={previewId} sending={false} />
                     <Button type='submit' variant="contained" color="success" startIcon={<BackupIcon />}>
                         Registra evento
                     </Button>

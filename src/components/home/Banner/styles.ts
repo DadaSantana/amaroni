@@ -1,12 +1,16 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import banner from '../../../assets/media/BannerComuneDiAmaroni.jpg';
+import banner from '../../../assets/media/Panorama.jpg';
 
-export const Content = styled.div`
+export const Content = styled(motion.div)`
     background: url('${banner}');
-    min-height: 50vh;
+    background-repeat: no-repeat;
     background-position: center;
+<<<<<<< HEAD
     background-size: cover;
-
+    min-height: 50vh;
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     .path-a {
         position: absolute;
@@ -37,10 +41,12 @@ export const Content = styled.div`
             h1 {
                 color: var(--whiteFont);
                 padding-top: 24px;
+                font-weight: bold;
+                margin-bottom: 0;
             }
             h3 {
                 color: var(--whiteFont);
-                padding-top: 16px;
+                font-style: italic;
             }
     
     
@@ -49,6 +55,21 @@ export const Content = styled.div`
     
 
     @media (max-width: 760px) {
+<<<<<<< HEAD
+        background-repeat: no-repeat;
+        background-position: top;
+        min-height: 50vh;
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+
+        .path-a {
+            clip-path: polygon(0 0,41% 0,30% 35%,0 35%);
+        }
+
+        .path-b {
+            clip-path: polygon(25% 0,63% 0,56% 25%,30% 25%);
+        }
+
         .title-content {
             .container {
                 padding: 0 10px;

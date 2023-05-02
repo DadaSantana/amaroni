@@ -33,6 +33,8 @@ export const getAll = async () => {
             address: doc.data().address,
             tel: doc.data().tel,
             email: doc.data().email,
+            latitude: doc.data().latitude,
+            longitude: doc.data().longitude,
             links: doc.data().links
         }    
     list.push(item);
@@ -41,9 +43,8 @@ export const getAll = async () => {
     return list;
 }
 
-export const newAnnuncio = async (imageUrl: string, name: string, description: string, dateStart: string, timeStart: string, dateEnd: string, timeEnd: string, address: string, tel: string, email: string, links: any[]) => {
-    let randomName = createId();
-    await setDoc(doc(db, "annuncios", randomName), {
+export const newAnnuncio = async (id:string,imageUrl: string, name: string, description: string, dateStart: string, timeStart: string, dateEnd: string, timeEnd: string, address: string, tel: string, email: string, ltn: number, lng: number, links: any[]) => {
+    await setDoc(doc(db, "annuncios", id), {
         imageUrl: imageUrl,
         name: name,
         description: description,
@@ -54,6 +55,8 @@ export const newAnnuncio = async (imageUrl: string, name: string, description: s
         address: address,
         tel: tel,
         email: email,
+        latitude: ltn,
+        longitude: lng,
         links: links
         
     });
@@ -78,6 +81,8 @@ export const getEventById = async (id: any) => {
             address: docSnap.data().address,
             tel: docSnap.data().tel,
             email: docSnap.data().email,
+            latitude: docSnap.data().latitude,
+            longitude: docSnap.data().longitude,
             links: docSnap.data().links
         } 
         list.push(item);
@@ -94,7 +99,7 @@ export const updateEventPhoto = async (imageUrl: string, id: string) => {
     });
 }
 
-export const updateEvent = async (id: string, name: string, description: string, dateStart: string, timeStart: string, dateEnd: string, timeEnd: string, address: string, tel: string, email: string, links: any[]) => {
+export const updateEvent = async (id: string, name: string, description: string, dateStart: string, timeStart: string, dateEnd: string, timeEnd: string, address: string, tel: string, email: string, ltn: number, lng: number, links: any[]) => {
     const attractionRef = doc(db, "annuncios", id);
     await updateDoc( attractionRef, {
         id: id,
@@ -107,6 +112,8 @@ export const updateEvent = async (id: string, name: string, description: string,
         address: address,
         tel: tel,
         email: email,
+        latitude: ltn,
+        longitude: lng,
         links: links
     });
 }

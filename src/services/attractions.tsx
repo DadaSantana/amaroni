@@ -27,32 +27,65 @@ export const getAll = async () => {
             type: document.data().type,
             address: document.data().address,
             tel: document.data().tel,
+            website: document.data().website,
             latitude: document.data().latitude,
             longitude: document.data().longitude,
             description: document.data().description,
             authorId: document.data().authorId,
             authorName: document.data().authorName,
-            rating: document.data().rating
+            rating: document.data().rating,
+            links: document.data().links
         }    
     list.push(item);
     });
     return list;
 }
 
-export const newAttraction = async (imageUrl: string, name: string, type: string, address: string, tel: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
-    let randomName = createId();
-    await setDoc(doc(db, "attractions", randomName), {
+<<<<<<< HEAD
+export const newAttraction = async (id:string,imageUrl: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string,links: any[]) => {
+=======
+export const newAttraction = async (id:string,imageUrl: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+    await setDoc(doc(db, "attractions", id), {
         imageUrl: imageUrl,
         name: name,
         type: type, 
         address: address,
         tel: tel,
+        website: website,
         latitude: latitude,
         longitude: longitude,
         description: description,
         authorId: authorId,
-        authorName: authorName
+        authorName: authorName,
+        links: links
     });
+
+    console.log(imageUrl);
+
+    const data = {
+        title: 'Nuova posizione aggiunta!',
+        body: `Nome del luogo: ${name},\nIndirizzo: ${address},\nTelefono: ${tel}.
+        `,
+        imageUrl: imageUrl
+      }
+  
+    const notificationData = await fetch('https://amaroni-it-notification.web.app/api/spaceapp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // dados retornados pela API
+    })
+    .catch(error => {
+        console.error(error); // erro de requisição
+    });
+
+    console.log(notificationData);
 }
 
 export const updateAttPhoto = async (imageUrl: string, id: string) => {
@@ -69,18 +102,22 @@ export const updateAttRating = async (id: string, rating: number) => {
     });
 }
 
-export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
+<<<<<<< HEAD
+export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, links: any[]) => {
+=======
+export const updateAttraction = async (id: string, name: string, type: string, address: string, tel: string, website: string, latitude: number, longitude: number, description: string, authorId: string, authorName: string) => {
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
     const attractionRef = doc(db, "attractions", id);
     await updateDoc( attractionRef, {
         name: name,
         type: type, 
         address: address,
         tel: tel,
+        website: website,
         latitude: latitude,
         longitude: longitude,
         description: description,
-        authorId: authorId,
-        authorName: authorName
+        links: links
     });
 }
 
@@ -97,12 +134,14 @@ export const getAttById = async (id: any) => {
             type: docSnap.data().type,
             address: docSnap.data().address,
             tel: docSnap.data().tel,
+            website: docSnap.data().website,
             latitude: docSnap.data().latitude,
             longitude: docSnap.data().longitude,
             description: docSnap.data().description,
             authorId: docSnap.data().authorId,
             authorName: docSnap.data().authorName,
-            rating: docSnap.data().rating
+            rating: docSnap.data().rating,
+            links: docSnap.data().links
         } 
         list.push(item);
         
@@ -127,12 +166,14 @@ export const getAttByUser = async (id: string) => {
             type: doc.data().type,
             address: doc.data().address,
             tel: doc.data().tel,
+            website: doc.data().website,
             latitude: doc.data().latitude,
             longitude: doc.data().longitude,
             description: doc.data().description,
             authorId: doc.data().authorId,
             authorName: doc.data().authorName,
-            rating: doc.data().rating
+            rating: doc.data().rating,
+            links: doc.data().links
         } 
         list.push(item);
     });
@@ -186,12 +227,14 @@ export const getAttByType = async (type: string) => {
             type: doc.data().type,
             address: doc.data().address,
             tel: doc.data().tel,
+            website: doc.data().website,
             latitude: doc.data().latitude,
             longitude: doc.data().longitude,
             description: doc.data().description,
             authorId: doc.data().authorId,
             authorName: doc.data().authorName,
-            rating: doc.data().rating
+            rating: doc.data().rating,
+            links: doc.data().links
         } 
         list.push(item);
     });

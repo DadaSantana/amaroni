@@ -6,12 +6,11 @@ import {
     query, 
     getDoc,
     getDocs,
-    where,
     updateDoc
 } from "firebase/firestore"; 
-import { v4 as createId } from 'uuid';
 import { Users } from '../types/Users';
 import { updateAccontPhoto, updateAccountName } from './auth';
+
 
 
 export const getAll = async () => {
@@ -27,7 +26,8 @@ export const getAll = async () => {
             email: doc.data().userEmail,
             photo: doc.data().userPhoto,
             phone: doc.data().userPhone,
-            levels: doc.data().levels
+            levels: doc.data().levels,
+            blocked: doc.data().blocked
         }    
     list.push(item);
     });
@@ -57,11 +57,12 @@ export const getUidData = async (uid: string) => {
     if (docSnap.exists()) {
         let item = {
             id: docSnap.id,
-            name: docSnap.data().name,
-            email: docSnap.data().email,
+            name: docSnap.data().userName,
+            email: docSnap.data().userEmail,
             photo: docSnap.data().userPhoto,
             phone: docSnap.data().userPhone,
-            levels: docSnap.data().levels
+            levels: docSnap.data().levels,
+            blocked: docSnap.data().blocked
         } 
         list.push(item);        
     } 
@@ -74,7 +75,7 @@ export const newUid = async (uid: string,name: string,email:string) => {
         uid: uid,
         userName: name, 
         userEmail: email,
-        userPhoto: 'https://firebasestorage.googleapis.com/v0/b/amaroni-it.appspot.com/o/users%2Fuser-profile.png?alt=media&token=dcbee91e-dc29-4f04-9886-cd5db5f479f9',
+        userPhoto: 'https://firebasestorage.googleapis.com/v0/b/amaroni-it.appspot.com/o/users%2Fuser-profile.png?alt=media&token=8b36dc06-7535-4819-8660-2059ea8afe8b',
         userPhone: '(  )',
         levels: {
             admin: false,
@@ -143,6 +144,13 @@ export const updateUserLevel = async (id: string, level: string) => {
         });
     }
 
+}
+
+export const blockUser = async (id: string) => {
+    const userRef = doc(db, "users", id);
+    await updateDoc( userRef, {
+        blocked: true
+    });
 }
 
 

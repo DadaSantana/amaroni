@@ -48,7 +48,7 @@ const BtnAction = ({id, fnEdit, fnUpdate}:BtnProps) => {
     }
   
     const handleRemoveItem = async (id: string) => {
-      let result = window.confirm("Deseja realmente exlcuir este local?");
+      let result = window.confirm("Vuoi davvero eliminare questa posizione?");
       if (result) {
         await deleteDoc(doc(db, "annuncios", id));
         fnUpdate();

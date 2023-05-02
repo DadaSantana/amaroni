@@ -21,6 +21,25 @@ export const Content = styled.div`
         .call-details.user {
             margin-right: 10px;
         }
+
+        @media (max-width: 760px) {
+            flex-direction: column;
+
+            .call-details.date {
+                margin-right: 0px;
+            }
+            .call-details.subject {
+                flex: 1;
+                margin-right: 0px;
+            }
+            .call-details.user {
+                margin-right: 0px;
+            }
+
+            .call-details {
+                margin-bottom: 10px;
+            }
+        }
     }
 
     .attach-file {
@@ -43,6 +62,7 @@ export const Content = styled.div`
         padding: 10px;
         box-shadow: 0 0 3px var(--shadow);
         border-radius: 5px;
+        margin-top: 20px;
 
         .response {
             width: fit-content;

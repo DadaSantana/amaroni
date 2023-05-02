@@ -8,13 +8,16 @@ import {
     updateProfile,
     Unsubscribe,
     sendEmailVerification,
-    updatePassword 
+    updatePassword, 
+    sendPasswordResetEmail,
+    updateCurrentUser
 } from "firebase/auth";
 
 import * as User from './users';
 import { UserFirebase } from "../types/Users";
+import { listenerVerifyData, updateVerifiedState } from "./realtime";
 
-const auth = getAuth(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
 export const loginEmailPassword = async (loginEmail : string, loginPassword : string) => {    
     try {
@@ -79,11 +82,10 @@ export const createAccont = async (userName: string, userEmail : string, userPas
     }
 }
 
-export const monitorAuthState = async () => {
+export const monitorAuthState = async (auth?: any) => {
     let userFirebase: UserFirebase[] = [];
     await onAuthStateChanged(auth, user => {
         if (user) {
-            console.log('entrou');
             let item = {
                 accessToken: user.uid,
                 displayName: user.displayName,
@@ -103,6 +105,43 @@ export const monitorAuthState = async () => {
         }
 
     });
+    console.log(userFirebase);
+    return userFirebase;
+}
+
+export const monitorVerifiedState = async () => {
+    let state: boolean = false;
+    const auth = getAuth();
+
+    if (auth) {
+        await updateCurrentUser(auth,auth.currentUser);
+    }
+    
+    return auth.currentUser != undefined ? auth.currentUser.emailVerified : false;
+}
+
+export const getCurrentUser = async (auth: any) => {
+    let userFirebase: UserFirebase[] = [];
+    const user = auth.currentUser;
+
+    if (user) {
+        let item = {
+            accessToken: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            phoneNumber: user.phoneNumber,
+            photoURL: user.photoURL,
+            uid: user.uid,
+            session: {
+                accessToken: user.uid,
+                expirationTime: 0
+            }
+        }
+        userFirebase.push(item);
+    } else {
+        console.log(user);
+    }
 
     return userFirebase;
 }
@@ -172,3 +211,21 @@ export const newPasswordUser = async (newPassword: string) => {
     }
 
 }
+
+export const sendRedefinePassword = async (email: string) => {
+    let state: boolean = false;
+    await sendPasswordResetEmail(auth, email)
+    .then(() => {
+      // Password reset email sent!
+      state = true;
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+
+    return state;
+}
+

@@ -10,5 +10,7 @@ export type Annuncio   = {
     address: string,
     tel: string,
     email: string,
+    latitude: number,
+    longitude: number,
     links: any[];
 }

@@ -32,19 +32,19 @@ export const Callview = ({id}:Props) => {
     const currencies = [
         {
           value: 'Registered Call',
-          label: 'Registered Call',
+          label: 'Chiamata registrata',
         },
         {
           value: 'Analyzing',
-          label: 'Analyzing',
+          label: 'Analizzando',
         },
         {
           value: 'Waiting for reply',
-          label: 'Waiting for reply',
+          label: 'In attesa di risposta',
         },
         {
           value: 'Finished',
-          label: 'Finished',
+          label: 'Finito',
         },
     ];
     //Backdrop
@@ -164,6 +164,7 @@ export const Callview = ({id}:Props) => {
                         readOnly: true,
                     }}
                 />
+                {user.level.admin &&
                 <TextField
                     id="outlined-select-currency"
                     className="call-details select"
@@ -182,14 +183,21 @@ export const Callview = ({id}:Props) => {
                         </MenuItem>
                     ))}
                 </TextField>
-            </div>
-                        <div className="attach-file">
-                {attach.length > 0 &&
-                <>
-                <AttachFileIcon />
-                <a href={href} download="image" target='_blank'>Fare clic qui per scaricare un file immagine</a>
-                </>
+<<<<<<< HEAD
                 }
+                {!user.level.admin &&
+                <TextField
+                    id="outlined-read-only-input"
+                    className="call-details select"
+                    label="Progresso"
+                    defaultValue={select}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+                }                
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
             </div>
             <div className="dialog-box">
                 {chatSetted &&

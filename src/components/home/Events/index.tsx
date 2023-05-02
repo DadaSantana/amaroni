@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAppSelector } from '../../../redux/hooks/useAppSelector';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Container } from 'react-bootstrap';
 import { Content } from './styles';
@@ -17,10 +17,16 @@ import three from '../../../assets/images/Carnaval.jpg';
 
 import * as Annuncios from '../../../services/annuncios';
 import { Annuncio } from '../../../types/Annuncio';
+import { motion } from 'framer-motion';
 
 export const Events = () => {
     const system = useAppSelector(state => state.system);
     const [ann, setAnn] = React.useState<Annuncio[]>([]);
+    const [activeSlide,setActiveSlide] = React.useState(0);
+<<<<<<< HEAD
+    const navigate = useNavigate();
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
 
     React.useEffect(()=>{
         const getAnn = async () => {
@@ -38,9 +44,7 @@ export const Events = () => {
                         {system.language[system.current] == 'german' ? 'Anzeigen' : null}
                     </h1>
                     <div className='title-bar'>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
-                        <span className="circle"></span>
+                        <span className="bar"></span>
                     </div>
                 </div>
                 <Swiper
@@ -53,23 +57,37 @@ export const Events = () => {
                     delay: 10000,
                     disableOnInteraction: false,
                 }}
+                loop={true}
                 navigation
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => {setActiveSlide(swiper.activeIndex)}}
+                onSlideChange={(swiper) => {setActiveSlide(swiper.activeIndex)}}
                 >
                     {ann.map((item, index)=>(
-                        <SwiperSlide 
-                            className='slide-item' 
-                            style={{
-                                background: `url('${item.imageUrl}')`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover'
-                            }}>
-                            <div className="event-details">
-                                <Link to={`event/${item.id}`}>{item.name}</Link>
-                            </div>
+                        <SwiperSlide>
+                            <motion.div className="slide-item">
+                                <motion.img 
+                                    src={item.imageUrl}
+                                    initial={{ scale: 1 }}  
+                                    animate={{
+                                        scale: activeSlide == index ? 1.25 : 1
+                                    }}
+                                    transition={{
+                                        ease: 'easeIn',
+                                        duration: activeSlide == index ? 10 : 0.5
+                                    }}
+<<<<<<< HEAD
+                                    onClick={()=>{
+                                        navigate(`event/${item.id}`);
+                                    }}
+=======
+>>>>>>> c415e8aca664a869c148a9d52dfce3b6b3bf6b24
+                                />
+                                <div className="event-details">
+                                    <Link to={`event/${item.id}`}>{item.name}</Link>
+                                </div>
+                            </motion.div>
                         </SwiperSlide>
                     ))}
                 </Swiper>   
